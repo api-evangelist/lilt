@@ -1,0 +1,21 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/lilt-openapi-original.yml
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - query
+schemes:
+- name: BasicAuth
+  type: http
+  scheme: basic
+  sources:
+  - openapi/lilt-openapi-original.yml
+- name: ApiKeyAuth
+  type: apiKey
+  in: query
+  parameter: key
+  sources:
+  - openapi/lilt-openapi-original.yml
