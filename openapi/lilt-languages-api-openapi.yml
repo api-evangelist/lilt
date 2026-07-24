@@ -1,0 +1,94 @@
+openapi: 3.0.3
+info:
+  title: LILT Create Languages API
+  description: "LILT API Support: https://lilt.atlassian.net/servicedesk/customer/portals\n\nThe LILT API enables programmatic access to the full-range of LILT backend services including:\n  * Training of and translating with interactive, adaptive machine translation\n  * Large-scale translation memory\n  * The Lexicon (a large-scale termbase)\n  * Programmatic control of the LILT CAT environment\n  * Translation memory synchronization\n\n\nRequests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests.\n\nThe base url for this REST API is `https://api.lilt.com/`.\n\n## Authentication\n\nRequests are authenticated via API key, which requires the Business plan.\n\nRequests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your API key as both the `username` and `password`.\n\nFor development, you may also pass the API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use.\n\n## Quotas\n\nOur services have a general quota of 4000 requests per minute. Should you hit the maximum requests per minute, you will need to wait 60 seconds before you can send another request.\n"
+  version: v3.0.3
+  license:
+    name: LILT Platform Terms and Conditions
+    url: https://lilt.com/lilt-platform-terms-and-conditions
+servers:
+- url: https://api.lilt.com
+security:
+- BasicAuth: []
+- ApiKeyAuth: []
+tags:
+- name: Languages
+paths:
+  /v2/languages:
+    get:
+      tags:
+      - Languages
+      summary: Retrieve supported languages
+      description: 'Get a list of supported languages.
+
+
+        '
+      operationId: getLanguages
+      responses:
+        '200':
+          description: An object listing supported languages and their corresponding locales.
+          content:
+            application/json:
+              schema:
+                title: LanguagesResponse
+                type: object
+                properties:
+                  source_to_target:
+                    type: object
+                    properties: {}
+                    description: A two-dimensional object in which the first key is an ISO 639-1 language code indicating the source, and the second key is an ISO 639-1 language code indicating the target.
+                    example:
+                      en:
+                        da: true
+                        de: true
+                        fr: true
+                        '...': '...'
+                      '...': '...'
+                  code_to_name:
+                    type: object
+                    properties: {}
+                    description: An object in which the key is an ISO 639-1 language code, and the value is the language name.
+                    example:
+                      aa: Afar
+                      ab: Abkhazian
+                      af: Afrikaans
+                      '...': '...'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable message describing the error.
+      description: 'Response in the event of an unexpected error.
+
+        '
+      example:
+        message: Internal server error.
+  responses:
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/octet-stream:
+          schema:
+            type: string
+        text/plain:
+          schema:
+            type: string
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    ApiKeyAuth:
+      type: apiKey
+      name: key
+      in: query

@@ -1,0 +1,319 @@
+openapi: 3.0.3
+info:
+  title: LILT Create Domains API
+  description: "LILT API Support: https://lilt.atlassian.net/servicedesk/customer/portals\n\nThe LILT API enables programmatic access to the full-range of LILT backend services including:\n  * Training of and translating with interactive, adaptive machine translation\n  * Large-scale translation memory\n  * The Lexicon (a large-scale termbase)\n  * Programmatic control of the LILT CAT environment\n  * Translation memory synchronization\n\n\nRequests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests.\n\nThe base url for this REST API is `https://api.lilt.com/`.\n\n## Authentication\n\nRequests are authenticated via API key, which requires the Business plan.\n\nRequests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your API key as both the `username` and `password`.\n\nFor development, you may also pass the API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use.\n\n## Quotas\n\nOur services have a general quota of 4000 requests per minute. Should you hit the maximum requests per minute, you will need to wait 60 seconds before you can send another request.\n"
+  version: v3.0.3
+  license:
+    name: LILT Platform Terms and Conditions
+    url: https://lilt.com/lilt-platform-terms-and-conditions
+servers:
+- url: https://api.lilt.com
+security:
+- BasicAuth: []
+- ApiKeyAuth: []
+tags:
+- name: Domains
+paths:
+  /v3/domains:
+    get:
+      tags:
+      - Domains
+      summary: Retrieve Domains
+      operationId: getDomains
+      description: 'Retrieve a list of Domains associated with the Organization''s API key.
+
+
+        Each Domain contains potentially 4 Arrays related to the Domain these are as follows:
+
+        - models - the list of models associated with the Domain
+
+        - filterConfigs - the list of filterConfigs associated with the Domain
+
+        - domainMetadata - the list of Domain specific options that have been configured for this domain.
+
+        '
+      parameters:
+      - name: key
+        in: header
+        description: the ApiKey used to authenticate with LILT, used to look up the Organization's domain information.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DomainList'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Domain:
+      type: object
+      properties:
+        domainId:
+          type: integer
+          format: int32
+          description: The unique identifier for the domain.
+          example: 123
+        domainName:
+          type: string
+          description: The name of the domain.
+          example: Example Domain
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/Model'
+          description: The models associated with the domain.
+          example:
+          - id: 456
+            name: Example Model
+            provider: Google Translate
+            status: Active
+            srcLang: en
+            trgLang: es
+            srcLocale: US
+            trgLocale: ES
+        filterConfigs:
+          type: array
+          items:
+            $ref: '#/components/schemas/FilterConfig'
+          description: The filter configurations associated with the domain.
+          example:
+          - id: 789
+            isDefault: true
+            filterConfig: Example Filter Config
+            filterName: Example Filter
+            configName: Example Config Name
+            configDescription: Example Config Description
+            subfilters: '{}'
+            segmentationConfigSetting: SENTENCE
+            srx: Example SRX
+            segmentationConfigName: Example Segmentation Config
+            domains:
+            - id: 101
+              name: Example Domain Ref
+            createdAt: '2024-01-01T00:00:00Z'
+            updatedAt: '2024-01-02T00:00:00Z'
+            default: true
+        domainMetadata:
+          type: array
+          items:
+            $ref: '#/components/schemas/DomainMetadata'
+          description: Metadata associated with the domain.
+          example:
+          - id: 131
+            key: Example Key
+            value: Example Value
+      required:
+      - domainId
+      - domainName
+      - models
+      - filterConfigs
+      - domainMetadata
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable message describing the error.
+      description: 'Response in the event of an unexpected error.
+
+        '
+      example:
+        message: Internal server error.
+    FilterConfig:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: The unique identifier for the filter configuration.
+          example: 789
+        isDefault:
+          type: boolean
+          description: Indicates if the filter configuration is the default.
+          example: true
+        filterConfig:
+          type: string
+          description: The filter configuration.
+          example: Example Filter Config
+        filterName:
+          type: string
+          description: The name of the filter.
+          example: Example Filter
+        configName:
+          type: string
+          description: The name of the configuration.
+          example: Example Config Name
+        configDescription:
+          type: string
+          description: The description of the configuration.
+          example: Example Config Description
+        subfilters:
+          type: string
+          description: The subfilters.
+          example: Example Subfilters
+        segmentationConfigSetting:
+          type: string
+          description: The segmentation configuration setting.
+          enum:
+          - SENTENCE
+          example: SENTENCE
+        srx:
+          type: string
+          description: The SRX (Segmentation Rules eXchange) data.
+          example: Example SRX
+        segmentationConfigName:
+          type: string
+          description: The name of the segmentation configuration.
+          example: Example Segmentation Config
+        domains:
+          type: array
+          items:
+            $ref: '#/components/schemas/DomainReference'
+          description: The domains associated with the filter configuration.
+          example:
+          - id: 101
+            name: Example Domain Ref
+        createdAt:
+          type: string
+          format: date-time
+          description: The creation timestamp.
+          example: '2024-01-01T00:00:00Z'
+        updatedAt:
+          type: string
+          format: date-time
+          description: The last update timestamp.
+          example: '2024-01-02T00:00:00Z'
+        default:
+          type: boolean
+          description: Indicates if the filter configuration is the default.
+          example: true
+    DomainMetadata:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: The unique identifier for the metadata.
+          example: 131
+        key:
+          type: string
+          description: The key of the metadata.
+          example: Example Key
+        value:
+          type: string
+          description: The value of the metadata.
+          example: Example Value
+    DomainList:
+      type: object
+      properties:
+        items:
+          type: array
+          description: The list of domains in the response.
+          items:
+            $ref: '#/components/schemas/Domain'
+          example:
+          - domainId: 123
+            domainName: Example Domain
+            models:
+            - id: 456
+              name: Example Model
+              provider: Google Translate
+              status: Active
+              srcLang: en
+              trgLang: es
+              srcLocale: US
+              trgLocale: ES
+            filterConfigs:
+            - id: 789
+              isDefault: true
+              filterConfig: Example Filter Config
+              filterName: Example Filter
+              configName: Example Config Name
+              configDescription: Example Config Description
+              subfilters: Example Subfilters
+              segmentationConfigSetting: SENTENCE
+              srx: Example SRX
+              segmentationConfigName: Example Segmentation Config
+              domains:
+              - id: 101
+                name: Example Domain Ref
+              createdAt: '2024-01-01T00:00:00Z'
+              updatedAt: '2024-01-02T00:00:00Z'
+              default: true
+            domainMetadata:
+            - id: 131
+              key: Example Key
+              value: Example Value
+        size:
+          type: integer
+          description: The total number of domains in the list.
+          format: int32
+          example: 1
+      required:
+      - items
+      - size
+    DomainReference:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: The unique identifier for the domain.
+          example: 101
+        name:
+          type: string
+          description: The name of the domain.
+          example: Example Domain Ref
+    Model:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: The unique identifier for the model.
+          example: 456
+        name:
+          type: string
+          description: The name of the model.
+          example: Example Model
+        provider:
+          type: string
+          description: The provider of the model.
+          example: Google Translate
+        status:
+          type: string
+          description: The status of the model.
+          example: Active
+        srcLang:
+          type: string
+          description: The source language of the model.
+          example: en
+        trgLang:
+          type: string
+          description: The target language of the model.
+          example: es
+        srcLocale:
+          type: string
+          description: The source locale of the model.
+          example: en-US
+        trgLocale:
+          type: string
+          description: The target locale of the model.
+          example: es-ES
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    ApiKeyAuth:
+      type: apiKey
+      name: key
+      in: query

@@ -1,0 +1,547 @@
+openapi: 3.0.3
+info:
+  title: LILT Create Translate API
+  description: "LILT API Support: https://lilt.atlassian.net/servicedesk/customer/portals\n\nThe LILT API enables programmatic access to the full-range of LILT backend services including:\n  * Training of and translating with interactive, adaptive machine translation\n  * Large-scale translation memory\n  * The Lexicon (a large-scale termbase)\n  * Programmatic control of the LILT CAT environment\n  * Translation memory synchronization\n\n\nRequests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests.\n\nThe base url for this REST API is `https://api.lilt.com/`.\n\n## Authentication\n\nRequests are authenticated via API key, which requires the Business plan.\n\nRequests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your API key as both the `username` and `password`.\n\nFor development, you may also pass the API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use.\n\n## Quotas\n\nOur services have a general quota of 4000 requests per minute. Should you hit the maximum requests per minute, you will need to wait 60 seconds before you can send another request.\n"
+  version: v3.0.3
+  license:
+    name: LILT Platform Terms and Conditions
+    url: https://lilt.com/lilt-platform-terms-and-conditions
+servers:
+- url: https://api.lilt.com
+security:
+- BasicAuth: []
+- ApiKeyAuth: []
+tags:
+- name: Translate
+paths:
+  /v2/translate:
+    get:
+      tags:
+      - Translate
+      summary: Translate a segment
+      description: 'Translate a source string.
+
+
+        Functionally identical to `POST /v2/translate`, with parameters passed
+
+        as query string parameters instead of a JSON request body. Useful for
+
+        simple integrations that prefer a GET request.
+
+
+        Setting the `rich` parameter to `true` will change the response format
+
+        to include additional information about each translation including a
+
+        model score, word alignments,  and formatting information.
+
+
+        By default, this endpoint also returns translation memory (TM) fuzzy matches, along
+
+        with associated scores. Fuzzy matches always appear ahead of machine translation
+
+        output in the response.
+
+
+        The maximum source length is 5,000 characters.
+
+
+        Usage charges apply to this endpoint for production API keys.
+
+
+        '
+      operationId: translateSegmentGet
+      parameters:
+      - name: source
+        in: query
+        description: The source string to translate.
+        schema:
+          type: string
+      - name: memory_id
+        in: query
+        description: A unique Memory identifier.
+        required: true
+        schema:
+          type: integer
+      - name: source_hash
+        in: query
+        description: A source hash code.
+        schema:
+          type: integer
+      - name: n
+        in: query
+        description: Return top n translations (deprecated).
+        schema:
+          type: integer
+      - name: prefix
+        in: query
+        description: A target prefix.
+        schema:
+          type: string
+      - name: rich
+        in: query
+        description: Returns rich translation information (e.g., with word alignments).
+        schema:
+          type: boolean
+          default: false
+      - name: tm_matches
+        in: query
+        description: Include translation memory fuzzy matches.
+        schema:
+          type: boolean
+          default: true
+      - name: project_tags
+        in: query
+        description: Project tags. Projects tags in source to target if set to true.
+        schema:
+          type: boolean
+          default: false
+      - name: contains_icu_data
+        in: query
+        description: Contains ICU data. If true then tags in the source following the ICU standard will be parsed and retained.
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: A TranslationList object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranslationList'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+      - Translate
+      summary: Translate a segment
+      description: 'Translate a source string.
+
+
+        Setting the `rich` parameter to `true` will change the response format
+
+        to include additional information about each translation including a
+
+        model score, word alignments,  and formatting information. The rich
+
+        format can be seen in the example response on this page.
+
+
+        By default, this endpoint also returns translation memory (TM) fuzzy matches, along
+
+        with associated scores. Fuzzy matches always appear ahead of machine translation
+
+        output in the response.
+
+
+        The maximum source length is 5,000 characters.
+
+
+        Usage charges apply to this endpoint for production API keys.
+
+
+        '
+      operationId: translateSegmentPost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: TranslateSegmentBody
+              required:
+              - memory_id
+              type: object
+              properties:
+                source:
+                  type: string
+                  description: A unique Segment identifier.
+                memory_id:
+                  type: integer
+                  description: A unique Memory identifier.
+                source_hash:
+                  type: integer
+                  description: A source hash code.
+                n:
+                  type: integer
+                  description: Return top n translations (deprecated).
+                prefix:
+                  type: string
+                  description: A target prefix
+                rich:
+                  type: boolean
+                  description: Returns rich translation information (e.g., with word alignments).
+                  default: false
+                tm_matches:
+                  type: boolean
+                  description: Include translation memory fuzzy matches.
+                  default: true
+                project_tags:
+                  type: boolean
+                  description: Project tags. Projects tags in source to target if set to true.
+                  default: false
+                containsICUData:
+                  type: boolean
+                  description: Contains ICU data. If true then tags in the source following the ICU standard will be parsed and retained.
+                  default: false
+        required: false
+      responses:
+        '200':
+          description: A TranslationList object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranslationList'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: body
+  /v2/translate/file:
+    get:
+      tags:
+      - Translate
+      summary: Monitor file translation
+      description: 'Get information about the one or more Files that are being translated with machine translation. Query filters are optional but at least one must be provided.
+
+
+        Example CURL:
+
+        ```bash
+
+        curl -X GET ''https://api.lilt.com/v2/translate/file?key=API_KEY&translationIds=1,2&fromTime=1607966744&toTime=1707966744&status=InProgress''
+
+        ```
+
+
+        '
+      operationId: monitorFileTranslation
+      parameters:
+      - name: translationIds
+        in: query
+        description: List of translation ids, comma separated
+        schema:
+          type: string
+      - name: status
+        in: query
+        description: One of the translation statuses - `InProgress`, `Completed`, `Failed`, `ReadyForDownload`
+        schema:
+          type: string
+      - name: fromTime
+        in: query
+        description: Results after this time (inclusive) will be returned, specified as seconds since the Unix epoch.
+        schema:
+          type: number
+      - name: toTime
+        in: query
+        description: Results before this time (exclusive) will be returned, specified as seconds since the Unix epoch.
+        schema:
+          type: number
+      responses:
+        '200':
+          description: Translation Info
+          content:
+            application/json:
+              schema:
+                title: monitorFileTranslationResponse
+                type: array
+                description: List of TranslationInfo objects
+                items:
+                  $ref: '#/components/schemas/TranslationInfo'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonitorFileTranslationTypeError'
+    post:
+      tags:
+      - Translate
+      summary: Translate a File
+      description: 'Start machine translation of one or more Files that have previously been uploaded.  The response will include an `id` parameter that can be used to monitor and download the translations in subsequent calls.
+
+
+        Example CURL:
+
+        ```bash
+
+        curl -X POST ''https://api.lilt.com/v2/translate/file?key=API_KEY&fileId=583&memoryId=2495&configId=123&withTM=true''
+
+        ```
+
+
+        '
+      operationId: batchTranslateFile
+      parameters:
+      - name: fileId
+        in: query
+        description: List of File ids to be translated, comma separated.
+        required: true
+        schema:
+          type: integer
+      - name: memoryId
+        in: query
+        description: Id of Memory to use in translation.
+        required: true
+        schema:
+          type: integer
+      - name: configId
+        in: query
+        description: An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file.
+        schema:
+          type: integer
+      - name: withTM
+        in: query
+        description: An optional boolean parameter to toggle the use of Translation Memory in the translation of the file.
+        schema:
+          type: boolean
+      - name: externalModelId
+        in: query
+        description: An optional parameter to specify a third-party model to use for translation. This allows you to use external MT providers instead of Lilt's built-in MT system.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Translation Info
+          content:
+            application/json:
+              schema:
+                title: batchTranslateFileResponse
+                type: array
+                description: List of TranslationInfo objects
+                items:
+                  $ref: '#/components/schemas/TranslationInfo'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/translate/files:
+    get:
+      tags:
+      - Translate
+      summary: Download translated file
+      description: 'Download a translated File.
+
+
+        Example CURL:
+
+        ```bash
+
+        curl -X GET ''https://api.lilt.com/v2/translate/files?key=API_KEY&id=1''
+
+        ```
+
+
+        '
+      operationId: downloadFile
+      parameters:
+      - name: id
+        in: query
+        description: A translation id.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: A file.
+          content:
+            application/octet-stream:
+              schema:
+                title: DocumentDownloadResponse
+                type: string
+                format: byte
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    TranslationInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for this translation.
+        fileId:
+          type: integer
+          description: id of the File that is being translated.
+        status:
+          type: string
+          description: Status of the translation - `InProgress`, `ReadyForDownload`, `Completed`, `Failed`.
+        createdAt:
+          type: integer
+          description: Time when this translation was started, in seconds since the Unix epoch.
+        errorMsg:
+          type: string
+          description: Error message, present when status is `Failed`.
+      description: 'Information describing a batch translation process.
+
+        '
+      example:
+        id: 1
+        fileId: 2,
+        status: InProgress
+        createdAt: 1609357135
+    MonitorFileTranslationTypeError:
+      type: object
+      description: 'Monitor file translation can have different errors based on reasons explained in the examples.
+
+        '
+      example:
+        Unsupported_file_type:
+          message: Customer gave us garbage.
+        File_extraction_error:
+          message: Customer gave us garbage.
+        No_translatable_content:
+          message: Customer gave us an empty file.
+        Batch_MT_initiation_failure:
+          message: Something is wrong with MT.
+        Batch_MT_response_failure:
+          message: Something is wrong with MT.
+        File_reassembly_error:
+          message: We couldn't put the translated file back together.(okapi error)
+        Billing_error:
+          message: We couldn't log the information about the MT to our billing system.
+        Invalid_memory:
+          message: Something is wrong with the memory.
+        Storage_error:
+          message: Error occurred interacting with file storage.
+    Translation:
+      type: object
+      properties:
+        target:
+          type: string
+          description: The target string.
+        targetWithTags:
+          type: string
+          description: The target string with source tags projected into the target.
+        align:
+          type: string
+          description: '"MT only: A whitespace delimited list of source-target alignment indices."
+
+            '
+        provenance:
+          type: string
+          description: 'Positive values indicate that the word is from the Memory,
+
+            with contiguous identical entries (e.g., 2 2) indicating
+
+            phrase matches. Negative contiguous values indicate entries from the Lexicon.
+
+            0 indicates a word from the background data.
+
+            '
+        score:
+          type: number
+          description: The score of the translation.
+        isTMMatch:
+          type: boolean
+          description: 'TM only: If true, indicates an exact translation memory match.'
+        targetDelimiters:
+          type: array
+          description: A format string that indicates, for each word, if the word should be preceded by a space.
+          items:
+            type: string
+        targetWords:
+          type: array
+          description: 'The target string can be constructed by suffixing each `targetDelimiters` entry with its corresponding word in `targetWords` and concatenating the constructed array.
+
+            Please note that the `targetDelimiters` array has one more entry than `targetWords` array which is why the last entry in the array will be the last value of `targetDelimiters`.
+
+            '
+          items:
+            type: string
+      description: A machine translation (MT) or a translation memory (TM) match of a source segment.
+      example:
+      - score: 3.4936864e-08
+        align: 0-0 1-1 2-2 3-3
+        targetDelimiters:
+        - ''
+        - ' '
+        - ' '
+        - ''
+        - ''
+        targetWords:
+        - Authentifizierung
+        - nicht
+        - erforderlich
+        - .
+        target: Authentifizierung nicht erforderlich .
+        targetWithTags: Authentifizierung nicht erforderlich.
+        isTMMatch: false
+        provenance: 0 0 0 0
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable message describing the error.
+      description: 'Response in the event of an unexpected error.
+
+        '
+      example:
+        message: Internal server error.
+    TranslationList:
+      type: object
+      properties:
+        untokenizedSource:
+          type: string
+          description: The untokenized source segment. Punctuation has not been separated from words.
+          example: Authentication not required.
+        tokenizedSource:
+          type: string
+          description: The tokenized source segment. Punctuation has been separated from words.
+          example: Authentication not required .
+        sourceDelimiters:
+          type: array
+          description: A format string that indicates, for each word, if the word should be preceded by a space.
+          example:
+          - ''
+          - ' '
+          - ' '
+          - ''
+          - ''
+          items:
+            type: string
+        translation:
+          type: array
+          description: A list of Translation objects.
+          items:
+            $ref: '#/components/schemas/Translation'
+      description: An ranked list of translations and associated metadata.
+  responses:
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/octet-stream:
+          schema:
+            type: string
+        text/plain:
+          schema:
+            type: string
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    ApiKeyAuth:
+      type: apiKey
+      name: key
+      in: query

@@ -1,0 +1,447 @@
+openapi: 3.0.3
+info:
+  title: LILT Create Projects API
+  description: "LILT API Support: https://lilt.atlassian.net/servicedesk/customer/portals\n\nThe LILT API enables programmatic access to the full-range of LILT backend services including:\n  * Training of and translating with interactive, adaptive machine translation\n  * Large-scale translation memory\n  * The Lexicon (a large-scale termbase)\n  * Programmatic control of the LILT CAT environment\n  * Translation memory synchronization\n\n\nRequests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests.\n\nThe base url for this REST API is `https://api.lilt.com/`.\n\n## Authentication\n\nRequests are authenticated via API key, which requires the Business plan.\n\nRequests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your API key as both the `username` and `password`.\n\nFor development, you may also pass the API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use.\n\n## Quotas\n\nOur services have a general quota of 4000 requests per minute. Should you hit the maximum requests per minute, you will need to wait 60 seconds before you can send another request.\n"
+  version: v3.0.3
+  license:
+    name: LILT Platform Terms and Conditions
+    url: https://lilt.com/lilt-platform-terms-and-conditions
+servers:
+- url: https://api.lilt.com
+security:
+- BasicAuth: []
+- ApiKeyAuth: []
+tags:
+- name: Projects
+paths:
+  /v2/projects:
+    get:
+      tags:
+      - Projects
+      summary: Retrieve a Project
+      description: 'Retrieves one or more projects, including the documents associated with each project. Retrieving a project is the most efficient way to retrieve a single project, multiple projects or a list of all available projects.
+
+
+        To retrieve a specific project, specify the `id` request parameter or you can retrieve multiple projects by adding comma (,) between ids eg. `?id=1234,5678`. To retrieve all projects, omit the `id` request parameter. To limit the retrieved projects to those with a particular source language or target language, specify the corresponding ISO 639-1 language codes in the `srclang` and `trglang` request parameters, respectively.'
+      operationId: getProjects
+      parameters:
+      - name: id
+        in: query
+        description: A unique Project identifier. It can be a single id or multiple ids separated by a comma
+        schema:
+          type: integer
+      - name: srclang
+        in: query
+        description: An ISO 639-1 language code.
+        schema:
+          type: string
+      - name: trglang
+        in: query
+        description: An ISO 639-1 language code.
+        schema:
+          type: string
+      - name: from_time
+        in: query
+        description: Unix time stamp (epoch, in seconds) of Projects with `created_at` greater than or equal to the value.
+        schema:
+          type: integer
+      - name: to_time
+        in: query
+        description: Unix time stamp (epoch, in seconds) of Projects with `created_at` less than the value.
+        schema:
+          type: integer
+      - name: state
+        in: query
+        description: A project state (backlog, inProgress, inReview, inQA, done).
+        schema:
+          type: string
+      - name: archived
+        in: query
+        description: A flag that toggles whether to include archived projects in the response (the default is `true`).
+        schema:
+          type: boolean
+      - name: connector_id
+        in: query
+        description: A unique Connector identifier.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: A list of Project objects.
+          content:
+            application/json:
+              schema:
+                title: ProjectResponse
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+      - Projects
+      summary: Create a Project
+      description: 'Create a Project. A Project is a collection of Documents.
+
+
+        A Project is associated with exactly one Memory.
+
+
+        Projects appear in the dashboard of the web app.
+
+
+        '
+      operationId: createProject
+      requestBody:
+        description: The Project resource to create.
+        content:
+          application/json:
+            schema:
+              title: ProjectCreateParameters
+              required:
+              - memory_id
+              - name
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: A name for the Project.
+                  example: My new project
+                memory_id:
+                  type: integer
+                  description: The Memory to associate with this new Project.
+                  example: 1234
+                job_id:
+                  type: integer
+                  description: 'The Job to associate with this new Project. If a Job ID is not
+
+                    provided then a new Job will be created to contain the
+
+                    Project.
+
+                    '
+                  example: 1234
+                due_date:
+                  type: integer
+                  description: The due date. Measured in seconds since the Unix epoch.
+                  example: 1489147692
+                metadata:
+                  type: object
+                  properties: {}
+                  description: A JSON object of key/value string pairs. Stores custom project information.
+                  example:
+                    connectorType: github
+                    notes: example metadata
+                workflowTemplateId:
+                  type: integer
+                  description: The workflow template used to create this project. WorkflowTemplateIds can be retrieved via the /workflows/templates endpoint. If not specified then the organization default workflowTemplateId will be used.
+                  example: 14
+                workflow_template_name:
+                  type: string
+                  description: Name of the workflow for the project, if a workflowTemplateId is passed, this field will be ignored.
+                  example: Translate > Review
+                llm_provider:
+                  type: string
+                  description: The LLM provider to use for the project. Defaults to "neural".
+                  example: neural
+                external_model_id:
+                  type: integer
+                  description: An optional parameter to specify a third-party model ID to use for translation. This allows you to use external MT providers instead of Lilt's built-in MT system. Must match the chosen llm_provider.
+                  example: 111
+                is_plural:
+                  type: boolean
+                  description: Whether the documents in this project contain ICU plural forms.
+                  example: false
+                require_batch_qa_translator:
+                  type: boolean
+                  description: Whether to require batch QA from the translator side.
+                  example: false
+                enable_prompt_labeling:
+                  type: boolean
+                  description: Whether to enable prompt labeling for the project.
+                  example: false
+                job_type:
+                  type: string
+                  description: (Optional) A specialized job type for advanced features.
+                  enum:
+                  - TRANSLATION
+                  - PROMPT_RESPONSE
+                additional_guidelines:
+                  type: string
+                  description: (Optional) Additional instructions or guidelines.
+                  example: Provide consistent style across all chapters.
+                is_enhanced_human_ai_optimized:
+                  type: boolean
+                  description: Whether the project is enhanced with AI optimization.
+                  example: false
+                domainId:
+                  type: integer
+                  description: A domain ID to categorize this project under.
+                  example: 234
+        required: true
+      responses:
+        '200':
+          description: A Project object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+      - Projects
+      summary: Delete a Project
+      description: 'Delete a Project.
+
+        '
+      operationId: deleteProject
+      parameters:
+      - name: id
+        in: query
+        description: A unique Project identifier.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: A status object.
+          content:
+            application/json:
+              schema:
+                title: ProjectDeleteResponse
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: A unique Project identifier.
+                    example: 46530
+                  deleted:
+                    type: boolean
+                    description: If the operation succeeded, then `true`. Otherwise, `false`.
+                    example: true
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Project:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: A unique number identifying the Project.
+          example: 448
+        memory_id:
+          type: integer
+          description: A unique number identifying the associated Memory.
+          example: 1234
+        job_id:
+          type: integer
+          description: A unique number identifying the associated Job.
+          example: 1234
+        srclang:
+          type: string
+          description: An ISO 639-1 language identifier.
+          example: en
+        trglang:
+          type: string
+          description: An ISO 639-1 language identifier.
+          example: fr
+        srclocale:
+          type: string
+          description: A locale identifier, supported for srclang.
+          example: US
+        trglocale:
+          type: string
+          description: A locale identifier, supported for trglang.
+          example: FR
+        name:
+          type: string
+          description: A name for the project.
+          example: My New Project
+        state:
+          type: string
+          description: The project's state. The possible states are `backlog`, `inProgress`, `inReview`, `inQA`, and `done`.
+          example: backlog
+        due_date:
+          type: integer
+          description: The due date. Measured in seconds since the Unix epoch.
+          example: 1489147692
+        archived:
+          type: boolean
+          description: The archived state of the Project.
+          example: false
+        metadata:
+          type: object
+          properties: {}
+          description: A JSON object of key/value string pairs. Stores custom project information.
+          example:
+            connectorType: github
+            notes: example metadata
+        sample_review_percentage:
+          type: integer
+          description: The project's sample review percentage.
+          example: 20
+        created_at:
+          type: integer
+          description: Time at which the object was created. Measured in seconds since the Unix epoch.
+          example: 1489147692
+        updated_at:
+          type: integer
+          description: Time at which the object was created. Measured in seconds since the Unix epoch.
+          example: 1489147692
+        workflowStatus:
+          type: string
+          description: The status of the Workflow for the current project. This may not be present for all project endpoints even with workflows enabled.
+          example: READY_TO_START
+          enum:
+          - READY_TO_START
+          - IN_PROGRESS
+          - DONE
+        document:
+          type: array
+          description: A list of Documents.
+          items:
+            $ref: '#/components/schemas/DocumentWithoutSegments'
+      description: 'A Project is a collection of zero or more Documents. It is specific to a language pair, and is associated with exactly one Memory for that language pair. The Memory association cannot be changed after the Project is created.
+
+        '
+    DocumentWithoutSegments:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: A unique number identifying the Document.
+          example: 46530
+        project_id:
+          type: integer
+          description: A unique number identifying the Project.
+          example: 287
+        srclang:
+          type: string
+          description: An ISO 639-1 language identifier.
+          example: en
+        trglang:
+          type: string
+          description: An ISO 639-1 language identifier.
+          example: de
+        name:
+          type: string
+          description: The document name.
+          example: Introduction.xliff
+        import_in_progress:
+          type: boolean
+          description: True if the document is currently being imported
+          example: false
+        import_succeeded:
+          type: boolean
+          description: True if the import process succeeded.
+          example: false
+        import_error_message:
+          type: string
+          description: Error message if `import_succeeded=false`
+          example: Could not parse XML.
+        export_in_progress:
+          type: boolean
+          description: True if the document is currently being exported for download
+          example: false
+        export_succeeded:
+          type: boolean
+          description: True if the export process succeeded.
+          example: false
+        export_error_message:
+          type: string
+          description: Error message if `export_succeeded=false`
+          example: Could not parse XML.
+        is_pretranslating:
+          type: boolean
+          description: True if the document is currently being pretranslated.
+          example: false
+        status:
+          type: object
+          properties:
+            pretranslation:
+              type: string
+              description: ''
+              example: idle
+              enum:
+              - idle
+              - pending
+              - running
+          description: A list of translations for the query term.
+          example:
+            pretranslation: idle
+        translator_email:
+          type: string
+          description: The email of the assigned translator.
+          example: translator@example.com
+        reviewer_email:
+          type: string
+          description: The email of the assigned reviewer.
+          example: reviewer@example.com
+        customer_reviewer_email:
+          type: string
+          description: The email of the assigned customer reviewer. Only present if the project was request by id.
+          example: reviewer@example.com
+        created_at:
+          type: integer
+          description: Time at which the object was created. Measured in seconds since the Unix epoch.
+          example: 1489147692
+        updated_at:
+          type: integer
+          description: Time at which the object was created. Measured in seconds since the Unix epoch.
+          example: 1489147692
+        is_review_complete:
+          type: boolean
+          description: Document review status.
+          example: true
+      description: 'A Document is a collection of zero or more Segments.
+
+        '
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable message describing the error.
+      description: 'Response in the event of an unexpected error.
+
+        '
+      example:
+        message: Internal server error.
+  responses:
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/octet-stream:
+          schema:
+            type: string
+        text/plain:
+          schema:
+            type: string
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    ApiKeyAuth:
+      type: apiKey
+      name: key
+      in: query

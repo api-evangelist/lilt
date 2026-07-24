@@ -1,0 +1,577 @@
+openapi: 3.0.3
+info:
+  title: LILT Create Memories API
+  description: "LILT API Support: https://lilt.atlassian.net/servicedesk/customer/portals\n\nThe LILT API enables programmatic access to the full-range of LILT backend services including:\n  * Training of and translating with interactive, adaptive machine translation\n  * Large-scale translation memory\n  * The Lexicon (a large-scale termbase)\n  * Programmatic control of the LILT CAT environment\n  * Translation memory synchronization\n\n\nRequests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests.\n\nThe base url for this REST API is `https://api.lilt.com/`.\n\n## Authentication\n\nRequests are authenticated via API key, which requires the Business plan.\n\nRequests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your API key as both the `username` and `password`.\n\nFor development, you may also pass the API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use.\n\n## Quotas\n\nOur services have a general quota of 4000 requests per minute. Should you hit the maximum requests per minute, you will need to wait 60 seconds before you can send another request.\n"
+  version: v3.0.3
+  license:
+    name: LILT Platform Terms and Conditions
+    url: https://lilt.com/lilt-platform-terms-and-conditions
+servers:
+- url: https://api.lilt.com
+security:
+- BasicAuth: []
+- ApiKeyAuth: []
+tags:
+- name: Memories
+paths:
+  /v2/memories:
+    get:
+      tags:
+      - Memories
+      summary: Retrieve a Memory
+      description: 'Retrieve a Memory. If you cannot access the Memory (401 error) please check permissions (e.g. in case you created the Memory via the web app with a different account you may have to explicitly share that Memory).
+
+
+        '
+      operationId: getMemory
+      parameters:
+      - name: id
+        in: query
+        description: An optional Memory identifier.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: A list of Memory objects.
+          content:
+            application/json:
+              schema:
+                title: MemoryResponse
+                type: array
+                items:
+                  $ref: '#/components/schemas/Memory'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          description: Memory not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+      - Memories
+      summary: Update the name of a Memory
+      description: 'Update a Memory.
+
+        '
+      operationId: updateMemory
+      requestBody:
+        description: The Memory resource to update.
+        content:
+          application/json:
+            schema:
+              title: MemoryUpdateParameters
+              required:
+              - id
+              - name
+              type: object
+              properties:
+                id:
+                  type: integer
+                  description: A unique Memory identifier.
+                  example: 7246
+                name:
+                  type: string
+                  description: The Memory name.
+                  example: Automotive Memory
+        required: true
+      responses:
+        '200':
+          description: A Memory object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Memory'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: body
+    post:
+      tags:
+      - Memories
+      summary: Create a Memory
+      description: 'Create a new Memory. A Memory is a container that collects source/target
+
+        sentences for a specific language pair (e.g., English>French). The data
+
+        in the Memory is used to train the MT system, populate the TM, and
+
+        update the lexicon. Memories are private to your account - the data is
+
+        not shared across users - unless you explicitly share a Memory with your
+
+        team (via web app only).
+
+
+        <a href="/kb/introduction-to-lilt-translation" target=_blank>Refer
+
+        to our KB</a> for a more detailed description.
+
+
+        '
+      operationId: createMemory
+      requestBody:
+        description: The Memory resource to create.
+        content:
+          application/json:
+            schema:
+              title: MemoryCreateParameters
+              required:
+              - name
+              - srclang
+              - trglang
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: A name for the Memory.
+                  example: automotive
+                srclang:
+                  type: string
+                  description: An ISO 639-1 language identifier.
+                  example: en
+                trglang:
+                  type: string
+                  description: An ISO 639-1 language identifier.
+                  example: fr
+                srclocale:
+                  type: string
+                  description: An ISO 3166-1 region name for language locales
+                  example: US
+                trglocale:
+                  type: string
+                  description: An ISO 3166-1 region name for language locales
+                  example: FR
+        required: true
+      responses:
+        '200':
+          description: A Memory object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Memory'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+      - Memories
+      summary: Delete a Memory
+      description: 'Delete a Memory.
+
+        '
+      operationId: deleteMemory
+      parameters:
+      - name: id
+        in: query
+        description: A unique Memory identifier.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: A status object.
+          content:
+            application/json:
+              schema:
+                title: MemoryDeleteResponse
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: A unique Memory identifier.
+                    example: 46530
+                  deleted:
+                    type: boolean
+                    description: If the operation succeeded, then `true`. Otherwise, `false`.
+                    example: true
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/memories/query:
+    get:
+      tags:
+      - Memories
+      summary: Query a Memory
+      description: 'Perform a translation memory query.
+
+        '
+      operationId: queryMemory
+      parameters:
+      - name: id
+        in: query
+        description: A unique Memory identifier.
+        required: true
+        schema:
+          type: integer
+      - name: query
+        in: query
+        description: A source query.
+        required: true
+        schema:
+          type: string
+      - name: n
+        in: query
+        description: Maximum number of results to return.
+        schema:
+          type: integer
+          default: 10
+      responses:
+        '200':
+          description: A list of TranslationMemoryEntry objects.
+          content:
+            application/json:
+              schema:
+                title: MemoryQueryResponse
+                type: array
+                items:
+                  $ref: '#/components/schemas/TranslationMemoryEntry'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/memories/import:
+    post:
+      tags:
+      - Memories
+      summary: File import for a Memory
+      description: "Imports common translation memory or termbase file formats to a specific LILT memory. Currently supported file formats are `*.tmx`, `*.sdltm`, `*.sdlxliff`(With custom Filters), '*.xliff', and `*.tmq` for TM data; `*.csv` and `*.tbx` for termbase data. Request parameters should be passed as JSON object with the header field `LILT-API`.\n\nExample CURL command to upload a translation memory file named `my_memory.sdltm` in the current working directory:\n```bash\n  curl -X POST https://api.lilt.com/v2/memories/import?key=API_KEY \\\n    --header \"LILT-API: {\\\"name\\\": \\\"my_memory.sdltm\\\",\\\"memory_id\\\": 42}\" \\\n    --header \"Content-Type: application/octet-stream\" \\\n    --data-binary @my_memory.sdltm\n```\n\nExample CURL command to upload a translation memory file named `my_memory.sdlxliff` in the current working directory, with Custom Filters based on SDLXLIFF fields, conf_name which maps to, percentage, and whether we should ignore unlocked segments.\n```bash\n  curl -X POST https://api.lilt.com/v2/memories/import?key=API_KEY \\\n    --header \"LILT-API: {\\\"name\\\": \\\"my_memory.sdlxliff\\\",\\\"memory_id\\\": 12,\\\"sdlxliff_filters\\\":[{\\\"conf_name\\\": \\\"Translated\\\", \\\"percentage\\\": 100, \\\"allow_unlocked\\\": false}]\"}\" \\\n    --header \"Content-Type: application/octet-stream\" \\\n    --data-binary @my_memory.sdlxliff\n```\n\n"
+      operationId: importMemoryFile
+      parameters:
+      - name: memory_id
+        in: header
+        description: A unique Memory identifier.
+        required: true
+        schema:
+          type: integer
+      - name: name
+        in: header
+        description: Name of the TM or termbase file.
+        required: true
+        schema:
+          type: string
+      - name: sdlxliff_filters
+        in: header
+        description: Contains Filter information Unique to SDLXLIFF
+        style: simple
+        explode: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/SDLXLIFFFilter'
+      - name: has_header_row
+        in: header
+        description: A flag indicating whether an imported Termbase CSV has a header row or not (the default value is `false`).
+        schema:
+          type: boolean
+      - name: skip_duplicates
+        in: header
+        description: 'A flag indicating whether or not to skip the import of segments
+
+          which already exist in the memory. (the default value is `false`).
+
+          '
+        schema:
+          type: boolean
+      requestBody:
+        description: The file contents to be uploaded. The entire POST body will be treated as the file.
+        content:
+          application/octet-stream:
+            schema:
+              title: MemoryImportBody
+              type: string
+              format: binary
+        required: true
+      responses:
+        '200':
+          description: A status object.
+          content:
+            application/json:
+              schema:
+                title: MemoryImportResponse
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: A unique Memory identifier.
+                    example: 123
+                  isProcessing:
+                    type: integer
+                    description: The current state of the import.
+                    example: 1
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: body
+  /v2/memories/termbase/export:
+    post:
+      tags:
+      - Memories
+      summary: Termbase export for a Memory
+      description: "Exports the termbase entries for the given memory into a CSV file.\n\nCalling this endpoint will begin the export process in the background.\nCheck that the processing is complete by polling the `GET /2/memories`\nendpoint. When the `is_processing` value is 0 then call the\n`POST /2/memories/termbase/download` endpoint.\n\n```bash\n  curl -X POST https://api.lilt.com/v2/memories/termbase/export?key=API_KEY&id=ID\n```\n"
+      operationId: exportTermbase
+      parameters:
+      - name: id
+        in: query
+        description: A unique Memory identifier.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: A status object.
+          content:
+            application/json:
+              schema:
+                title: TermbaseExportResponse
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: A unique Memory identifier.
+                    example: 123
+                  is_processing:
+                    type: integer
+                    description: The current state of the import.
+                    example: 1
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/memories/termbase/download:
+    get:
+      tags:
+      - Memories
+      summary: Termbase download for a Memory
+      description: "Downloads the termbase export for the given memory as a CSV file.\n\nEnsure you first call the `/2/memories/termbase/export` endpoint to\nstart the export process before you try to download it.\n\n```bash\n  curl -X GET https://api.lilt.com/v2/memories/termbase/download?key=API_KEY&id=ID\n```\n"
+      operationId: downloadTermbase
+      parameters:
+      - name: id
+        in: query
+        description: A unique Memory identifier.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: A file.
+          content:
+            application/json:
+              schema:
+                title: TermbaseDownloadResponse
+                type: string
+                format: byte
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/memories/segment:
+    delete:
+      tags:
+      - Memories
+      summary: Delete a segment from a memory.
+      description: "Delete a segment from a memory.\n\n```bash\n  curl -X DELETE https://api.lilt.com/v2/memories/segment?key=API_KEY&id=ID&segment_id=$SEGMENT_ID\n```\n"
+      operationId: deleteSegmentFromMemory
+      parameters:
+      - name: id
+        in: query
+        description: A unique Memory identifier.
+        required: true
+        schema:
+          type: integer
+      - name: segment_id
+        in: query
+        description: A unique Segment identifier.
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: A success resposne.
+          content:
+            application/json:
+              schema:
+                title: DeleteSegmentFromMemoryResponse
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    SDLXLIFFFilter:
+      required:
+      - confName
+      type: object
+      properties:
+        confName:
+          type: string
+          description: the current state of the SDLXLIFF Trans Unit.
+          enum:
+          - Translated
+          - Draft
+          - ApprovedTranslation
+          - Locked
+          - SignedOff
+        allowablePercentage:
+          type: integer
+          description: This represents for the current conf_name what percentage the filter applies to.  If you pass -1 it will take any value for this field and won't ignore blank values. If you pass 50, Lilt will only import Segments that have a 50 percent match or better.
+        allowUnlockedSegments:
+          type: boolean
+          description: Boolean that tells Lilt whether we should allow unlocked Segments for this conf_name.
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable message describing the error.
+      description: 'Response in the event of an unexpected error.
+
+        '
+      example:
+        message: Internal server error.
+    Memory:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: A unique number identifying the Memory.
+          example: 1234
+        srclang:
+          type: string
+          description: An ISO 639-1 language identifier.
+          example: en
+        trglang:
+          type: string
+          description: An ISO 639-1 language identifier.
+          example: fr
+        srclocale:
+          type: string
+          description: An ISO 639-1 language identifier.
+          example: US
+        trglocale:
+          type: string
+          description: An ISO 639-1 language identifier.
+          example: FR
+        name:
+          type: string
+          description: A name for the Memory.
+          example: Acme Corp Support Content
+        is_processing:
+          type: boolean
+          description: Indicates the memory is being processed.
+          example: false
+        version:
+          type: integer
+          description: The current version of the Memory, which is the number of updates since the memory was created.
+          example: 78
+        created_at:
+          type: integer
+          description: Time at which the object was created. Measured in seconds since the Unix epoch.
+          example: 1489147692
+        updated_at:
+          type: integer
+          description: Time at which the object was created. Measured in seconds since the Unix epoch.
+          example: 1489147692
+        resources:
+          type: array
+          description: The resource files (translation memories and termbases) associated with this Memory.
+          items:
+            type: string
+      description: 'A Memory is a collection of parallel (source/target) segments
+
+        from which a MT/TM model is trained. When a translator confirms
+
+        a segment in the Interface, a parallel segment is added to the
+
+        Memory. Parallel segments from existing translation memories and
+
+        bitexts can also be added to the Memory via the API.
+
+        '
+    TranslationMemoryEntry:
+      type: object
+      properties:
+        source:
+          type: string
+          description: The source string.
+          example: The red bus.
+        target:
+          type: string
+          description: The target string. Tags will be automatically placed according to the query string.
+          example: Le bus rouge.
+        score:
+          type: integer
+          description: The fuzzy match score.
+          example: 100
+        metadata:
+          type: object
+          properties: {}
+          description: Attributes describing the translation memory entry.
+      description: A translation memory entry.
+  responses:
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/octet-stream:
+          schema:
+            type: string
+        text/plain:
+          schema:
+            type: string
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    ApiKeyAuth:
+      type: apiKey
+      name: key
+      in: query
