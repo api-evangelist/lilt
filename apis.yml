@@ -1,27 +1,382 @@
 aid: lilt
 name: Lilt
-description: 'Lilt is a company surfaced as a portfolio company of redpoint-ventures and added to the
-  API Evangelist network as a stub for enrichment. Sector: ai. This profile is a lead awaiting the enrichment
-  pipeline.'
+description: 'LILT is an AI translation and localization platform that pairs contextual, adaptive machine
+  translation with human linguist verification. The LILT REST API (https://api.lilt.com) exposes the platform
+  programmatically: adaptive machine translation, large-scale translation memory and the Lexicon termbase,
+  document and file translation, job/project/segment management, Lilt Create multilingual content generation,
+  workflow templates, domains, cloud and multipart uploads, and webhook configuration. LILT also ships
+  connectors for CMS, DAM and repository systems, first-party Python, Node and Java SDKs, and a hosted
+  remote MCP server at mcp.lilt.com for agent-driven translation.'
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://lilt.com/favicon-32x32.png
 url: https://raw.githubusercontent.com/api-evangelist/lilt/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - redpoint-ventures
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: enriched
+x-tier-reason: pipeline-enriched
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
 - Company
 - Ai
-apis: []
+- Translation
+- Localization
+- Machine Translation
+- Language
+- Content
+- Translation Memory
+- Agents
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: lilt:lilt-create-api
+  name: Lilt Create API
+  description: The Create API from Lilt — 2 operation(s) for create.
+  humanURL: https://support.lilt.com/developers/introduction
+  baseURL: https://api.lilt.com
+  tags:
+  - Create
+  properties:
+  - type: OpenAPI
+    url: openapi/lilt-create-api-openapi.yml
+  - type: Documentation
+    url: https://support.lilt.com/developers/introduction
+  - type: APIReference
+    url: https://support.lilt.com/api-reference/languages/retrieve-supported-languages
+  - type: GettingStarted
+    url: https://support.lilt.com/developers/quickstart
+  - type: Authentication
+    url: authentication/lilt-authentication.yml
+  - type: RateLimits
+    url: rate-limits/lilt-rate-limits.yml
+- aid: lilt:lilt-documents-api
+  name: Lilt Documents API
+  description: The Documents API from Lilt — 2 operation(s) for documents.
+  humanURL: https://support.lilt.com/developers/introduction
+  baseURL: https://api.lilt.com
+  tags:
+  - Documents
+  properties:
+  - type: OpenAPI
+    url: openapi/lilt-documents-api-openapi.yml
+  - type: Documentation
+    url: https://support.lilt.com/developers/introduction
+  - type: APIReference
+    url: https://support.lilt.com/api-reference/languages/retrieve-supported-languages
+  - type: GettingStarted
+    url: https://support.lilt.com/developers/quickstart
+  - type: Authentication
+    url: authentication/lilt-authentication.yml
+  - type: RateLimits
+    url: rate-limits/lilt-rate-limits.yml
+- aid: lilt:lilt-domains-api
+  name: Lilt Domains API
+  description: The Domains API from Lilt — 1 operation(s) for domains.
+  humanURL: https://support.lilt.com/developers/introduction
+  baseURL: https://api.lilt.com
+  tags:
+  - Domains
+  properties:
+  - type: OpenAPI
+    url: openapi/lilt-domains-api-openapi.yml
+  - type: Documentation
+    url: https://support.lilt.com/developers/introduction
+  - type: APIReference
+    url: https://support.lilt.com/api-reference/languages/retrieve-supported-languages
+  - type: GettingStarted
+    url: https://support.lilt.com/developers/quickstart
+  - type: Authentication
+    url: authentication/lilt-authentication.yml
+  - type: RateLimits
+    url: rate-limits/lilt-rate-limits.yml
+- aid: lilt:lilt-files-api
+  name: Lilt Files API
+  description: The Files API from Lilt — 3 operation(s) for files.
+  humanURL: https://support.lilt.com/developers/introduction
+  baseURL: https://api.lilt.com
+  tags:
+  - Files
+  properties:
+  - type: OpenAPI
+    url: openapi/lilt-files-api-openapi.yml
+  - type: Documentation
+    url: https://support.lilt.com/developers/introduction
+  - type: APIReference
+    url: https://support.lilt.com/api-reference/languages/retrieve-supported-languages
+  - type: GettingStarted
+    url: https://support.lilt.com/developers/quickstart
+  - type: Authentication
+    url: authentication/lilt-authentication.yml
+  - type: RateLimits
+    url: rate-limits/lilt-rate-limits.yml
+- aid: lilt:lilt-jobs-api
+  name: Lilt Jobs API
+  description: The Jobs API from Lilt — 9 operation(s) for jobs.
+  humanURL: https://support.lilt.com/developers/introduction
+  baseURL: https://api.lilt.com
+  tags:
+  - Jobs
+  properties:
+  - type: OpenAPI
+    url: openapi/lilt-jobs-api-openapi.yml
+  - type: Documentation
+    url: https://support.lilt.com/developers/introduction
+  - type: APIReference
+    url: https://support.lilt.com/api-reference/languages/retrieve-supported-languages
+  - type: GettingStarted
+    url: https://support.lilt.com/developers/quickstart
+  - type: Authentication
+    url: authentication/lilt-authentication.yml
+  - type: RateLimits
+    url: rate-limits/lilt-rate-limits.yml
+- aid: lilt:lilt-languages-api
+  name: Lilt Languages API
+  description: The Languages API from Lilt — 1 operation(s) for languages.
+  humanURL: https://support.lilt.com/developers/introduction
+  baseURL: https://api.lilt.com
+  tags:
+  - Languages
+  properties:
+  - type: OpenAPI
+    url: openapi/lilt-languages-api-openapi.yml
+  - type: Documentation
+    url: https://support.lilt.com/developers/introduction
+  - type: APIReference
+    url: https://support.lilt.com/api-reference/languages/retrieve-supported-languages
+  - type: GettingStarted
+    url: https://support.lilt.com/developers/quickstart
+  - type: Authentication
+    url: authentication/lilt-authentication.yml
+  - type: RateLimits
+    url: rate-limits/lilt-rate-limits.yml
+- aid: lilt:lilt-memories-api
+  name: Lilt Memories API
+  description: The Memories API from Lilt — 6 operation(s) for memories.
+  humanURL: https://support.lilt.com/developers/introduction
+  baseURL: https://api.lilt.com
+  tags:
+  - Memories
+  properties:
+  - type: OpenAPI
+    url: openapi/lilt-memories-api-openapi.yml
+  - type: Documentation
+    url: https://support.lilt.com/developers/introduction
+  - type: APIReference
+    url: https://support.lilt.com/api-reference/languages/retrieve-supported-languages
+  - type: GettingStarted
+    url: https://support.lilt.com/developers/quickstart
+  - type: Authentication
+    url: authentication/lilt-authentication.yml
+  - type: RateLimits
+    url: rate-limits/lilt-rate-limits.yml
+- aid: lilt:lilt-projects-api
+  name: Lilt Projects API
+  description: The Projects API from Lilt — 1 operation(s) for projects.
+  humanURL: https://support.lilt.com/developers/introduction
+  baseURL: https://api.lilt.com
+  tags:
+  - Projects
+  properties:
+  - type: OpenAPI
+    url: openapi/lilt-projects-api-openapi.yml
+  - type: Documentation
+    url: https://support.lilt.com/developers/introduction
+  - type: APIReference
+    url: https://support.lilt.com/api-reference/languages/retrieve-supported-languages
+  - type: GettingStarted
+    url: https://support.lilt.com/developers/quickstart
+  - type: Authentication
+    url: authentication/lilt-authentication.yml
+  - type: RateLimits
+    url: rate-limits/lilt-rate-limits.yml
+- aid: lilt:lilt-segments-api
+  name: Lilt Segments API
+  description: The Segments API from Lilt — 3 operation(s) for segments.
+  humanURL: https://support.lilt.com/developers/introduction
+  baseURL: https://api.lilt.com
+  tags:
+  - Segments
+  properties:
+  - type: OpenAPI
+    url: openapi/lilt-segments-api-openapi.yml
+  - type: Documentation
+    url: https://support.lilt.com/developers/introduction
+  - type: APIReference
+    url: https://support.lilt.com/api-reference/languages/retrieve-supported-languages
+  - type: GettingStarted
+    url: https://support.lilt.com/developers/quickstart
+  - type: Authentication
+    url: authentication/lilt-authentication.yml
+  - type: RateLimits
+    url: rate-limits/lilt-rate-limits.yml
+- aid: lilt:lilt-translate-api
+  name: Lilt Translate API
+  description: The Translate API from Lilt — 3 operation(s) for translate.
+  humanURL: https://support.lilt.com/developers/introduction
+  baseURL: https://api.lilt.com
+  tags:
+  - Translate
+  properties:
+  - type: OpenAPI
+    url: openapi/lilt-translate-api-openapi.yml
+  - type: Documentation
+    url: https://support.lilt.com/developers/introduction
+  - type: APIReference
+    url: https://support.lilt.com/api-reference/languages/retrieve-supported-languages
+  - type: GettingStarted
+    url: https://support.lilt.com/developers/quickstart
+  - type: Authentication
+    url: authentication/lilt-authentication.yml
+  - type: RateLimits
+    url: rate-limits/lilt-rate-limits.yml
+- aid: lilt:lilt-uploads-api
+  name: Lilt Uploads API
+  description: The Uploads API from Lilt — 7 operation(s) for uploads.
+  humanURL: https://support.lilt.com/developers/introduction
+  baseURL: https://api.lilt.com
+  tags:
+  - Uploads
+  properties:
+  - type: OpenAPI
+    url: openapi/lilt-uploads-api-openapi.yml
+  - type: Documentation
+    url: https://support.lilt.com/developers/introduction
+  - type: APIReference
+    url: https://support.lilt.com/api-reference/languages/retrieve-supported-languages
+  - type: GettingStarted
+    url: https://support.lilt.com/developers/quickstart
+  - type: Authentication
+    url: authentication/lilt-authentication.yml
+  - type: RateLimits
+    url: rate-limits/lilt-rate-limits.yml
+- aid: lilt:lilt-webhook-configuration-api
+  name: Lilt Webhook Configuration API
+  description: The Webhook Configuration API from Lilt — 2 operation(s) for webhook configuration.
+  humanURL: https://support.lilt.com/developers/introduction
+  baseURL: https://api.lilt.com
+  tags:
+  - Webhook Configuration
+  properties:
+  - type: OpenAPI
+    url: openapi/lilt-webhook-configuration-api-openapi.yml
+  - type: Documentation
+    url: https://support.lilt.com/developers/introduction
+  - type: APIReference
+    url: https://support.lilt.com/api-reference/languages/retrieve-supported-languages
+  - type: GettingStarted
+    url: https://support.lilt.com/developers/quickstart
+  - type: Authentication
+    url: authentication/lilt-authentication.yml
+  - type: RateLimits
+    url: rate-limits/lilt-rate-limits.yml
+- aid: lilt:lilt-workflows-api
+  name: Lilt Workflows API
+  description: The Workflows API from Lilt — 1 operation(s) for workflows.
+  humanURL: https://support.lilt.com/developers/introduction
+  baseURL: https://api.lilt.com
+  tags:
+  - Workflows
+  properties:
+  - type: OpenAPI
+    url: openapi/lilt-workflows-api-openapi.yml
+  - type: Documentation
+    url: https://support.lilt.com/developers/introduction
+  - type: APIReference
+    url: https://support.lilt.com/api-reference/languages/retrieve-supported-languages
+  - type: GettingStarted
+    url: https://support.lilt.com/developers/quickstart
+  - type: Authentication
+    url: authentication/lilt-authentication.yml
+  - type: RateLimits
+    url: rate-limits/lilt-rate-limits.yml
 common:
+- type: TrustCenter
+  url: security/lilt-trust-center.yml
 - type: Website
   url: https://lilt.com/
+- type: DeveloperPortal
+  url: https://support.lilt.com/developers/introduction
+- type: Documentation
+  url: https://support.lilt.com/developers/introduction
+- type: APIReference
+  url: https://support.lilt.com/api-reference/languages/retrieve-supported-languages
+- type: GettingStarted
+  url: https://support.lilt.com/developers/quickstart
+- type: Support
+  url: https://support.lilt.com/kb/contacting-support-submitting-feature-requests
+- type: Blog
+  url: https://lilt.com/blog
+- type: GitHubOrganization
+  url: https://github.com/lilt
+- type: Pricing
+  url: https://lilt.com/pricing
+- type: SignUp
+  url: https://lilt.com/signin
+- type: TermsOfService
+  url: https://lilt.com/website-terms-of-use
+- type: PrivacyPolicy
+  url: https://lilt.com/legal/privacy
+- type: StatusPage
+  url: https://status.lilt.com/
+- type: Compliance
+  url: https://trust.lilt.com/
+- type: OpenAPI
+  url: openapi/lilt-openapi-original.yml
+- type: LLMsTxt
+  url: llms/lilt-llms.txt
+- type: MCPServer
+  url: mcp/lilt-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Packages
+  url: packages/lilt-packages.yml
+- type: SDKs
+  url: packages/lilt-packages.yml
+- type: Authentication
+  url: authentication/lilt-authentication.yml
+- type: OAuthScopes
+  url: scopes/lilt-scopes.yml
+- type: Conventions
+  url: conventions/lilt-conventions.yml
+- type: ErrorCatalog
+  url: errors/lilt-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/lilt-lifecycle.yml
+- type: ChangeLog
+  url: changelog/lilt-changelog.yml
+- type: Conformance
+  url: conformance/lilt-conformance.yml
+- type: DataModel
+  url: data-model/lilt-data-model.yml
+- type: Webhooks
+  url: asyncapi/lilt-webhooks.yml
+- type: WellKnown
+  url: well-known/lilt-well-known.yml
+- type: DomainSecurity
+  url: security/lilt-domain-security.yml
+- type: Overlay
+  url: overlays/lilt-api-overlay.yaml
+- type: RateLimits
+  url: rate-limits/lilt-rate-limits.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence
