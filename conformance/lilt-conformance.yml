@@ -1,0 +1,98 @@
+generated: '2026-07-19'
+method: derived
+source: >-
+  Derived from openapi/lilt-openapi-original.yml and the fetched
+  well-known/lilt-mcp-oauth-authorization-server.json; compliance claims
+  searched at https://trust.lilt.com/.
+standards:
+- id: openapi-3.0
+  conforms: true
+  evidence: 'Published OpenAPI 3.0.3 bundle at https://support.lilt.com/api-reference/openapi-bundled.yaml'
+- id: http-basic-auth
+  conforms: true
+  evidence: 'components.securitySchemes.BasicAuth type http, scheme basic'
+- id: oauth2
+  conforms: partial
+  evidence: >-
+    The REST API at api.lilt.com does NOT use OAuth (API key over Basic). LILT's
+    hosted MCP server at mcp.lilt.com does — RFC 8414 metadata advertises
+    authorization_code + PKCE S256 + refresh_token + device_code.
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: true
+  evidence: 'https://mcp.lilt.com/.well-known/oauth-authorization-server returned 200 (MCP host only)'
+- id: rfc7591-dynamic-client-registration
+  conforms: true
+  evidence: 'registration_endpoint advertised in the MCP authorization-server metadata'
+- id: rfc8628-device-authorization-grant
+  conforms: true
+  evidence: 'urn:ietf:params:oauth:grant-type:device_code in grant_types_supported (MCP host)'
+- id: oidc
+  conforms: partial
+  evidence: >-
+    The MCP authorization server advertises the openid/profile/email scopes via
+    AuthKit, but /.well-known/openid-configuration returns the SPA HTML shell
+    rather than discovery metadata. LILT also offers SSO/SAML for platform
+    login.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: 'No application/problem+json anywhere in the spec; errors are {"message": string}'
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: '/.well-known/security.txt returned 404 on lilt.com and api.lilt.com'
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation header support documented; deprecations announced in the product-updates feed.
+- id: idempotency-key
+  conforms: false
+  evidence: 'Zero matches for /idempoten/i across the spec and developer docs'
+- id: pagination
+  conforms: true
+  evidence: 'Offset pagination via start/limit query parameters (GET /v2/jobs, GET /v2/upload)'
+- id: rate-limit-headers
+  conforms: true
+  evidence: 'X-RateLimit-Limit / -Remaining / -Reset documented with a 429 contract'
+- id: json-api
+  conforms: false
+  evidence: Plain JSON; no JSON:API document structure.
+- id: mcp
+  conforms: true
+  evidence: 'Hosted remote MCP server at https://mcp.lilt.com/mcp with a published tool catalog'
+- id: llms-txt
+  conforms: true
+  evidence: 'https://support.lilt.com/llms.txt returned 200'
+- id: xliff-1.2
+  conforms: true
+  evidence: >-
+    Documents export in XLIFF 1.2 by default (GET /v2/documents/files,
+    is_xliff parameter).
+- id: tmx
+  conforms: true
+  evidence: '*.tmx accepted for translation-memory import (POST /v2/memories/import)'
+- id: tbx
+  conforms: true
+  evidence: '*.tbx accepted for termbase import (POST /v2/memories/import)'
+- id: srx
+  conforms: true
+  evidence: >-
+    Custom segmentation via SRX files
+    (https://support.lilt.com/kb/custom-segmentation-using-srx-files)
+- id: bcp47-language-tags
+  conforms: true
+  evidence: 'IETF BCP 47 tags for src_lang/trg_lang across the translation surface'
+- id: icu-message-format
+  conforms: true
+  evidence: 'ICU and plurals support (https://support.lilt.com/kb/icu-support)'
+compliance:
+  source: https://trust.lilt.com/
+  published: true
+  certifications:
+  - SOC 2 Type II
+  - ISO 9001
+  - ISO 18587
+  regulatory:
+  - GDPR
+  note: >-
+    ISO 18587 is the translation-industry standard for post-editing of machine
+    translation output. Certifications are asserted on LILT's Wolfia-hosted
+    trust center; this pipeline records the claim, it does not verify the
+    attestation.

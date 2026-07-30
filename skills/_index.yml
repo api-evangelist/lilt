@@ -1,0 +1,50 @@
+generated: '2026-07-19'
+method: generated
+source: >-
+  Generated from openapi/lilt-openapi-original.yml (every operationId verified
+  verbatim against the spec) plus conventions/, errors/, rate-limits/ and
+  asyncapi/ in this repo. LILT publishes no first-party Agent Skills or
+  AGENTS.md — searched https://support.lilt.com/llms.txt and
+  https://github.com/lilt.
+api: openapi/lilt-openapi-original.yml
+skills:
+- file: lilt-translate-a-file.md
+  name: Translate a file with LILT machine translation
+  description: >-
+    Upload a source file, run adaptive MT on it, poll to completion and download
+    the translated result — the instant path with no human stage.
+  api: openapi/lilt-openapi-original.yml
+  operations: [getLanguages, uploadFile, batchTranslateFile, monitorFileTranslation, downloadFile]
+- file: lilt-create-and-deliver-a-job.md
+  name: Create, track and deliver a verified translation job
+  description: >-
+    The full human-verified localization flow — workflow template, job creation,
+    documents, pretranslation, leverage stats, export/download and delivery.
+  api: openapi/lilt-openapi-original.yml
+  operations: [getWorkflowTemplates, createJob, createProject, uploadDocument, pretranslateDocuments,
+    getJob, getJobLeverageStats, exportJob, downloadJob, deliverJob]
+- file: lilt-manage-translation-memory.md
+  name: Build and query a LILT translation memory and termbase
+  description: >-
+    Create a memory for a language pair, import TMX/TBX assets, add and correct
+    segments, query for leverage matches and export the termbase.
+  api: openapi/lilt-openapi-original.yml
+  operations: [createMemory, getMemory, updateMemory, importMemoryFile, queryMemory, createSegment,
+    getSegment, updateSegment, deleteSegmentFromMemory, exportTermbase, downloadTermbase]
+- file: lilt-subscribe-to-webhooks.md
+  name: Subscribe to LILT webhooks and handle event payloads
+  description: >-
+    Register webhook configurations for job, project and instant-translation
+    events, then correctly discriminate and safely process each payload.
+  api: openapi/lilt-openapi-original.yml
+  operations: [webhooksCreate, webhooksGetMany, webhooksGet, webhooksUpdate]
+notes:
+- >-
+  LILT also ships a hosted remote MCP server at https://mcp.lilt.com/mcp with
+  its own tool surface — see mcp/lilt-mcp.yml. These skills target the REST API
+  at api.lilt.com, which is the enterprise surface; the MCP app is a separate
+  self-service product with separate accounts.
+- >-
+  Destructive operations (deleteJob, deleteMemory, deleteSegment,
+  deleteSegmentFromMemory, deleteProject, deleteFile) cascade. Every skill that
+  touches them requires explicit human confirmation.

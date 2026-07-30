@@ -1,0 +1,5523 @@
+openapi: 3.0.3
+info:
+  title: LILT API
+  description: >
+    LILT API Support: https://lilt.atlassian.net/servicedesk/customer/portals
+
+
+    The LILT API enables programmatic access to the full-range of LILT backend
+    services including:
+      * Training of and translating with interactive, adaptive machine translation
+      * Large-scale translation memory
+      * The Lexicon (a large-scale termbase)
+      * Programmatic control of the LILT CAT environment
+      * Translation memory synchronization
+
+
+    Requests and responses are in JSON format. The REST API only responds to
+    HTTPS / SSL requests.
+
+
+    The base url for this REST API is `https://api.lilt.com/`.
+
+
+    ## Authentication
+
+
+    Requests are authenticated via API key, which requires the Business plan.
+
+
+    Requests are authenticated using [HTTP Basic
+    Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your
+    API key as both the `username` and `password`.
+
+
+    For development, you may also pass the API key via the `key` query
+    parameter. This is less secure than HTTP Basic Auth, and is not recommended
+    for production use.
+
+
+    ## Quotas
+
+
+    Our services have a general quota of 4000 requests per minute. Should you
+    hit the maximum requests per minute, you will need to wait 60 seconds before
+    you can send another request.
+  version: v3.0.3
+  license:
+    name: LILT Platform Terms and Conditions
+    url: https://lilt.com/lilt-platform-terms-and-conditions
+servers:
+  - url: https://api.lilt.com
+security:
+  - BasicAuth: []
+  - ApiKeyAuth: []
+paths:
+  /v2/languages:
+    get:
+      tags:
+        - Languages
+      summary: Retrieve supported languages
+      description: |+
+        Get a list of supported languages.
+
+      operationId: getLanguages
+      responses:
+        '200':
+          description: >-
+            An object listing supported languages and their corresponding
+            locales.
+          content:
+            application/json:
+              schema:
+                title: LanguagesResponse
+                type: object
+                properties:
+                  source_to_target:
+                    type: object
+                    properties: {}
+                    description: >-
+                      A two-dimensional object in which the first key is an ISO
+                      639-1 language code indicating the source, and the second
+                      key is an ISO 639-1 language code indicating the target.
+                    example:
+                      en:
+                        da: true
+                        de: true
+                        fr: true
+                        ...: ...
+                      ...: ...
+                  code_to_name:
+                    type: object
+                    properties: {}
+                    description: >-
+                      An object in which the key is an ISO 639-1 language code,
+                      and the value is the language name.
+                    example:
+                      aa: Afar
+                      ab: Abkhazian
+                      af: Afrikaans
+                      ...: ...
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/memories:
+    get:
+      tags:
+        - Memories
+      summary: Retrieve a Memory
+      description: >+
+        Retrieve a Memory. If you cannot access the Memory (401 error) please
+        check permissions (e.g. in case you created the Memory via the web app
+        with a different account you may have to explicitly share that Memory).
+
+      operationId: getMemory
+      parameters:
+        - name: id
+          in: query
+          description: An optional Memory identifier.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A list of Memory objects.
+          content:
+            application/json:
+              schema:
+                title: MemoryResponse
+                type: array
+                items:
+                  $ref: '#/components/schemas/Memory'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          description: Memory not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+        - Memories
+      summary: Update the name of a Memory
+      description: |
+        Update a Memory.
+      operationId: updateMemory
+      requestBody:
+        description: The Memory resource to update.
+        content:
+          application/json:
+            schema:
+              title: MemoryUpdateParameters
+              required:
+                - id
+                - name
+              type: object
+              properties:
+                id:
+                  type: integer
+                  description: A unique Memory identifier.
+                  example: 7246
+                name:
+                  type: string
+                  description: The Memory name.
+                  example: Automotive Memory
+        required: true
+      responses:
+        '200':
+          description: A Memory object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Memory'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: body
+    post:
+      tags:
+        - Memories
+      summary: Create a Memory
+      description: |+
+        Create a new Memory. A Memory is a container that collects source/target
+        sentences for a specific language pair (e.g., English>French). The data
+        in the Memory is used to train the MT system, populate the TM, and
+        update the lexicon. Memories are private to your account - the data is
+        not shared across users - unless you explicitly share a Memory with your
+        team (via web app only).
+
+        <a href="/kb/introduction-to-lilt-translation" target=_blank>Refer
+        to our KB</a> for a more detailed description.
+
+      operationId: createMemory
+      requestBody:
+        description: The Memory resource to create.
+        content:
+          application/json:
+            schema:
+              title: MemoryCreateParameters
+              required:
+                - name
+                - srclang
+                - trglang
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: A name for the Memory.
+                  example: automotive
+                srclang:
+                  type: string
+                  description: An ISO 639-1 language identifier.
+                  example: en
+                trglang:
+                  type: string
+                  description: An ISO 639-1 language identifier.
+                  example: fr
+                srclocale:
+                  type: string
+                  description: An ISO 3166-1 region name for language locales
+                  example: US
+                trglocale:
+                  type: string
+                  description: An ISO 3166-1 region name for language locales
+                  example: FR
+        required: true
+      responses:
+        '200':
+          description: A Memory object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Memory'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+        - Memories
+      summary: Delete a Memory
+      description: |
+        Delete a Memory.
+      operationId: deleteMemory
+      parameters:
+        - name: id
+          in: query
+          description: A unique Memory identifier.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A status object.
+          content:
+            application/json:
+              schema:
+                title: MemoryDeleteResponse
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: A unique Memory identifier.
+                    example: 46530
+                  deleted:
+                    type: boolean
+                    description: >-
+                      If the operation succeeded, then `true`. Otherwise,
+                      `false`.
+                    example: true
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/memories/query:
+    get:
+      tags:
+        - Memories
+      summary: Query a Memory
+      description: |
+        Perform a translation memory query.
+      operationId: queryMemory
+      parameters:
+        - name: id
+          in: query
+          description: A unique Memory identifier.
+          required: true
+          schema:
+            type: integer
+        - name: query
+          in: query
+          description: A source query.
+          required: true
+          schema:
+            type: string
+        - name: 'n'
+          in: query
+          description: Maximum number of results to return.
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: A list of TranslationMemoryEntry objects.
+          content:
+            application/json:
+              schema:
+                title: MemoryQueryResponse
+                type: array
+                items:
+                  $ref: '#/components/schemas/TranslationMemoryEntry'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/memories/import:
+    post:
+      tags:
+        - Memories
+      summary: File import for a Memory
+      description: >+
+        Imports common translation memory or termbase file formats to a specific
+        LILT memory. Currently supported file formats are `*.tmx`, `*.sdltm`,
+        `*.sdlxliff`(With custom Filters), '*.xliff', and `*.tmq` for TM data;
+        `*.csv` and `*.tbx` for termbase data. Request parameters should be
+        passed as JSON object with the header field `LILT-API`.
+
+
+        Example CURL command to upload a translation memory file named
+        `my_memory.sdltm` in the current working directory:
+
+        ```bash
+          curl -X POST https://api.lilt.com/v2/memories/import?key=API_KEY \
+            --header "LILT-API: {\"name\": \"my_memory.sdltm\",\"memory_id\": 42}" \
+            --header "Content-Type: application/octet-stream" \
+            --data-binary @my_memory.sdltm
+        ```
+
+
+        Example CURL command to upload a translation memory file named
+        `my_memory.sdlxliff` in the current working directory, with Custom
+        Filters based on SDLXLIFF fields, conf_name which maps to, percentage,
+        and whether we should ignore unlocked segments.
+
+        ```bash
+          curl -X POST https://api.lilt.com/v2/memories/import?key=API_KEY \
+            --header "LILT-API: {\"name\": \"my_memory.sdlxliff\",\"memory_id\": 12,\"sdlxliff_filters\":[{\"conf_name\": \"Translated\", \"percentage\": 100, \"allow_unlocked\": false}]"}" \
+            --header "Content-Type: application/octet-stream" \
+            --data-binary @my_memory.sdlxliff
+        ```
+
+      operationId: importMemoryFile
+      parameters:
+        - name: memory_id
+          in: header
+          description: A unique Memory identifier.
+          required: true
+          schema:
+            type: integer
+        - name: name
+          in: header
+          description: Name of the TM or termbase file.
+          required: true
+          schema:
+            type: string
+        - name: sdlxliff_filters
+          in: header
+          description: Contains Filter information Unique to SDLXLIFF
+          style: simple
+          explode: false
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/SDLXLIFFFilter'
+        - name: has_header_row
+          in: header
+          description: >-
+            A flag indicating whether an imported Termbase CSV has a header row
+            or not (the default value is `false`).
+          schema:
+            type: boolean
+        - name: skip_duplicates
+          in: header
+          description: |
+            A flag indicating whether or not to skip the import of segments
+            which already exist in the memory. (the default value is `false`).
+          schema:
+            type: boolean
+      requestBody:
+        description: >-
+          The file contents to be uploaded. The entire POST body will be treated
+          as the file.
+        content:
+          application/octet-stream:
+            schema:
+              title: MemoryImportBody
+              type: string
+              format: binary
+        required: true
+      responses:
+        '200':
+          description: A status object.
+          content:
+            application/json:
+              schema:
+                title: MemoryImportResponse
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: A unique Memory identifier.
+                    example: 123
+                  isProcessing:
+                    type: integer
+                    description: The current state of the import.
+                    example: 1
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: body
+  /v2/memories/termbase/export:
+    post:
+      tags:
+        - Memories
+      summary: Termbase export for a Memory
+      description: |
+        Exports the termbase entries for the given memory into a CSV file.
+
+        Calling this endpoint will begin the export process in the background.
+        Check that the processing is complete by polling the `GET /2/memories`
+        endpoint. When the `is_processing` value is 0 then call the
+        `POST /2/memories/termbase/download` endpoint.
+
+        ```bash
+          curl -X POST https://api.lilt.com/v2/memories/termbase/export?key=API_KEY&id=ID
+        ```
+      operationId: exportTermbase
+      parameters:
+        - name: id
+          in: query
+          description: A unique Memory identifier.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A status object.
+          content:
+            application/json:
+              schema:
+                title: TermbaseExportResponse
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: A unique Memory identifier.
+                    example: 123
+                  is_processing:
+                    type: integer
+                    description: The current state of the import.
+                    example: 1
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/memories/termbase/download:
+    get:
+      tags:
+        - Memories
+      summary: Termbase download for a Memory
+      description: |
+        Downloads the termbase export for the given memory as a CSV file.
+
+        Ensure you first call the `/2/memories/termbase/export` endpoint to
+        start the export process before you try to download it.
+
+        ```bash
+          curl -X GET https://api.lilt.com/v2/memories/termbase/download?key=API_KEY&id=ID
+        ```
+      operationId: downloadTermbase
+      parameters:
+        - name: id
+          in: query
+          description: A unique Memory identifier.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A file.
+          content:
+            application/json:
+              schema:
+                title: TermbaseDownloadResponse
+                type: string
+                format: byte
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/memories/segment:
+    delete:
+      tags:
+        - Memories
+      summary: Delete a segment from a memory.
+      description: |
+        Delete a segment from a memory.
+
+        ```bash
+          curl -X DELETE https://api.lilt.com/v2/memories/segment?key=API_KEY&id=ID&segment_id=$SEGMENT_ID
+        ```
+      operationId: deleteSegmentFromMemory
+      parameters:
+        - name: id
+          in: query
+          description: A unique Memory identifier.
+          required: true
+          schema:
+            type: integer
+        - name: segment_id
+          in: query
+          description: A unique Segment identifier.
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: A success resposne.
+          content:
+            application/json:
+              schema:
+                title: DeleteSegmentFromMemoryResponse
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/segments:
+    post:
+      description: >+
+        Create a Segment and add it to a Memory or a Document. A Segment is a
+        source/target
+
+        pair that is used to train the machine translation system and populate
+
+        the translation memory.
+
+
+        The maximum source length is 5,000 characters.
+
+      operationId: createSegment
+      requestBody:
+        description: >
+          The Segment resource to create.
+
+
+          To add a Segment to a Memory, include the `memory_id` and `target`
+          parameters.
+
+
+          To add a Segment to a Document, include the `document_id` and the
+          `source` parameters.
+
+          The `target` parameter is optional.
+        required: true
+        content:
+          application/json:
+            schema:
+              title: SegmentCreateParameters
+              type: object
+              properties:
+                memory_id:
+                  description: A unique Memory identifier.
+                  type: integer
+                  example: 10641
+                document_id:
+                  description: A unique Document identifier.
+                  type: integer
+                  example: 1876
+                source:
+                  description: The source string.
+                  type: string
+                  example: Code zur Fehleranalyse einschalten
+                target:
+                  description: The target string.
+                  type: string
+                  example: Enable debugging code
+                shouldApplySegmentation:
+                  description: >-
+                    A flag for whether this segment should be broken down into
+                    smaller segments. If this is true then the response is an
+                    array of segments.
+                  type: boolean
+                srcLang:
+                  description: >-
+                    A two letter language code for the source language. Required
+                    if `shouldApplySegmentation` is enabled.
+                  type: string
+                  example: fr
+              required:
+                - source
+      responses:
+        '200':
+          description: A Segment object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Segment'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      summary: Create a Segment
+      tags:
+        - Segments
+    get:
+      description: |+
+        Retrieve a Segment.
+
+      operationId: getSegment
+      parameters:
+        - description: A unique Segment identifier.
+          in: query
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Include comments in the response.
+          in: query
+          name: include_comments
+          schema:
+            type: boolean
+            default: false
+          required: false
+      responses:
+        '200':
+          description: A Segment object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Segment'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      summary: Retrieve a Segment
+      tags:
+        - Segments
+    put:
+      description: >+
+        Update a Segment in memory. The Memory will be updated with the new
+        target string.
+
+      operationId: updateSegment
+      requestBody:
+        description: The Segment resource to update.
+        content:
+          application/json:
+            schema:
+              title: SegmentUpdateParameters
+              type: object
+              properties:
+                id:
+                  description: A unique Segment identifier.
+                  type: integer
+                  example: 84480010
+                target:
+                  description: The target string.
+                  type: string
+                  example: Enable debug code
+              required:
+                - id
+                - target
+        required: true
+      responses:
+        '200':
+          description: A Segment object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Segment'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      summary: Update a Segment
+      tags:
+        - Segments
+    delete:
+      description: >
+        Delete a Segment from memory. This will not delete a segment from a
+        document.
+      operationId: deleteSegment
+      parameters:
+        - description: A unique Segment identifier.
+          in: query
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A status object.
+          content:
+            application/json:
+              schema:
+                title: SegmentDeleteResponse
+                type: object
+                properties:
+                  id:
+                    description: A unique Segment identifier.
+                    type: integer
+                    example: 46530
+                  deleted:
+                    description: >-
+                      If the operation succeeded, then `true`. Otherwise,
+                      `false`.
+                    type: boolean
+                    example: true
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      summary: Delete a Segment
+      tags:
+        - Segments
+  /v2/segments/review/unlock:
+    post:
+      description: >
+        Unaccept and unlock segments.
+
+        Sets individual segments' "Review Done" to false. Confirmed segments
+        will remain confirmed.
+
+
+        Example curl:
+
+        ```
+          curl --X --request POST 'https://lilt.com/2/segments/review/unlock?key=API_KEY' \
+          --header 'Content-Type: application/json' \
+          --data-raw '{
+              "segmentIds": [23921, 23922]
+          }'
+        ```
+      operationId: unlockSegments
+      requestBody:
+        description: segment ids to update
+        required: true
+        content:
+          application/json:
+            schema:
+              title: SegmentDoneResponse
+              type: object
+              properties:
+                segmentIds:
+                  description: array of segment ids
+                  type: array
+                  example:
+                    - 30032
+                    - 30125
+                  items:
+                    type: number
+              required:
+                - segmentIds
+      summary: Unaccept and unlock segments
+      tags:
+        - Segments
+      responses:
+        '200':
+          description: array of updated segments
+          content:
+            application/json:
+              schema:
+                title: SegmentDoneResponse
+                type: array
+                items:
+                  type: number
+  /v2/segments/tag:
+    get:
+      description: >+
+        Project tags for a segment. The `source_tagged` string contains one or
+        more SGML
+
+        tags. The `target` string is untagged. This endpoint will automatically
+        place the
+
+        source tags in the target.
+
+
+        Usage charges apply to this endpoint for production REST API keys.
+
+      operationId: tagSegment
+      parameters:
+        - description: The tagged source string.
+          in: query
+          name: source_tagged
+          required: true
+          schema:
+            type: string
+        - description: The target string.
+          in: query
+          name: target
+          required: true
+          schema:
+            type: string
+        - description: A unique Memory identifier.
+          in: query
+          name: memory_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A TaggedSegment object.
+          content:
+            application/json:
+              schema:
+                title: TaggedSegment
+                type: object
+                properties:
+                  source_tagged:
+                    type: string
+                    description: The tagged source string.
+                  target_tagged:
+                    type: string
+                    description: The tagged target string.
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      summary: Tag a Segment
+      tags:
+        - Segments
+  /v2/translate:
+    get:
+      tags:
+        - Translate
+      summary: Translate a segment
+      description: >+
+        Translate a source string.
+
+
+        Functionally identical to `POST /v2/translate`, with parameters passed
+
+        as query string parameters instead of a JSON request body. Useful for
+
+        simple integrations that prefer a GET request.
+
+
+        Setting the `rich` parameter to `true` will change the response format
+
+        to include additional information about each translation including a
+
+        model score, word alignments,  and formatting information.
+
+
+        By default, this endpoint also returns translation memory (TM) fuzzy
+        matches, along
+
+        with associated scores. Fuzzy matches always appear ahead of machine
+        translation
+
+        output in the response.
+
+
+        The maximum source length is 5,000 characters.
+
+
+        Usage charges apply to this endpoint for production API keys.
+
+      operationId: translateSegmentGet
+      parameters:
+        - name: source
+          in: query
+          description: The source string to translate.
+          schema:
+            type: string
+        - name: memory_id
+          in: query
+          description: A unique Memory identifier.
+          required: true
+          schema:
+            type: integer
+        - name: source_hash
+          in: query
+          description: A source hash code.
+          schema:
+            type: integer
+        - name: 'n'
+          in: query
+          description: Return top n translations (deprecated).
+          schema:
+            type: integer
+        - name: prefix
+          in: query
+          description: A target prefix.
+          schema:
+            type: string
+        - name: rich
+          in: query
+          description: Returns rich translation information (e.g., with word alignments).
+          schema:
+            type: boolean
+            default: false
+        - name: tm_matches
+          in: query
+          description: Include translation memory fuzzy matches.
+          schema:
+            type: boolean
+            default: true
+        - name: project_tags
+          in: query
+          description: Project tags. Projects tags in source to target if set to true.
+          schema:
+            type: boolean
+            default: false
+        - name: contains_icu_data
+          in: query
+          description: >-
+            Contains ICU data. If true then tags in the source following the ICU
+            standard will be parsed and retained.
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: A TranslationList object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranslationList'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - Translate
+      summary: Translate a segment
+      description: >+
+        Translate a source string.
+
+
+        Setting the `rich` parameter to `true` will change the response format
+
+        to include additional information about each translation including a
+
+        model score, word alignments,  and formatting information. The rich
+
+        format can be seen in the example response on this page.
+
+
+        By default, this endpoint also returns translation memory (TM) fuzzy
+        matches, along
+
+        with associated scores. Fuzzy matches always appear ahead of machine
+        translation
+
+        output in the response.
+
+
+        The maximum source length is 5,000 characters.
+
+
+        Usage charges apply to this endpoint for production API keys.
+
+      operationId: translateSegmentPost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: TranslateSegmentBody
+              required:
+                - memory_id
+              type: object
+              properties:
+                source:
+                  type: string
+                  description: A unique Segment identifier.
+                memory_id:
+                  type: integer
+                  description: A unique Memory identifier.
+                source_hash:
+                  type: integer
+                  description: A source hash code.
+                'n':
+                  type: integer
+                  description: Return top n translations (deprecated).
+                prefix:
+                  type: string
+                  description: A target prefix
+                rich:
+                  type: boolean
+                  description: >-
+                    Returns rich translation information (e.g., with word
+                    alignments).
+                  default: false
+                tm_matches:
+                  type: boolean
+                  description: Include translation memory fuzzy matches.
+                  default: true
+                project_tags:
+                  type: boolean
+                  description: >-
+                    Project tags. Projects tags in source to target if set to
+                    true.
+                  default: false
+                containsICUData:
+                  type: boolean
+                  description: >-
+                    Contains ICU data. If true then tags in the source following
+                    the ICU standard will be parsed and retained.
+                  default: false
+        required: false
+      responses:
+        '200':
+          description: A TranslationList object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranslationList'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: body
+  /v2/translate/file:
+    get:
+      tags:
+        - Translate
+      summary: Monitor file translation
+      description: >+
+        Get information about the one or more Files that are being translated
+        with machine translation. Query filters are optional but at least one
+        must be provided.
+
+
+        Example CURL:
+
+        ```bash
+
+        curl -X GET
+        'https://api.lilt.com/v2/translate/file?key=API_KEY&translationIds=1,2&fromTime=1607966744&toTime=1707966744&status=InProgress'
+
+        ```
+
+      operationId: monitorFileTranslation
+      parameters:
+        - name: translationIds
+          in: query
+          description: List of translation ids, comma separated
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: >-
+            One of the translation statuses - `InProgress`, `Completed`,
+            `Failed`, `ReadyForDownload`
+          schema:
+            type: string
+        - name: fromTime
+          in: query
+          description: >-
+            Results after this time (inclusive) will be returned, specified as
+            seconds since the Unix epoch.
+          schema:
+            type: number
+        - name: toTime
+          in: query
+          description: >-
+            Results before this time (exclusive) will be returned, specified as
+            seconds since the Unix epoch.
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Translation Info
+          content:
+            application/json:
+              schema:
+                title: monitorFileTranslationResponse
+                type: array
+                description: List of TranslationInfo objects
+                items:
+                  $ref: '#/components/schemas/TranslationInfo'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonitorFileTranslationTypeError'
+    post:
+      tags:
+        - Translate
+      summary: Translate a File
+      description: >+
+        Start machine translation of one or more Files that have previously been
+        uploaded.  The response will include an `id` parameter that can be used
+        to monitor and download the translations in subsequent calls.
+
+
+        Example CURL:
+
+        ```bash
+
+        curl -X POST
+        'https://api.lilt.com/v2/translate/file?key=API_KEY&fileId=583&memoryId=2495&configId=123&withTM=true'
+
+        ```
+
+      operationId: batchTranslateFile
+      parameters:
+        - name: fileId
+          in: query
+          description: List of File ids to be translated, comma separated.
+          required: true
+          schema:
+            type: integer
+        - name: memoryId
+          in: query
+          description: Id of Memory to use in translation.
+          required: true
+          schema:
+            type: integer
+        - name: configId
+          in: query
+          description: >-
+            An optional pararameter to specify an import configuration to be
+            applied when extracting translatable content from this file.
+          schema:
+            type: integer
+        - name: withTM
+          in: query
+          description: >-
+            An optional boolean parameter to toggle the use of Translation
+            Memory in the translation of the file.
+          schema:
+            type: boolean
+        - name: externalModelId
+          in: query
+          description: >-
+            An optional parameter to specify a third-party model to use for
+            translation. This allows you to use external MT providers instead of
+            Lilt's built-in MT system.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Translation Info
+          content:
+            application/json:
+              schema:
+                title: batchTranslateFileResponse
+                type: array
+                description: List of TranslationInfo objects
+                items:
+                  $ref: '#/components/schemas/TranslationInfo'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/translate/files:
+    get:
+      tags:
+        - Translate
+      summary: Download translated file
+      description: |+
+        Download a translated File.
+
+        Example CURL:
+        ```bash
+        curl -X GET 'https://api.lilt.com/v2/translate/files?key=API_KEY&id=1'
+        ```
+
+      operationId: downloadFile
+      parameters:
+        - name: id
+          in: query
+          description: A translation id.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A file.
+          content:
+            application/octet-stream:
+              schema:
+                title: DocumentDownloadResponse
+                type: string
+                format: byte
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/create:
+    get:
+      tags:
+        - Create
+      summary: Get Lilt Create content
+      description: |+
+        Get a list of all content that has been generated by Lilt Create.
+
+        Example CURL:
+        ```bash
+        curl -X GET 'https://api.lilt.com/v2/create?key=API_KEY'
+        ```
+
+      operationId: getLiltCreateContent
+      responses:
+        '200':
+          description: An object with a documents next task Workflow metadata.
+          content:
+            application/json:
+              schema:
+                title: getLiltCreateContentResponse
+                type: object
+                properties:
+                  contents:
+                    type: array
+                    description: List of LiltCreateContent objects
+                    items:
+                      $ref: '#/components/schemas/LiltCreateContent'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - Create
+      summary: Generate new Lilt Create content
+      description: |+
+        Generate new Lilt Create content with the given parameters.
+
+        Example CURL:
+        ```bash
+        curl -X POST 'https://api.lilt.com/v2/create?key=API_KEY' \
+        --header 'Content-Type: application/json' \
+        --data-raw '{
+          "language":"en-US",
+          "template":"blog-post",
+          "templateParams":{
+            "contentLength":"100",
+            "language":"en-US",
+            "sections":[],
+            "summary":"a blog post about hiking"
+            },
+          "preferences":{"tone":"formal","styleguide":""}
+        }'
+        ```
+
+      operationId: generateLiltCreateContent
+      requestBody:
+        description: |
+          Input parameters that determine what content will be generated.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LiltCreateContentRequest'
+        required: true
+      responses:
+        '200':
+          description: >
+            An event stream produced by Server Side Events. The following
+
+            events are supported.
+
+            - message: an object with the newly generated text (e.g. {"text":
+            "hello"})
+
+            - message: upon completion of events the string "[DONE]" will be
+            emitted
+
+            - fullcontent: an object containing the full response
+          content: {}
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: templateParams
+  /v2/create/{contentId}:
+    get:
+      tags:
+        - Create
+      summary: Get Lilt Create content by ID.
+      description: |+
+        Get Lilt Create content by ID.
+
+        Example CURL:
+        ```bash
+        curl -X GET 'https://api.lilt.com/v2/create/1234?key=API_KEY'
+        ```
+
+      operationId: getLiltCreateById
+      parameters:
+        - name: contentId
+          in: path
+          description: The content ID.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: The Lilt Create content.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LiltCreateContent'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+        - Create
+      summary: Update Lilt Create content
+      description: |+
+        Update a piece of Lilt Create content.
+
+        Example CURL:
+        ```bash
+        curl -X PUT 'https://api.lilt.com/v2/create/1234?key=API_KEY' \
+        --header 'Content-Type: application/json' \
+        --data-raw '{"language":"de-DE"}'
+        ```
+
+      operationId: updateLiltCreateContent
+      parameters:
+        - name: contentId
+          in: path
+          description: The content ID.
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LiltCreateContent'
+        required: false
+      responses:
+        '200':
+          description: The updated Lilt Create content.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LiltCreateContent'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+        - Create
+      summary: Delete Lilt Create content
+      description: |+
+        Delete a piece of Lilt Create content.
+
+        Example CURL:
+        ```bash
+        curl -X DELETE 'https://api.lilt.com/v2/create/1234?key=API_KEY'
+        ```
+
+      operationId: deleteLiltCreateContent
+      parameters:
+        - name: contentId
+          in: path
+          description: The content ID.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: The Delete Lilt Create Content Response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: The ID of the deleted Lilt Create content.
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/workflows/templates:
+    get:
+      tags:
+        - Workflows
+      summary: Retrieve workflow templates
+      description: >
+        Get all of the possible Workflow Templates owned by the team. Useful for
+        retrieving the ids corresponding to each workflow tables, and passing
+        them to subsequent requests, for example, creating a new Job with a
+        specific Workflow.
+
+        Example CURL:
+
+        ```bash curl -X GET
+        'https://api.lilt.com/v2/workflows/templates?key=API_KEY' ```
+      operationId: getWorkflowTemplates
+      responses:
+        '200':
+          description: An array with a team's available WorkflowTemplates.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkflowTemplate'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/jobs:
+    get:
+      tags:
+        - Jobs
+      summary: Retrieve all Jobs
+      description: >-
+        Get all Jobs within a given offset and limit. You can retrieve jobs from
+        your account using the above API.
+
+
+        Example CURL command:
+
+
+        ```bash
+
+        curl -X GET 'https://api.lilt.com/v2/jobs?key=API_KEY&isArchived=false'
+
+        ```
+      operationId: retrieveAllJobs
+      parameters:
+        - name: isArchived
+          in: query
+          description: Retrieves all jobs that are archived.
+          schema:
+            type: boolean
+        - name: isDelivered
+          in: query
+          description: Retrieves all jobs that are delivered.
+          schema:
+            type: boolean
+        - name: offset
+          in: query
+          description: >-
+            Return jobs starting at the offset row. If not given the default
+            offset will be 0.
+          schema:
+            minimum: 0
+            type: integer
+        - name: limit
+          in: query
+          description: >-
+            The maximum number of jobs to be returned. If not given the default
+            limit will be 25.
+          schema:
+            maximum: 50
+            type: integer
+      responses:
+        '200':
+          description: A list of Job objects.
+          content:
+            application/json:
+              schema:
+                title: JobsResponse
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - Jobs
+      summary: Create a Job
+      description: |+
+        Create a Job. A Job is a collection of Projects.
+        A Job will contain multiple projects, based on the language pair.
+        A Project is associated with exactly one Memory.
+
+        Jobs appear in the Jobs dashboard of the web app.
+
+        Example CURL command:
+
+        ```bash
+        curl -X POST 'https://api.lilt.com/v2/jobs?key=API_KEY' \
+        --header 'Content-Type: application/json' \
+        --data-raw '{
+          "name": "test job",
+          "fileIds": [5009, 5010, 5011],
+          "due": "2022-05-05T10:56:44.985Z",
+          "srcLang": "en",
+          "srcLocale": "US",
+          "languagePairs": [
+              { "memoryId": 3121, "trgLang": "de" },
+              { "memoryId": 2508, "trgLang": "fr" },
+              { "memoryId": 3037, "trgLang": "zh" }
+            ]
+        }'
+        ```
+
+      operationId: createJob
+      requestBody:
+        description: The Job resource to create.
+        content:
+          application/json:
+            schema:
+              title: JobCreateParameters
+              required:
+                - fileIds
+                - languagePairs
+                - name
+                - srcLang
+                - srcLocale
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: A name for the Job.
+                  example: My new Job
+                languagePairs:
+                  type: array
+                  description: >-
+                    Language pairs is a set of one or more pairs that includes
+                    source language, source locale(optional), target language,
+                    target locale(optional), and memoryId.
+                  items:
+                    $ref: '#/components/schemas/LanguagePair'
+                fileIds:
+                  type: array
+                  description: A list of file ids to upload to job creation.
+                  example:
+                    - 298
+                    - 299
+                  items:
+                    type: integer
+                due:
+                  type: string
+                  description: An ISO string date representing job due date.
+                  example: '2021-10-05T14:48:00.000Z'
+                srcLang:
+                  type: string
+                  description: 2-letter ISO source language code
+                  example: en
+                srcLocale:
+                  type: string
+                  description: 2-letter source language code
+                  example: US
+                isPlural:
+                  type: boolean
+                  description: A boolean value representing if the files have plurals.
+                  example: true
+                workflowTemplateId:
+                  type: integer
+                  description: >-
+                    ID of the workflow template to be used. Use the [workflows
+                    templates
+                    endpoint](#tag/Workflows/operation/getWorkflowTemplates) to
+                    get the list of available workflows.
+                domainId:
+                  type: integer
+                  description: >-
+                    ID of the domain to be used. Use the [domains
+                    endpoint](#tag/Domains/operation/getDomains) to get the list
+                    of available domains.
+                  example: 1
+        required: true
+      responses:
+        '200':
+          description: A Job object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: body
+  /v2/jobs/{jobId}:
+    get:
+      tags:
+        - Jobs
+      summary: Retrieve a Job
+      description: >-
+        Retrieves a job data along with stats. To retrieve a specific job, you
+        will need the job `id` in the url path.
+
+
+        Example CURL command:
+
+
+        ```bash
+
+        curl -X GET 'https://api.lilt.com/v2/jobs/{id}?key=API_KEY'
+
+        ```
+      operationId: getJob
+      parameters:
+        - name: jobId
+          in: path
+          description: A job id.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A job object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+        - Jobs
+      summary: Update a Job
+      description: >-
+        Updates a job with the new job properties. To update a specific job, you
+        will need the job `id` in the url path.
+
+
+        You can update job's name and due date by passing the property and new
+        value in the body.
+
+
+        Example CURL command:
+
+
+        ```bash
+
+        curl -X PUT 'https://api.lilt.com/v2/jobs/{id}?key=API_KEY' \
+
+        --header 'Content-Type: application/json' \
+
+        --data-raw '{
+          "name": "test job",
+          "due": "2022-05-05T10:56:44.985Z"
+        }'
+
+        ```
+      operationId: updateJob
+      parameters:
+        - name: jobId
+          in: path
+          description: A job id.
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: The Job resource to update.
+        content:
+          application/json:
+            schema:
+              title: JobUpdateParameters
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: A name for the Job.
+                  example: My new Job
+                due:
+                  type: string
+                  format: date-time
+                  description: An ISO string date.
+                  example: '2021-10-05T14:48:00.000Z'
+                isProcessing:
+                  type: string
+                  description: >
+                    The processing status of the job. Provide one of the
+                    following
+
+                    integers to indicate the status.
+
+
+                    Ok = 0
+
+                    Started = 1
+
+                    ExportError = -2
+                  example: ExportError
+                  enum:
+                    - '0'
+                    - '1'
+                    - '-2'
+                processingErrorMsg:
+                  type: string
+                  description: The processing error message.
+                  example: Authentication failed. Check your Contentful API Key.
+        required: false
+      responses:
+        '200':
+          description: A job object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+        - Jobs
+      summary: Delete a Job
+      description: >-
+        Delete a job, deletes all projects and documents in the job, deletes all
+        the segments from all the job's translation memories.
+
+
+        Example CURL command:
+
+
+        ```bash
+
+        curl -X DELETE 'https://api.lilt.com/v2/jobs/{id}?key=API_KEY'
+
+        ```
+      operationId: deleteJob
+      parameters:
+        - name: jobId
+          in: path
+          description: A job id.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A status object.
+          content:
+            application/json:
+              schema:
+                title: JobDeleteResponse
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: A unique Project identifier.
+                    example: 241
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/jobs/{jobId}/stats:
+    get:
+      tags:
+        - Jobs
+      summary: Retrieve Job Leverage Stats
+      description: |-
+        Get the TM leverage stats for the job (new/exact/fuzzy matches).
+
+        Example CURL command:
+
+        ```bash
+        curl -X GET 'https://api.lilt.com/v2/jobs/{id}/stats?key=API_KEY'
+        ```
+      operationId: getJobLeverageStats
+      parameters:
+        - name: jobId
+          in: path
+          description: A job id.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A job leverage stats object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobLeverageStats'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/jobs/{jobId}/archive:
+    post:
+      tags:
+        - Jobs
+      summary: Archive a Job
+      description: >-
+        Set job to archived, unassign all linguists and archive all projects and
+        documents inside the job.
+
+
+        It will return the archived job.
+
+
+        Example CURL command:
+
+
+        ```bash
+
+        curl -X POST 'https://api.lilt.com/v2/jobs/{id}/archive?key=API_KEY'
+
+        ```
+      operationId: archiveJob
+      parameters:
+        - name: jobId
+          in: path
+          description: A job id.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A job object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/jobs/{jobId}/unarchive:
+    post:
+      tags:
+        - Jobs
+      summary: Unarchive a Job
+      description: |-
+        Set job to unarchived, the job will move to active status.
+
+        Example CURL command:
+
+        ```bash
+        curl -X POST 'https://api.lilt.com/v2/jobs/{id}/unarchive?key=API_KEY'
+        ```
+      operationId: unarchiveJob
+      parameters:
+        - name: jobId
+          in: path
+          description: A job id.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A job object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/jobs/{jobId}/deliver:
+    post:
+      tags:
+        - Jobs
+      summary: Deliver a Job
+      description: >-
+        Set the job state to delivered and set all the projects in the job to
+        done
+
+
+        It will return the delivered job.
+
+
+        Example CURL command:
+
+
+        ```bash
+
+        curl -X POST 'https://api.lilt.com/v2/jobs/{id}/deliver?key=API_KEY'
+
+        ```
+      operationId: deliverJob
+      parameters:
+        - name: jobId
+          in: path
+          description: A job id.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A job object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/jobs/{jobId}/reactivate:
+    post:
+      tags:
+        - Jobs
+      summary: Reactivate a Job
+      description: >-
+        Set the job state to active. Does not change the state of projects
+        associated with the given job.
+
+
+        It will return the reactivated job.
+
+
+        Example CURL command:
+
+
+        ```bash
+
+        curl -X POST 'https://api.lilt.com/v2/jobs/{id}/reactivate?key=API_KEY'
+
+        ```
+      operationId: reactivateJob
+      parameters:
+        - name: jobId
+          in: path
+          description: A job id.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A job object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/jobs/{jobId}/export:
+    get:
+      tags:
+        - Jobs
+      summary: Export a Job
+      description: >-
+        Prepare job files for download.
+
+        To export translated documents from the job use the query parameter
+        `type=files`:
+
+
+        Example CURL command:
+
+
+        ```bash
+
+        curl -X GET
+        'https://api.lilt.com/v2/jobs/{id}/export?key=API_KEY&type=files'
+
+        ```
+
+
+        To export job memories use the query parameter `type=memory`.
+
+
+        The status of the export can be checked by requesting the job `GET
+        /jobs/:jobId`, `job.isProcessing` will be `1` while in progress,
+
+        `0` when idle and `-2` when the export failed.
+      operationId: exportJob
+      parameters:
+        - name: jobId
+          in: path
+          description: A job id.
+          required: true
+          schema:
+            type: integer
+        - name: type
+          in: query
+          description: category for files and memory.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 status.
+          content: {}
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/jobs/{jobId}/download:
+    get:
+      tags:
+        - Jobs
+      summary: Download a Job
+      description: >-
+        Make sure you have exported a job with the same id before using this
+        api.
+
+
+        Downloading files requires the exported job `id` in the param.
+
+
+        Example CURL command:
+
+
+        ```bash
+
+        curl -X GET 'https://api.lilt.com/v2/jobs/{id}/download?key=API_KEY'
+
+        ```
+      operationId: downloadJob
+      parameters:
+        - name: jobId
+          in: path
+          description: A job id.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: zipped file
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: byte
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/projects:
+    get:
+      tags:
+        - Projects
+      summary: Retrieve a Project
+      description: >-
+        Retrieves one or more projects, including the documents associated with
+        each project. Retrieving a project is the most efficient way to retrieve
+        a single project, multiple projects or a list of all available projects.
+
+
+        To retrieve a specific project, specify the `id` request parameter or
+        you can retrieve multiple projects by adding comma (,) between ids eg.
+        `?id=1234,5678`. To retrieve all projects, omit the `id` request
+        parameter. To limit the retrieved projects to those with a particular
+        source language or target language, specify the corresponding ISO 639-1
+        language codes in the `srclang` and `trglang` request parameters,
+        respectively.
+      operationId: getProjects
+      parameters:
+        - name: id
+          in: query
+          description: >-
+            A unique Project identifier. It can be a single id or multiple ids
+            separated by a comma
+          schema:
+            type: integer
+        - name: srclang
+          in: query
+          description: An ISO 639-1 language code.
+          schema:
+            type: string
+        - name: trglang
+          in: query
+          description: An ISO 639-1 language code.
+          schema:
+            type: string
+        - name: from_time
+          in: query
+          description: >-
+            Unix time stamp (epoch, in seconds) of Projects with `created_at`
+            greater than or equal to the value.
+          schema:
+            type: integer
+        - name: to_time
+          in: query
+          description: >-
+            Unix time stamp (epoch, in seconds) of Projects with `created_at`
+            less than the value.
+          schema:
+            type: integer
+        - name: state
+          in: query
+          description: A project state (backlog, inProgress, inReview, inQA, done).
+          schema:
+            type: string
+        - name: archived
+          in: query
+          description: >-
+            A flag that toggles whether to include archived projects in the
+            response (the default is `true`).
+          schema:
+            type: boolean
+        - name: connector_id
+          in: query
+          description: A unique Connector identifier.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A list of Project objects.
+          content:
+            application/json:
+              schema:
+                title: ProjectResponse
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - Projects
+      summary: Create a Project
+      description: |+
+        Create a Project. A Project is a collection of Documents.
+
+        A Project is associated with exactly one Memory.
+
+        Projects appear in the dashboard of the web app.
+
+      operationId: createProject
+      requestBody:
+        description: The Project resource to create.
+        content:
+          application/json:
+            schema:
+              title: ProjectCreateParameters
+              required:
+                - memory_id
+                - name
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: A name for the Project.
+                  example: My new project
+                memory_id:
+                  type: integer
+                  description: The Memory to associate with this new Project.
+                  example: 1234
+                job_id:
+                  type: integer
+                  description: >
+                    The Job to associate with this new Project. If a Job ID is
+                    not
+
+                    provided then a new Job will be created to contain the
+
+                    Project.
+                  example: 1234
+                due_date:
+                  type: integer
+                  description: The due date. Measured in seconds since the Unix epoch.
+                  example: 1489147692
+                metadata:
+                  type: object
+                  properties: {}
+                  description: >-
+                    A JSON object of key/value string pairs. Stores custom
+                    project information.
+                  example:
+                    connectorType: github
+                    notes: example metadata
+                workflowTemplateId:
+                  type: integer
+                  description: >-
+                    The workflow template used to create this project.
+                    WorkflowTemplateIds can be retrieved via the
+                    /workflows/templates endpoint. If not specified then the
+                    organization default workflowTemplateId will be used.
+                  example: 14
+                workflow_template_name:
+                  type: string
+                  description: >-
+                    Name of the workflow for the project, if a
+                    workflowTemplateId is passed, this field will be ignored.
+                  example: Translate > Review
+                llm_provider:
+                  type: string
+                  description: >-
+                    The LLM provider to use for the project. Defaults to
+                    "neural".
+                  example: neural
+                external_model_id:
+                  type: integer
+                  description: >-
+                    An optional parameter to specify a third-party model ID to
+                    use for translation. This allows you to use external MT
+                    providers instead of Lilt's built-in MT system. Must match
+                    the chosen llm_provider.
+                  example: 111
+                is_plural:
+                  type: boolean
+                  description: >-
+                    Whether the documents in this project contain ICU plural
+                    forms.
+                  example: false
+                require_batch_qa_translator:
+                  type: boolean
+                  description: Whether to require batch QA from the translator side.
+                  example: false
+                enable_prompt_labeling:
+                  type: boolean
+                  description: Whether to enable prompt labeling for the project.
+                  example: false
+                job_type:
+                  type: string
+                  description: (Optional) A specialized job type for advanced features.
+                  enum:
+                    - TRANSLATION
+                    - PROMPT_RESPONSE
+                additional_guidelines:
+                  type: string
+                  description: (Optional) Additional instructions or guidelines.
+                  example: Provide consistent style across all chapters.
+                is_enhanced_human_ai_optimized:
+                  type: boolean
+                  description: Whether the project is enhanced with AI optimization.
+                  example: false
+                domainId:
+                  type: integer
+                  description: A domain ID to categorize this project under.
+                  example: 234
+        required: true
+      responses:
+        '200':
+          description: A Project object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+        - Projects
+      summary: Delete a Project
+      description: |
+        Delete a Project.
+      operationId: deleteProject
+      parameters:
+        - name: id
+          in: query
+          description: A unique Project identifier.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A status object.
+          content:
+            application/json:
+              schema:
+                title: ProjectDeleteResponse
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: A unique Project identifier.
+                    example: 46530
+                  deleted:
+                    type: boolean
+                    description: >-
+                      If the operation succeeded, then `true`. Otherwise,
+                      `false`.
+                    example: true
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/documents/files:
+    get:
+      tags:
+        - Documents
+      summary: Download a Document
+      description: >+
+        Export a Document that has been translated in the Lilt web application.
+
+        Any Document can be downloaded in XLIFF 1.2 format, or can be retrieved
+        in its original uploaded format by setting `is_xliff=false`.
+
+        This endpoint will fail if either (a) export or (b) pre-translation
+        operations are in-progress. The status of those operations can be
+        determined by retrieving the Document resource.
+
+        Example CURL command:
+
+        ```bash
+          curl -X GET https://api.lilt.com/v2/documents/files?key=API_KEY&id=274 -o from_lilt.xliff
+        ```
+
+      operationId: downloadDocument
+      parameters:
+        - name: id
+          in: query
+          description: An unique Document identifier.
+          required: true
+          schema:
+            type: integer
+        - name: is_xliff
+          in: query
+          description: Download the document in XLIFF 1.2 format.
+          schema:
+            type: boolean
+            default: true
+      responses:
+        '200':
+          description: A file.
+          content:
+            application/octet-stream:
+              schema:
+                title: DocumentDownloadResponse
+                type: string
+                format: byte
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '502':
+          description: File in pretranslation.
+          content: {}
+        default:
+          description: Unexpected error
+          content:
+            application/octet-stream:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - Documents
+      summary: Upload a File
+      description: >+
+        Create a Document from a file in any of the formats [documented in our
+        knowledge base](/kb/supported-file-formats).
+
+        Request parameters should be passed as JSON object with the header field
+        `LILT-API`.
+
+
+        File names in the header can only contain [US-ASCII
+        characters](https://en.wikipedia.org/wiki/ASCII). File names with
+        characters outside of US-ASCII should be [URI
+        encoded](https://en.wikipedia.org/wiki/Percent-encoding) or
+        transliterated to US-ASCII strings.
+
+
+        Example CURL command:
+
+        ```bash
+          curl -X POST https://api.lilt.com/v2/documents/files?key=API_KEY \
+          --header "LILT-API: {\"name\": \"introduction.xliff\",\"pretranslate\": \"tm+mt\",\"project_id\": 9}" \
+          --header "Content-Type: application/octet-stream" \
+          --data-binary @Introduction.xliff
+        ```
+
+      operationId: uploadDocument
+      parameters:
+        - name: name
+          in: header
+          description: A file name.
+          required: true
+          schema:
+            type: string
+        - name: project_id
+          in: header
+          description: A unique Project identifier.
+          required: true
+          schema:
+            type: integer
+        - name: pretranslate
+          in: header
+          description: |
+            An optional parameter indicating if and how the document will be
+            pretranslated upon being uploaded.
+            The accepted values are `TM`, or `TM+MT`
+          schema:
+            type: string
+        - name: auto_accept
+          in: header
+          description: >
+            An optional parameter to auto-accept segments with 100% translation
+
+            memory matches when the `pretranslate` option is also set, or to
+
+            auto-accept any target data that is present when the uploaded file
+
+            is XLIFF. If omitted it will default to your organization settings
+            for `Accept and lock exact matches`,
+
+            if set to `false`, no segments will be auto-accepted.
+          schema:
+            type: boolean
+        - name: case_sensitive
+          in: header
+          description: >
+            An optional parameter to use case sensitive translation memory
+            matching when the `pretranslate`
+
+            option is also enabled. Matches must have identical
+            character-by-character case to qualify as matches.
+
+            Default value matches your organization settings for `Use case
+            sensitive translation memory matching` setting
+          schema:
+            type: boolean
+        - name: match_attribution
+          in: header
+          description: >
+            An optional parameter to attribute translation authorship of exact
+            matches to the author of the file
+
+            when the `pretranslate` option is also enabled. Default value
+            matches your organization settings for `Translation authorship`
+            setting
+          schema:
+            type: boolean
+        - name: config_id
+          in: header
+          description: |
+            An optional pararameter to specify an import configuration to
+            be applied when extracting translatable content from this file.
+          schema:
+            type: integer
+      requestBody:
+        description: |
+          The file contents to be uploaded. The entire POST body will be
+          treated as the file.
+        content:
+          application/octet-stream:
+            schema:
+              title: DocumentUploadBody
+              type: string
+              format: binary
+              example: |-
+                <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+                <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2">
+                ...
+                </xliff>
+        required: true
+      responses:
+        '200':
+          description: A Document object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentWithSegments'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: body
+  /v2/documents/pretranslate:
+    post:
+      tags:
+        - Documents
+      summary: Pretranslate Documents
+      description: >+
+        Pretranslate one or more Documents using translation memory (TM) and,
+
+        optionally, machine translation (MT). Only documents that are not
+
+        currently importing/exporting and are not already pretranslating will
+
+        be pretranslated; the response always reflects the current state of
+
+        every requested Document id, whether or not it was eligible.
+
+
+        This is an asynchronous operation. The endpoint returns immediately
+
+        with a `202` response once pretranslation has been queued; poll the
+
+        Document resource (or the `is_pretranslating` / `status.pretranslation`
+
+        fields it returns) to see when pretranslation has finished.
+
+
+        This endpoint is subject to a per-organization rate limit. See the
+
+        [API Rate Limits guide](/developers/guides/rate-limits) for details on
+
+        how to read `429` responses and batch requests efficiently by passing
+
+        multiple document ids in a single call.
+
+
+        Example CURL:
+
+        ```bash
+
+        curl -X POST
+        'https://api.lilt.com/v2/documents/pretranslate?key=API_KEY' \
+
+        --header 'Content-Type: application/json' \
+
+        --data-raw '{"id": [274, 275], "mode": "TM+MT", "auto_accept": true}'
+
+        ```
+
+      operationId: pretranslateDocuments
+      parameters:
+        - name: auto_accept
+          in: query
+          description: >-
+            Auto-accept segments with 100% translation memory matches. Can also
+            be passed in the request body. Defaults to your organization's
+            `Accept and lock exact matches` setting.
+          schema:
+            type: boolean
+        - name: case_sensitive
+          in: query
+          description: >-
+            Use case-sensitive translation memory matching. Can also be passed
+            in the request body. Defaults to your organization's `Use case
+            sensitive translation memory matching` setting.
+          schema:
+            type: boolean
+        - name: attribute_to_creator
+          in: query
+          description: >-
+            Attribute translation authorship of exact matches to the author of
+            the document. Can also be passed in the request body. Defaults to
+            your organization's `Translation authorship` setting.
+          schema:
+            type: boolean
+        - name: mode
+          in: query
+          description: >-
+            Pretranslation mode. Can also be passed in the request body.
+            Defaults to `TM`.
+          schema:
+            type: string
+            enum:
+              - TM
+              - TM+MT
+            default: TM
+      requestBody:
+        description: >-
+          The Document id(s) to pretranslate, plus optional pretranslation
+          options.
+        content:
+          application/json:
+            schema:
+              title: PretranslateDocumentsBody
+              type: object
+              required:
+                - id
+              properties:
+                id:
+                  description: A Document id, or an array of Document ids, to pretranslate.
+                  oneOf:
+                    - type: integer
+                    - type: array
+                      items:
+                        type: integer
+                  example:
+                    - 274
+                    - 275
+                mode:
+                  type: string
+                  description: Pretranslation mode. Defaults to `TM`.
+                  enum:
+                    - TM
+                    - TM+MT
+                  default: TM
+                auto_accept:
+                  type: boolean
+                  description: >-
+                    Auto-accept segments with 100% translation memory matches.
+                    Defaults to your organization's `Accept and lock exact
+                    matches` setting.
+                case_sensitive:
+                  type: boolean
+                  description: >-
+                    Use case-sensitive translation memory matching. Defaults to
+                    your organization's `Use case sensitive translation memory
+                    matching` setting.
+                attribute_to_creator:
+                  type: boolean
+                  description: >-
+                    Attribute translation authorship of exact matches to the
+                    author of the document. Defaults to your organization's
+                    `Translation authorship` setting.
+        required: true
+      responses:
+        '202':
+          description: >-
+            Pretranslation has been queued. Returns the current state of every
+            requested Document.
+          content:
+            application/json:
+              schema:
+                title: PretranslateDocumentsResponse
+                type: object
+                properties:
+                  id:
+                    type: array
+                    description: The Document ids that were requested.
+                    items:
+                      type: integer
+                    example:
+                      - 274
+                      - 275
+                  is_pretranslating:
+                    type: boolean
+                    description: Always `true` for a successfully queued request.
+                    example: true
+                  documents:
+                    type: array
+                    description: The current state of each requested Document.
+                    items:
+                      $ref: '#/components/schemas/DocumentWithoutSegments'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '429':
+          description: >-
+            Rate limit exceeded. See the [API Rate Limits
+            guide](/developers/guides/rate-limits) for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: body
+  /v2/files:
+    get:
+      tags:
+        - Files
+      summary: Retrieve a File
+      description: >-
+        Retrieves one or more files available to your user. Files are not
+        associated with a project or a memory. They are unprocessed and can be
+        used later in the project/document creation workflow step.
+
+
+        To retrieve a specific file, specify the <strong>id</strong> request
+        parameter. To retrieve all files, omit the <strong>id</strong> request
+        parameter.
+
+
+        Example CURL command:
+
+        ```bash
+         curl -X GET https://api.lilt.com/v2/files?key=API_KEY&id=274
+        ```
+      operationId: getFiles
+      parameters:
+        - name: id
+          in: query
+          description: A unique File identifier.
+          schema:
+            type: integer
+        - name: labels
+          in: query
+          description: |
+            One or more labels. This will return the files which contain all of
+            the given labels.
+          style: form
+          explode: false
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: A list of files.
+          content:
+            application/json:
+              schema:
+                title: FilesList
+                type: array
+                items:
+                  $ref: '#/components/schemas/SourceFile'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          description: User does not have permission for provided file.
+          content: {}
+        '410':
+          description: File deleted.
+          content: {}
+        default:
+          description: Unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - Files
+      summary: Upload a File
+      description: >+
+        Upload a File in any of the formats [documented in our knowledge
+
+        base](/kb/supported-file-formats).
+
+        Request parameters should be passed in as query string parameters.
+
+
+        Example CURL command:
+
+        ```bash
+          curl -X POST https://api.lilt.com/v2/files?key=API_KEY&name=en_US.json \
+          --header "Content-Type: application/octet-stream" \
+          --data-binary @en_US.json
+        ```
+
+        Calls to GET /files are used to monitor the language detection results.
+        The API response will be augmented to include detected language and
+        confidence score.
+
+
+        The language detection will complete asynchronously. Prior to
+        completion, the `detected_lang` value will be `zxx`, the reserved ISO
+        639-2 code for "No linguistic content/not applicable".
+
+
+        If the language can not be determined, or the detection process fails,
+        the `detected_lang` field will return `und`, the reserved ISO 639-2 code
+        for undetermined language, and the `detected_lang_confidence` score will
+        be `0`.
+
+      operationId: uploadFile
+      parameters:
+        - name: name
+          in: query
+          description: A file name.
+          required: true
+          schema:
+            type: string
+        - name: file_hash
+          in: query
+          description: >-
+            A hash value to associate with the file. The MD5 hash of the body
+            contents will be used by default if a value isn't provided.
+          schema:
+            type: string
+        - name: langId
+          in: query
+          description: >-
+            Flag indicating whether to perform language detection on the
+            uploaded file. Default is false.
+          schema:
+            type: boolean
+        - name: project_id
+          in: query
+          description: The project to associate the uploaded file with.
+          schema:
+            type: integer
+        - name: category
+          in: query
+          description: >-
+            The category of the file. The options are `REFERENCE`, or `API`. The
+            default is API. Files with the `REFERENCE` category will be
+            displayed as reference material.
+          schema:
+            type: string
+        - name: labels
+          in: query
+          description: Comma-separated list of labels to add to the uploaded document.
+          schema:
+            type: string
+        - in: query
+          name: job_type
+          description: Specifies the job type when adding this file to a job.
+          required: false
+          schema:
+            type: string
+            enum:
+              - TRANSLATION
+              - PROMPT_RESPONSE
+      requestBody:
+        description: >-
+          The file contents to be uploaded. The entire POST body will be treated
+          as the file.
+        content:
+          application/octet-stream:
+            schema:
+              title: FileUploadBody
+              type: string
+              format: binary
+              example: |-
+                <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+                <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2">
+                ...
+                </xliff>
+        required: true
+      responses:
+        '201':
+          description: A SourceFile object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SourceFile'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+        - Files
+      summary: Delete a File
+      description: |+
+        Delete a File.
+
+        Example CURL command:
+        ```bash
+          curl -X DELETE https://api.lilt.com/v2/files?key=API_KEY&id=123
+        ```
+
+      operationId: deleteFile
+      parameters:
+        - name: id
+          in: query
+          description: A unique File identifier.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: A status object.
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/files/download:
+    get:
+      tags:
+        - Files
+      summary: Download file
+      description: |
+        Download a File.
+
+        Example CURL:
+        ```bash
+        curl -X GET 'https://api.lilt.com/v2/files/download?key=API_KEY&id=1'
+        ```
+      operationId: download
+      parameters:
+        - name: id
+          in: query
+          description: A File id.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A file.
+          content:
+            application/octet-stream:
+              schema:
+                title: DocumentDownloadResponse
+                type: string
+                format: byte
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/files/labels:
+    post:
+      tags:
+        - Files
+      summary: Add Label to File
+      description: |
+        Add a label to a File.
+
+        Example CURL:
+        ```bash
+        curl -X POST 'https://api.lilt.com/v2/files/labels?key=API_KEY&id=1'
+        --header 'Content-Type: application/json' \
+        --data-raw '{
+            "name": "label_name"
+        }'
+        ```
+      operationId: addLabel
+      parameters:
+        - name: id
+          in: query
+          description: A File id.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: A label name.
+        content:
+          application/json:
+            schema:
+              title: AddFileLabelRequest
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The Label name.
+                  example: label_name
+        required: true
+      responses:
+        '204':
+          description: A success response.
+          content: {}
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: name
+    delete:
+      tags:
+        - Files
+      summary: Remove Label from File
+      description: >
+        Remove a label from a File.
+
+
+        Example CURL:
+
+        ```bash
+
+        curl -X DELETE
+        'https://api.lilt.com/v2/files/labels?key=API_KEY&id=1&name=label_name'
+
+        ```
+      operationId: removeLabel
+      parameters:
+        - name: id
+          in: query
+          description: A File id.
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: A label name.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: A success response.
+          content: {}
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/upload:
+    get:
+      summary: Get All Pending Uploads or specific list of uploads by ids or statuses
+      description: |
+        Retrieve all pending uploads for the current user and organization.
+
+        Example CURL command:
+        ```
+          curl -X GET https://lilt.com/2/upload?key=API_KEY
+        ```
+      operationId: getPendingUploads
+      parameters:
+        - name: ids
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Comma-separated list of upload IDs to filter by.
+        - name: statuses
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Comma-separated list of upload statuses to filter by.
+      tags:
+        - Uploads
+      responses:
+        '200':
+          description: List of pending uploads.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: Unique upload identifier
+                      example: 12345
+                    filename:
+                      type: string
+                      description: Name of the uploaded file
+                      example: document.xliff
+                    status:
+                      type: string
+                      description: Current upload status
+                      example: pending
+                    created_at:
+                      type: string
+                      format: date-time
+                      description: Upload creation timestamp
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/upload/{uploadId}:
+    get:
+      summary: Get Upload by ID
+      description: |
+        Retrieve a specific upload by its unique identifier.
+
+        Example CURL command:
+        ```
+          curl -X GET https://lilt.com/2/upload/12345?key=API_KEY
+        ```
+      operationId: getUploadById
+      tags:
+        - Uploads
+      parameters:
+        - in: path
+          name: uploadId
+          description: Unique upload identifier
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
+          description: Upload details.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: Unique upload identifier
+                    example: 12345
+                  filename:
+                    type: string
+                    description: Name of the uploaded file
+                    example: document.xliff
+                  status:
+                    type: string
+                    description: Current upload status
+                    example: pending
+                  created_at:
+                    type: string
+                    format: date-time
+                    description: Upload creation timestamp
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/upload/s3/params:
+    get:
+      summary: Get S3 Upload Parameters
+      description: >
+        Get S3 upload parameters via query string. This endpoint provides the
+        necessary information
+
+        to complete the file upload process using GET parameters.
+
+
+        Example CURL command:
+
+        ```
+          curl -X GET "https://lilt.com/v2/upload/s3/params?key=API_KEY&filename=example.json&type=application/json&metadata.size=1024&metadata.labels=important,review-needed"
+        ```
+      operationId: getS3UploadParams
+      tags:
+        - Uploads
+      parameters:
+        - in: query
+          name: filename
+          description: A file name including file extension.
+          required: true
+          schema:
+            type: string
+            example: document.xliff
+        - in: query
+          name: type
+          description: The content-type or mime-type of the file to upload.
+          required: true
+          schema:
+            type: string
+            example: video/mp4
+        - in: query
+          name: metadata.size
+          description: The size of the file to upload in bytes.
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            example: 1024
+        - in: query
+          name: metadata.category
+          description: File category metadata.
+          required: false
+          schema:
+            type: string
+            example: documents
+        - in: query
+          name: metadata.uuid
+          description: File UUID metadata.
+          required: false
+          schema:
+            type: string
+            example: 123e4567-e89b-12d3-a456-426614174000
+        - in: query
+          name: metadata.labels
+          description: >-
+            Comma-separated list of label names to be added to the file after
+            upload completes.
+          required: false
+          schema:
+            type: string
+            example: important,review-needed
+      responses:
+        '200':
+          description: Upload initialization information.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    description: Pre-signed URL for file upload
+                    example: >-
+                      https://storage.googleapis.com/bucket/uploads/user123/file456.json?...
+                  key:
+                    type: string
+                    description: Upload key identifier
+                    example: uploads/user123/file456.json
+                  method:
+                    type: string
+                    description: HTTP method to use for upload
+                    example: PUT
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Initiate File Upload to Cloud Storage
+      description: >
+        Initiate the upload of a file to cloud storage. This endpoint provides
+        the necessary information
+
+        to complete the file upload process.
+
+
+        Supports both single file and bulk upload requests. For bulk uploads,
+        pass an array of upload
+
+        objects (maximum 100 items). The response format matches the request
+        format - a single object
+
+        for single file requests, or an array for bulk requests.
+
+
+        Example CURL command (single file):
+
+        ```
+          curl -X POST https://lilt.com/v2/upload/s3/params?key=API_KEY \
+          --header "Content-Type: application/json" \
+          --data-raw '{
+            "filename": "example.json",
+            "type": "application/json",
+            "metadata": {
+              "size": 1024,
+              "labels": ["important", "review-needed"]
+            }
+          }'
+        ```
+
+
+        Example CURL command (bulk upload):
+
+        ```
+          curl -X POST https://lilt.com/v2/upload/s3/params?key=API_KEY \
+          --header "Content-Type: application/json" \
+          --data-raw '[
+            {
+              "filename": "file1.json",
+              "type": "application/json",
+              "metadata": { "size": 1024 }
+            },
+            {
+              "filename": "file2.txt",
+              "type": "text/plain",
+              "metadata": { "size": 2048 }
+            }
+          ]'
+        ```
+      operationId: initiateS3Upload
+      tags:
+        - Uploads
+      requestBody:
+        description: >
+          Information about the file(s) to be uploaded. Can be a single object
+          or an array of objects (max 100).
+
+
+          Single file request: `{ "filename": "...", "type": "...", "metadata":
+          {...} }`
+
+          Bulk request: `[{ "filename": "...", "type": "...", "metadata": {...}
+          }, ...]`
+        required: true
+        content:
+          application/json:
+            schema:
+              title: InitiateUploadBody
+              description: >-
+                A single upload request object, or an array of upload request
+                objects (max 100).
+              type: object
+              properties:
+                filename:
+                  description: A file name including file extension.
+                  type: string
+                  example: document.xliff
+                type:
+                  description: The content-type or mime-type of the file to upload.
+                  type: string
+                  example: video/mp4
+                metadata:
+                  description: Optional file metadata.
+                  type: object
+                  properties:
+                    size:
+                      description: The size of the file to upload in bytes.
+                      type: integer
+                      minimum: 0
+                      example: 1024
+                    category:
+                      description: File category.
+                      type: string
+                      example: documents
+                    uuid:
+                      description: File UUID.
+                      type: string
+                      example: 123e4567-e89b-12d3-a456-426614174000
+                    labels:
+                      description: >-
+                        Array of label names to be added to the file after
+                        upload completes.
+                      type: array
+                      items:
+                        type: string
+                      example:
+                        - important
+                        - review-needed
+              required:
+                - filename
+                - type
+      responses:
+        '200':
+          description: >
+            Upload initialization information. Returns a single object for
+            single file requests,
+
+            or an array of objects for bulk requests.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    description: Pre-signed URL for file upload
+                    example: >-
+                      https://storage.googleapis.com/bucket/uploads/user123/file456.json?...
+                  key:
+                    type: string
+                    description: Upload key identifier
+                    example: uploads/user123/file456.json
+                  method:
+                    type: string
+                    description: HTTP method to use for upload
+                    example: PUT
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/upload/s3/multipart:
+    post:
+      summary: Initiate Multipart Upload
+      description: >
+        Initiate a multipart upload for large files. This endpoint provides the
+        necessary information
+
+        to start a multipart upload process.
+
+
+        Supports both single file and bulk upload requests. For bulk uploads,
+        pass an array of upload
+
+        objects (maximum 100 items). The response format matches the request
+        format - a single object
+
+        for single file requests, or an array for bulk requests.
+
+
+        Example CURL command (single file):
+
+        ```
+          curl -X POST https://lilt.com/v2/upload/s3/multipart?key=API_KEY \
+          --header "Content-Type: application/json" \
+          --data-raw '{
+            "filename": "large-file.zip",
+            "type": "application/zip",
+            "metadata": {
+              "size": 104857600
+            }
+          }'
+        ```
+
+
+        Example CURL command (bulk upload):
+
+        ```
+          curl -X POST https://lilt.com/v2/upload/s3/multipart?key=API_KEY \
+          --header "Content-Type: application/json" \
+          --data-raw '[
+            {
+              "filename": "large-file1.zip",
+              "type": "application/zip",
+              "metadata": { "size": 104857600 }
+            },
+            {
+              "filename": "large-file2.zip",
+              "type": "application/zip",
+              "metadata": { "size": 209715200 }
+            }
+          ]'
+        ```
+      operationId: initiateMultipartUpload
+      tags:
+        - Uploads
+      requestBody:
+        description: >
+          Information about the file(s) to be uploaded. Can be a single object
+          or an array of objects (max 100).
+
+
+          Single file request: `{ "filename": "...", "type": "...", "metadata":
+          {...} }`
+
+          Bulk request: `[{ "filename": "...", "type": "...", "metadata": {...}
+          }, ...]`
+        required: true
+        content:
+          application/json:
+            schema:
+              title: InitiateMultipartUploadBody
+              description: >-
+                A single upload request object, or an array of upload request
+                objects (max 100).
+              type: object
+              properties:
+                filename:
+                  description: A file name including file extension.
+                  type: string
+                  example: large-file.zip
+                type:
+                  description: The content-type or mime-type of the file to upload.
+                  type: string
+                  example: application/zip
+                metadata:
+                  description: Optional file metadata.
+                  type: object
+                  properties:
+                    size:
+                      description: The size of the file to upload in bytes.
+                      type: integer
+                      minimum: 0
+                      example: 104857600
+                    category:
+                      description: File category.
+                      type: string
+                      example: documents
+                    uuid:
+                      description: File UUID.
+                      type: string
+                      example: 123e4567-e89b-12d3-a456-426614174000
+                    labels:
+                      description: >-
+                        Array of label names to be added to the file after
+                        upload completes.
+                      type: array
+                      items:
+                        type: string
+                      example:
+                        - important
+                        - review-needed
+              required:
+                - filename
+                - type
+      responses:
+        '200':
+          description: >
+            Multipart upload initialization information. Returns a single object
+            for single file requests,
+
+            or an array of objects for bulk requests.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  uploadId:
+                    type: string
+                    description: Multipart upload ID for subsequent part uploads
+                    example: abc123def456
+                  key:
+                    type: string
+                    description: Upload key identifier
+                    example: uploads/user123/large-file.zip
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/upload/s3/multipart/{uploadId}/complete:
+    post:
+      summary: Complete Multipart Upload
+      description: |
+        Complete a multipart upload by providing all uploaded parts information.
+
+        Example CURL command:
+        ```
+          curl -X POST "https://lilt.com/v2/upload/s3/multipart/abc123def456/complete?key=API_KEY&key=uploads/user123/file456.zip" \
+          --header "Content-Type: application/json" \
+          --data-raw '{
+            "parts": [
+              {"ETag": "etag1", "PartNumber": 1},
+              {"ETag": "etag2", "PartNumber": 2}
+            ]
+          }'
+        ```
+      operationId: completeMultipartUpload
+      tags:
+        - Uploads
+      parameters:
+        - in: path
+          name: uploadId
+          description: Multipart upload ID from initiate response
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: s3Key
+          description: Upload key from initiate response
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Information about uploaded parts.
+        required: true
+        content:
+          application/json:
+            schema:
+              title: CompleteMultipartUploadBody
+              type: object
+              properties:
+                parts:
+                  description: Array of completed upload parts.
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      ETag:
+                        description: ETag of the uploaded part
+                        type: string
+                        example: abc123def456
+                      PartNumber:
+                        description: Part number (1-based)
+                        type: integer
+                        minimum: 1
+                        example: 1
+                    required:
+                      - ETag
+                      - PartNumber
+              required:
+                - parts
+      responses:
+        '200':
+          description: Upload completion confirmation.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    description: Upload completion status
+                    type: boolean
+                    example: true
+                  location:
+                    description: Final file location
+                    type: string
+                    example: >-
+                      https://storage.googleapis.com/bucket/uploads/user123/file456.zip
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/upload/s3/multipart/{uploadId}/{partNumber}:
+    get:
+      summary: Sign Upload Part
+      description: |
+        Get a signed URL for uploading a specific part of a multipart upload.
+
+        Make sure to set the part size to 8MB (8388608 bytes).
+
+        Example CURL command:
+        ```
+          curl -X GET "https://lilt.com/v2/upload/s3/multipart/abc123def456/1?key=API_KEY&key=uploads/user123/file456.zip&size=5242880"
+        ```
+      operationId: signUploadPart
+      tags:
+        - Uploads
+      parameters:
+        - in: path
+          name: uploadId
+          description: Multipart upload ID from initiate response
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: partNumber
+          description: Part number (1-based)
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+        - in: query
+          name: s3Key
+          description: Upload key from initiate response
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: size
+          description: Size of this part in bytes
+          required: true
+          schema:
+            type: integer
+            minimum: 0
+      responses:
+        '200':
+          description: Signed URL for part upload.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    description: Pre-signed URL for this part upload
+                    type: string
+                    example: >-
+                      https://storage.googleapis.com/bucket/uploads/user123/file456.zip?partNumber=1&...
+                  method:
+                    description: HTTP method to use for upload
+                    type: string
+                    example: PUT
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v2/upload/s3/multipart/{uploadId}:
+    delete:
+      summary: Cancel Multipart Upload
+      description: |
+        Cancel/abort a multipart upload and clean up any uploaded parts.
+
+        Example CURL command:
+        ```
+          curl -X DELETE "https://lilt.com/v2/upload/s3/multipart/abc123def456?key=API_KEY&key=uploads/user123/file456.zip"
+        ```
+      operationId: cancelMultipartUpload
+      tags:
+        - Uploads
+      parameters:
+        - in: path
+          name: uploadId
+          description: Multipart upload ID to cancel
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: s3Key
+          description: Upload key from initiate response
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Upload cancellation confirmation.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    description: Cancellation status
+                    type: boolean
+                    example: true
+                  message:
+                    description: Cancellation message
+                    type: string
+                    example: Multipart upload cancelled successfully
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v3/connectors/configuration/webhooks:
+    get:
+      tags:
+        - Webhook Configuration
+      summary: Retrieve a list of Webhook Configurations.
+      description: >
+        Retrieves a list of webhook configurations available to your LILT
+        organization.
+
+        Use this to manage your webhook configurations.
+      operationId: webhooksGetMany
+      responses:
+        '200':
+          description: The webhook configurations response.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/webhook_response'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - Webhook Configuration
+      summary: Creates a new Webhook Configuration
+      description: |
+        Creates a new webhook configuration for your LILT organization.
+      operationId: webhooksCreate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/create_webhook_options'
+      responses:
+        '200':
+          description: Returns the newly created webhook configuration.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/webhook_response'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v3/connectors/configuration/webhooks/{id}:
+    get:
+      tags:
+        - Webhook Configuration
+      summary: Retrieve a specific Webhook Configuration by ID.
+      description: |
+        Retrieves a specific webhook configuration by its ID.
+        Deleted webhook configurations are not returned.
+      operationId: webhooksGet
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The Webhook Configuration ID.
+          schema:
+            type: integer
+            example: 12345
+      responses:
+        '200':
+          description: Returns the webhook configuration.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/webhook_response'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+        - Webhook Configuration
+      summary: Update a specific Webhook Configuration by ID.
+      description: |
+        Updates a specific webhook configuration by its ID.
+        Only the fields that are provided in the request body will be updated.
+      operationId: webhooksUpdate
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The Webhook Configuration ID.
+          schema:
+            type: integer
+            example: 12345
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              anyOf:
+                - type: object
+                  properties:
+                    webhookName:
+                      type: string
+                      description: The name of the webhook configuration.
+                  required:
+                    - webhookName
+                - type: object
+                  properties:
+                    webhookUrl:
+                      type: string
+                      format: uri
+                      description: The URL to which the webhook notifications will be sent.
+                  required:
+                    - webhookUrl
+                - type: object
+                  properties:
+                    eventType:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                          - JOB_DELIVER
+                          - JOB_UPDATE
+                          - PROJECT_DELIVER
+                          - PROJECT_UPDATE
+                          - INSTANT_TRANSLATE_COMPLETED
+                          - INSTANT_TRANSLATE_FAILED
+                      description: >-
+                        The list of event types that will trigger the webhook
+                        notification.
+                  required:
+                    - eventType
+      responses:
+        '200':
+          description: Returns the updated webhook configuration.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/webhook_response'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+        - Webhook Configuration
+      summary: Delete a specific Webhook Configuration by ID.
+      operationId: services.configuration_api.webhooks.delete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The Webhook Configuration ID.
+          schema:
+            type: integer
+            example: 12345
+      responses:
+        '204':
+          description: Upon success a response with an empty body is returned.
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v3/domains:
+    get:
+      tags:
+        - Domains
+      summary: Retrieve Domains
+      operationId: getDomains
+      description: >
+        Retrieve a list of Domains associated with the Organization's API key.
+
+
+        Each Domain contains potentially 4 Arrays related to the Domain these
+        are as follows:
+
+        - models - the list of models associated with the Domain
+
+        - filterConfigs - the list of filterConfigs associated with the Domain
+
+        - domainMetadata - the list of Domain specific options that have been
+        configured for this domain.
+      parameters:
+        - name: key
+          in: header
+          description: >-
+            the ApiKey used to authenticate with LILT, used to look up the
+            Organization's domain information.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DomainList'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    ApiKeyAuth:
+      type: apiKey
+      name: key
+      in: query
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable message describing the error.
+      description: |
+        Response in the event of an unexpected error.
+      example:
+        message: Internal server error.
+    Memory:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: A unique number identifying the Memory.
+          example: 1234
+        srclang:
+          type: string
+          description: An ISO 639-1 language identifier.
+          example: en
+        trglang:
+          type: string
+          description: An ISO 639-1 language identifier.
+          example: fr
+        srclocale:
+          type: string
+          description: An ISO 639-1 language identifier.
+          example: US
+        trglocale:
+          type: string
+          description: An ISO 639-1 language identifier.
+          example: FR
+        name:
+          type: string
+          description: A name for the Memory.
+          example: Acme Corp Support Content
+        is_processing:
+          type: boolean
+          description: Indicates the memory is being processed.
+          example: false
+        version:
+          type: integer
+          description: >-
+            The current version of the Memory, which is the number of updates
+            since the memory was created.
+          example: 78
+        created_at:
+          type: integer
+          description: >-
+            Time at which the object was created. Measured in seconds since the
+            Unix epoch.
+          example: 1489147692
+        updated_at:
+          type: integer
+          description: >-
+            Time at which the object was created. Measured in seconds since the
+            Unix epoch.
+          example: 1489147692
+        resources:
+          type: array
+          description: >-
+            The resource files (translation memories and termbases) associated
+            with this Memory.
+          items:
+            type: string
+      description: |
+        A Memory is a collection of parallel (source/target) segments
+        from which a MT/TM model is trained. When a translator confirms
+        a segment in the Interface, a parallel segment is added to the
+        Memory. Parallel segments from existing translation memories and
+        bitexts can also be added to the Memory via the API.
+    TranslationMemoryEntry:
+      type: object
+      properties:
+        source:
+          type: string
+          description: The source string.
+          example: The red bus.
+        target:
+          type: string
+          description: >-
+            The target string. Tags will be automatically placed according to
+            the query string.
+          example: Le bus rouge.
+        score:
+          type: integer
+          description: The fuzzy match score.
+          example: 100
+        metadata:
+          type: object
+          properties: {}
+          description: Attributes describing the translation memory entry.
+      description: A translation memory entry.
+    SDLXLIFFFilter:
+      required:
+        - confName
+      type: object
+      properties:
+        confName:
+          type: string
+          description: the current state of the SDLXLIFF Trans Unit.
+          enum:
+            - Translated
+            - Draft
+            - ApprovedTranslation
+            - Locked
+            - SignedOff
+        allowablePercentage:
+          type: integer
+          description: >-
+            This represents for the current conf_name what percentage the filter
+            applies to.  If you pass -1 it will take any value for this field
+            and won't ignore blank values. If you pass 50, Lilt will only import
+            Segments that have a 50 percent match or better.
+        allowUnlockedSegments:
+          type: boolean
+          description: >-
+            Boolean that tells Lilt whether we should allow unlocked Segments
+            for this conf_name.
+    Translation:
+      type: object
+      properties:
+        target:
+          type: string
+          description: The target string.
+        targetWithTags:
+          type: string
+          description: The target string with source tags projected into the target.
+        align:
+          type: string
+          description: >
+            "MT only: A whitespace delimited list of source-target alignment
+            indices."
+        provenance:
+          type: string
+          description: >
+            Positive values indicate that the word is from the Memory,
+
+            with contiguous identical entries (e.g., 2 2) indicating
+
+            phrase matches. Negative contiguous values indicate entries from the
+            Lexicon.
+
+            0 indicates a word from the background data.
+        score:
+          type: number
+          description: The score of the translation.
+        isTMMatch:
+          type: boolean
+          description: 'TM only: If true, indicates an exact translation memory match.'
+        targetDelimiters:
+          type: array
+          description: >-
+            A format string that indicates, for each word, if the word should be
+            preceded by a space.
+          items:
+            type: string
+        targetWords:
+          type: array
+          description: >
+            The target string can be constructed by suffixing each
+            `targetDelimiters` entry with its corresponding word in
+            `targetWords` and concatenating the constructed array.
+
+            Please note that the `targetDelimiters` array has one more entry
+            than `targetWords` array which is why the last entry in the array
+            will be the last value of `targetDelimiters`.
+          items:
+            type: string
+      description: >-
+        A machine translation (MT) or a translation memory (TM) match of a
+        source segment.
+      example:
+        - score: 3.4936864e-8
+          align: 0-0 1-1 2-2 3-3
+          targetDelimiters:
+            - ''
+            - ' '
+            - ' '
+            - ''
+            - ''
+          targetWords:
+            - Authentifizierung
+            - nicht
+            - erforderlich
+            - .
+          target: Authentifizierung nicht erforderlich .
+          targetWithTags: Authentifizierung nicht erforderlich.
+          isTMMatch: false
+          provenance: 0 0 0 0
+    TranslationList:
+      type: object
+      properties:
+        untokenizedSource:
+          type: string
+          description: >-
+            The untokenized source segment. Punctuation has not been separated
+            from words.
+          example: Authentication not required.
+        tokenizedSource:
+          type: string
+          description: >-
+            The tokenized source segment. Punctuation has been separated from
+            words.
+          example: Authentication not required .
+        sourceDelimiters:
+          type: array
+          description: >-
+            A format string that indicates, for each word, if the word should be
+            preceded by a space.
+          example:
+            - ''
+            - ' '
+            - ' '
+            - ''
+            - ''
+          items:
+            type: string
+        translation:
+          type: array
+          description: A list of Translation objects.
+          items:
+            $ref: '#/components/schemas/Translation'
+      description: An ranked list of translations and associated metadata.
+    TranslationInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for this translation.
+        fileId:
+          type: integer
+          description: id of the File that is being translated.
+        status:
+          type: string
+          description: >-
+            Status of the translation - `InProgress`, `ReadyForDownload`,
+            `Completed`, `Failed`.
+        createdAt:
+          type: integer
+          description: >-
+            Time when this translation was started, in seconds since the Unix
+            epoch.
+        errorMsg:
+          type: string
+          description: Error message, present when status is `Failed`.
+      description: |
+        Information describing a batch translation process.
+      example:
+        id: 1
+        fileId: 2,
+        status: InProgress
+        createdAt: 1609357135
+    MonitorFileTranslationTypeError:
+      type: object
+      description: >
+        Monitor file translation can have different errors based on reasons
+        explained in the examples.
+      example:
+        Unsupported_file_type:
+          message: Customer gave us garbage.
+        File_extraction_error:
+          message: Customer gave us garbage.
+        No_translatable_content:
+          message: Customer gave us an empty file.
+        Batch_MT_initiation_failure:
+          message: Something is wrong with MT.
+        Batch_MT_response_failure:
+          message: Something is wrong with MT.
+        File_reassembly_error:
+          message: We couldn't put the translated file back together.(okapi error)
+        Billing_error:
+          message: We couldn't log the information about the MT to our billing system.
+        Invalid_memory:
+          message: Something is wrong with the memory.
+        Storage_error:
+          message: Error occurred interacting with file storage.
+    LiltCreateContent:
+      type: object
+      required:
+        - language
+        - template
+        - templateParams
+      properties:
+        name:
+          type: string
+          description: A name for the request content.
+        id:
+          type: integer
+          description: A unique identifier for the generated content.
+        language:
+          type: string
+          description: The language of the content.
+        template:
+          type: string
+          description: The template of the content.
+        templateParams:
+          type: object
+          description: The template parameters of the content.
+          required:
+            - language
+          properties:
+            contentLength:
+              type: integer
+              description: The length of the content.
+            memoryId:
+              type: integer
+              description: The ID referencing a Data Source.
+            language:
+              type: string
+              description: The language of the content.
+            sections:
+              type: array
+              description: The sections of the content.
+              items:
+                type: string
+                description: A section heading of the content.
+            summary:
+              type: string
+              description: The summary of the content.
+        preferences:
+          type: object
+          description: The preferences of the content.
+          properties:
+            tone:
+              type: string
+              description: The tone of the content.
+            styleguide:
+              type: string
+              description: The styleguide of the content.
+      description: |
+        Content Parameters for LiltCreate.
+    LiltCreateContentRequest:
+      type: object
+      required:
+        - language
+        - template
+        - templateParams
+      properties:
+        name:
+          type: string
+          description: A name for the request content.
+        language:
+          type: string
+          description: The language of the content.
+        template:
+          type: string
+          description: The template of the content.
+        templateParams:
+          type: object
+          description: The template parameters of the content.
+          required:
+            - language
+          properties:
+            contentLength:
+              type: integer
+              description: The length of the content.
+            memoryId:
+              type: integer
+              description: The ID referencing a Data Source.
+            language:
+              type: string
+              description: The language of the content.
+            sections:
+              type: array
+              description: The sections of the content.
+              items:
+                type: string
+                description: A section heading of the content.
+            summary:
+              type: string
+              description: The summary of the content.
+        preferences:
+          type: object
+          description: The preferences of the content.
+          properties:
+            tone:
+              type: string
+              description: The tone of the content.
+            styleguide:
+              type: string
+              description: The styleguide of the content.
+      description: |
+        Content Parameters for LiltCreate.
+    WorkflowStageTemplate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The human readable name of a Workflow stage.
+          example: Translate
+        assignmentType:
+          type: string
+          description: An enum to represent all possible types of Workflow stage.
+          example: TRANSLATE
+          enum:
+            - READY_TO_START
+            - TRANSLATE
+            - REVIEW
+            - SECONDARY_REVIEW
+            - DONE
+      description: A single stage within a Workflow Template.
+    WorkflowTemplate:
+      type: object
+      properties:
+        id:
+          type: number
+          description: >-
+            Identifier of a teams Workflow template. Can be used during Job
+            creation for specifying the workflow used for a job or language
+            pair.
+          example: 15
+        name:
+          type: string
+          example: Translate > Review > Customer Review
+        TeamId:
+          type: number
+          description: The name of a given Workflow template.
+          example: 100
+        stages:
+          type: array
+          description: The stages in this workflow template.
+          items:
+            $ref: '#/components/schemas/WorkflowStageTemplate'
+      description: >-
+        A workflow template which defines the workflow's possible steps
+        (combination of Translation, Review and Customer Review).
+    WorkflowStageAssignment:
+      required:
+        - workflowStageTemplateId
+      type: object
+      properties:
+        workflowStageTemplateId:
+          type: integer
+          example: 12345
+        userId:
+          type: integer
+          example: 123
+        email:
+          type: string
+          example: username@domain.com
+      description: >-
+        An assignment object that associates a user to a workflow stage
+        template.
+    Job:
+      type: object
+      properties:
+        name:
+          type: string
+          description: A name for the job.
+          example: My New Job
+        creationStatus:
+          type: string
+          description: >-
+            Status of job creation process that includes PENDING, COMPLETE, and
+            FAILED.
+          example: COMPLETE
+        deliveredAt:
+          type: string
+          format: date-time
+          example: '2021-06-03T13:43:00Z'
+        status:
+          type: string
+          description: Current status of job that includes archived, delivered, and active.
+          example: active
+        due:
+          type: string
+          description: An ISO string date.
+          format: date-time
+          example: '2021-06-03T13:43:00Z'
+        id:
+          type: integer
+          description: An id for the job.
+          example: 241
+        isProcessing:
+          type: integer
+          description: >-
+            Values include `1` while in progress, `0` when idle and `-2` when
+            processing failed.
+          example: 0
+        stats:
+          $ref: '#/components/schemas/JobStats'
+        domains:
+          type: array
+          description: >-
+            Domains associated with this Job. Returned on the `GET
+            /v2/jobs/{jobId}` response so callers can drive domain-specific
+            behaviour (e.g. quality thresholds) without falling back to
+            BigQuery.
+          items:
+            $ref: '#/components/schemas/JobDomain'
+      description: >
+        A Job is a collection of multiple Projects. Each project is specific to
+        a language pair, and is associated with exactly one Memory for that
+        language pair. The Memory association cannot be changed after the
+        Project is created.
+    JobStats:
+      type: object
+      properties:
+        exactWords:
+          type: integer
+          description: Total number of exact words.
+          example: 0
+        fuzzyWords:
+          type: integer
+          description: Total number of fuzzy words.
+          example: 0
+        newWords:
+          type: integer
+          description: Total number of fuzzy words.
+          example: 0
+        numDeliveredProjects:
+          type: integer
+          description: Total number of delivered projects.
+          example: 0
+        numLanguagePairs:
+          type: integer
+          description: Total number of delivered projects.
+          example: 0
+        numProjects:
+          type: integer
+          description: Total number of projects.
+          example: 0
+        percentReviewed:
+          type: integer
+          description: Overall percentage of documents reviewed.
+          example: 0
+        percentTranslated:
+          type: integer
+          description: Overall percentage of documents translated.
+          example: 0
+        projects:
+          type: array
+          items:
+            $ref: '#/components/schemas/JobProject'
+        sourceWords:
+          type: integer
+          description: Total number of source words.
+          example: 0
+        uniqueLanguagePairs:
+          type: integer
+          description: Number of unique language pairs.
+          example: 1
+        uniqueLinguists:
+          type: integer
+          description: Number of unique linguists.
+          example: 1
+        workflowStatus:
+          type: string
+          description: The status of the Workflow for the current job.
+          example: READY_TO_START
+          enum:
+            - READY_TO_START
+            - IN_PROGRESS
+            - DONE
+      description: >
+        A job stats shows an overview of job's statistical data including total
+        number of exact words, fuzzy words, language pairs, projects, etc.
+    JobProject:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: An id for the project.
+        srcLang:
+          type: string
+          description: Source language, an ISO 639-1 language identifier.
+          example: en
+        srcLocale:
+          type: string
+          description: A locale identifier, supported for source language.
+          example: US
+        trgLang:
+          type: string
+          description: Target language, an ISO 639-1 language identifier.
+          example: fr
+        trgLocale:
+          type: string
+          description: A locale identifier, supported for target language.
+          example: CA
+        name:
+          type: string
+          description: A name for the project.
+          example: My new project
+        due:
+          type: string
+          description: An ISO date.
+          example: '2021-10-03T13:43:00.000Z'
+        isComplete:
+          type: boolean
+          description: A state that checks project was completed.
+          example: false
+        isArchived:
+          type: boolean
+          description: The archived state of the project.
+          example: false
+        state:
+          type: string
+          description: >-
+            Current state of the project. Example, backlog, inProgress,
+            inReview, done.
+          example: inProgress
+        numSourceTokens:
+          type: integer
+          description: Total number of source tokens.
+          example: 2134
+        createdAt:
+          type: string
+          description: Time at which the object was created.
+          example: '2021-04-01T13:43:00.000Z'
+        updatedAt:
+          type: string
+          description: Time at which the object was updated.
+          example: '2021-06-03T13:43:00.000Z'
+        isDeleted:
+          type: boolean
+          description: A state that checks project was deleted.
+          example: false
+        memoryId:
+          type: integer
+          description: A unique number identifying the associated Memory.
+          example: 2134
+        workflowStatus:
+          type: string
+          description: The status of the Workflow for the current project.
+          example: READY_TO_START
+          enum:
+            - READY_TO_START
+            - IN_PROGRESS
+            - DONE
+        workflowName:
+          type: string
+          description: >-
+            Human readable name of the workflow associated with the current
+            project.
+          example: Translate > Review > Analyst Review
+      description: >
+        A job project contains project statistical data that belongs to a
+        specific job.
+    JobLeverageStats:
+      type: object
+      properties:
+        sourceWords:
+          type: integer
+          description: Total number of source words.
+          example: 0
+        exactWords:
+          type: integer
+          description: Total number of exact words.
+          example: 0
+        fuzzyWords:
+          type: integer
+          description: Total number of fuzzy words.
+          example: 0
+        newWords:
+          type: integer
+          description: Total number of new words.
+          example: 0
+        projects:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectStats'
+      description: |
+        A job leverage stats object shows an overview of job's statistical data
+        including total number of exact words, fuzzy words, and exact words for
+        the job in total and for each project.
+    LanguagePair:
+      required:
+        - memoryId
+        - trgLang
+      type: object
+      properties:
+        trgLang:
+          type: string
+          description: Target language, an ISO 639-1 language identifier.
+          example: de
+        trgLocale:
+          type: string
+          description: A locale identifier, supported for target language.
+          example: DE
+        dueDate:
+          type: string
+          description: An ISO date.
+          example: '2021-10-03T13:43:00.000Z'
+        memoryId:
+          type: integer
+          description: A unique number identifying the associated Memory.
+          example: 1241
+        externalModelId:
+          type: integer
+          description: >-
+            An optional parameter to specify a third-party model ID to use for
+            translation. This allows you to use external MT providers instead of
+            Lilt's built-in MT system.
+          example: 44
+        pretranslate:
+          type: boolean
+          description: >-
+            Attribute translation authorship of exact matches to the creator of
+            the document being pretranslated.
+        autoAccept:
+          type: boolean
+          description: Accept and lock exact matches.
+          example: true
+        caseSensitive:
+          type: boolean
+          description: Use case sensitive translation memory matching.
+        takeMatchAttribution:
+          type: boolean
+          description: Use MT for unmatched segments.
+          example: true
+        configId:
+          type: integer
+          description: Configuration id
+          example: 2332
+        workflowTemplateId:
+          type: integer
+          description: >-
+            Workflow Template id, to assign a specific Workflow to the project
+            created out of this Language Pair. WorkflowTemplateIds can be
+            retrieved via the /workflows/templates endpoint. If not specified
+            then the Job level workflowTemplateId will be used.
+          example: 14
+        workflowTemplateName:
+          type: integer
+          description: >-
+            Workflow Template Name, when passed with TeamId it allows for an on
+            the fly look up of the correct WorkflowTemplate to use. If
+            workflowTemplateId is passed the workflowTemplateId supercedes other
+            lookups.
+        workflowStageAssignments:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowStageAssignment'
+      description: >
+        A language pair couples the source and target language along with memory
+        and pre-translations settings associated to a project.
+    ProjectStats:
+      required:
+        - exactWords
+        - fuzzyWords
+        - id
+        - newWords
+        - sourceWords
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        sourceWords:
+          type: integer
+          example: 1000
+        exactWords:
+          type: integer
+          example: 800
+        fuzzyWords:
+          type: integer
+          example: 150
+        newWords:
+          type: integer
+          example: 50
+    Project:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: A unique number identifying the Project.
+          example: 448
+        memory_id:
+          type: integer
+          description: A unique number identifying the associated Memory.
+          example: 1234
+        job_id:
+          type: integer
+          description: A unique number identifying the associated Job.
+          example: 1234
+        srclang:
+          type: string
+          description: An ISO 639-1 language identifier.
+          example: en
+        trglang:
+          type: string
+          description: An ISO 639-1 language identifier.
+          example: fr
+        srclocale:
+          type: string
+          description: A locale identifier, supported for srclang.
+          example: US
+        trglocale:
+          type: string
+          description: A locale identifier, supported for trglang.
+          example: FR
+        name:
+          type: string
+          description: A name for the project.
+          example: My New Project
+        state:
+          type: string
+          description: >-
+            The project's state. The possible states are `backlog`,
+            `inProgress`, `inReview`, `inQA`, and `done`.
+          example: backlog
+        due_date:
+          type: integer
+          description: The due date. Measured in seconds since the Unix epoch.
+          example: 1489147692
+        archived:
+          type: boolean
+          description: The archived state of the Project.
+          example: false
+        metadata:
+          type: object
+          properties: {}
+          description: >-
+            A JSON object of key/value string pairs. Stores custom project
+            information.
+          example:
+            connectorType: github
+            notes: example metadata
+        sample_review_percentage:
+          type: integer
+          description: The project's sample review percentage.
+          example: 20
+        created_at:
+          type: integer
+          description: >-
+            Time at which the object was created. Measured in seconds since the
+            Unix epoch.
+          example: 1489147692
+        updated_at:
+          type: integer
+          description: >-
+            Time at which the object was created. Measured in seconds since the
+            Unix epoch.
+          example: 1489147692
+        workflowStatus:
+          type: string
+          description: >-
+            The status of the Workflow for the current project. This may not be
+            present for all project endpoints even with workflows enabled.
+          example: READY_TO_START
+          enum:
+            - READY_TO_START
+            - IN_PROGRESS
+            - DONE
+        document:
+          type: array
+          description: A list of Documents.
+          items:
+            $ref: '#/components/schemas/DocumentWithoutSegments'
+      description: >
+        A Project is a collection of zero or more Documents. It is specific to a
+        language pair, and is associated with exactly one Memory for that
+        language pair. The Memory association cannot be changed after the
+        Project is created.
+    DocumentWithoutSegments:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: A unique number identifying the Document.
+          example: 46530
+        project_id:
+          type: integer
+          description: A unique number identifying the Project.
+          example: 287
+        srclang:
+          type: string
+          description: An ISO 639-1 language identifier.
+          example: en
+        trglang:
+          type: string
+          description: An ISO 639-1 language identifier.
+          example: de
+        name:
+          type: string
+          description: The document name.
+          example: Introduction.xliff
+        import_in_progress:
+          type: boolean
+          description: True if the document is currently being imported
+          example: false
+        import_succeeded:
+          type: boolean
+          description: True if the import process succeeded.
+          example: false
+        import_error_message:
+          type: string
+          description: Error message if `import_succeeded=false`
+          example: Could not parse XML.
+        export_in_progress:
+          type: boolean
+          description: True if the document is currently being exported for download
+          example: false
+        export_succeeded:
+          type: boolean
+          description: True if the export process succeeded.
+          example: false
+        export_error_message:
+          type: string
+          description: Error message if `export_succeeded=false`
+          example: Could not parse XML.
+        is_pretranslating:
+          type: boolean
+          description: True if the document is currently being pretranslated.
+          example: false
+        status:
+          type: object
+          properties:
+            pretranslation:
+              type: string
+              description: ''
+              example: idle
+              enum:
+                - idle
+                - pending
+                - running
+          description: A list of translations for the query term.
+          example:
+            pretranslation: idle
+        translator_email:
+          type: string
+          description: The email of the assigned translator.
+          example: translator@example.com
+        reviewer_email:
+          type: string
+          description: The email of the assigned reviewer.
+          example: reviewer@example.com
+        customer_reviewer_email:
+          type: string
+          description: >-
+            The email of the assigned customer reviewer. Only present if the
+            project was request by id.
+          example: reviewer@example.com
+        created_at:
+          type: integer
+          description: >-
+            Time at which the object was created. Measured in seconds since the
+            Unix epoch.
+          example: 1489147692
+        updated_at:
+          type: integer
+          description: >-
+            Time at which the object was created. Measured in seconds since the
+            Unix epoch.
+          example: 1489147692
+        is_review_complete:
+          type: boolean
+          description: Document review status.
+          example: true
+      description: |
+        A Document is a collection of zero or more Segments.
+    DocumentWithSegments:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: A unique number identifying the Document.
+          example: 46530
+        project_id:
+          type: integer
+          description: A unique number identifying the Project.
+          example: 287
+        srclang:
+          type: string
+          description: An ISO 639-1 language identifier.
+          example: en
+        trglang:
+          type: string
+          description: An ISO 639-1 language identifier.
+          example: de
+        name:
+          type: string
+          description: The document name.
+          example: Introduction.xliff
+        import_in_progress:
+          type: boolean
+          description: True if the document is currently being imported
+          example: false
+        import_succeeded:
+          type: boolean
+          description: True if the import process succeeded.
+          example: false
+        import_error_message:
+          type: string
+          description: Error message if `import_succeeded=false`
+          example: Could not parse XML.
+        export_in_progress:
+          type: boolean
+          description: True if the document is currently being exported for download
+          example: false
+        export_succeeded:
+          type: boolean
+          description: True if the export process succeeded.
+          example: false
+        export_error_message:
+          type: string
+          description: Error message if `export_succeeded=false`
+          example: Could not parse XML.
+        is_pretranslating:
+          type: boolean
+          description: True if the document is currently being pretranslated.
+          example: false
+        status:
+          type: object
+          properties:
+            pretranslation:
+              type: string
+              description: ''
+              example: idle
+              enum:
+                - idle
+                - pending
+                - running
+          description: A list of translations for the query term.
+          example:
+            pretranslation: idle
+        translator_email:
+          type: string
+          description: The email of the assigned translator.
+          example: translator@example.com
+        reviewer_email:
+          type: string
+          description: The email of the assigned reviewer.
+          example: reviewer@example.com
+        created_at:
+          type: integer
+          description: >-
+            Time at which the object was created. Measured in seconds since the
+            Unix epoch.
+          example: 1489147692
+        updated_at:
+          type: integer
+          description: >-
+            Time at which the object was created. Measured in seconds since the
+            Unix epoch.
+          example: 1489147692
+        is_review_complete:
+          type: boolean
+          description: Document review status.
+          example: true
+        segments:
+          type: array
+          description: A list of Segments.
+          items:
+            $ref: '#/components/schemas/Segment'
+      description: |
+        A Document is a collection of zero or more Segments.
+    Segment:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: A unique number identifying the Segment.
+          example: 84480010
+        created_at:
+          type: integer
+          description: >-
+            Time at which the object was created. Measured in seconds since the
+            Unix epoch.
+          example: 1489147692
+        updated_at:
+          type: integer
+          description: >-
+            Time at which the object was created. Measured in seconds since the
+            Unix epoch.
+          example: 1489147692
+        document_id:
+          type: integer
+          description: A unique Document identifier.
+          example: 1234
+        memory_id:
+          type: integer
+          description: The Memory with which this Segment is associated.
+          example: 5678
+        source:
+          type: string
+          description: The source string.
+          example: The red bus.
+        srclang:
+          type: string
+          description: An ISO 639-1 language code.
+          example: en
+        target:
+          type: string
+          description: The target string.
+          example: Le bus rouge.
+        trglang:
+          type: string
+          description: An ISO 639-1 language code.
+          example: fr
+        is_confirmed:
+          type: boolean
+          description: The confirmation status.
+          example: true
+        is_reviewed:
+          type: boolean
+          description: The review status.
+          example: true
+      description: >
+        A Segment is a source string and, optionally, its translation. A Segment
+        can be associated with both a Memory and a Document. The Segment object
+        contains additional metadata about the source and target strings.
+    SourceFile:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: A unique number identifying the SourceFile.
+          example: 46530
+        name:
+          type: string
+          description: The file name.
+          example: en_US.json
+        file_hash:
+          type: string
+          description: >-
+            A unique hash value associated with the file. An MD5 hash of the
+            file content will be used by default.
+          example: 3858f62230ac3c915f300c664312c63f
+        detected_lang:
+          type: string
+          description: Language associated with the file.
+          example: de
+        detected_lang_confidence:
+          type: number
+          description: Confidence score for the language associated with the file.
+          example: 0.7
+        category:
+          type: string
+          description: >-
+            The category of the file. The options are `REFERENCE`, or `API`. The
+            default is API. Files with the `REFERENCE` category will be
+            displayed as reference material.
+          example: REFERENCE
+        labels:
+          type: array
+          description: The list of labels associated with the file.
+          example: []
+          items:
+            type: string
+        created_at:
+          type: string
+          description: Time at which the object was created.
+          format: date-time
+          example: '2019-10-16T22:12:34Z'
+        updated_at:
+          type: string
+          description: Time at which the object was created.
+          format: date-time
+          example: '2019-10-16T22:12:34Z'
+      description: >-
+        A SourceFile is an unprocessed source file that can later be added to a
+        project.
+    webhook_response:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier for the webhook configuration.
+          example: 12345
+        webhookName:
+          type: string
+          description: The name of the webhook configuration.
+        webhookUrl:
+          type: string
+          format: uri
+          description: The URL to which the webhook notifications will be sent.
+        eventType:
+          type: array
+          items:
+            type: string
+            enum:
+              - JOB_DELIVER
+              - JOB_UPDATE
+              - PROJECT_DELIVER
+              - PROJECT_UPDATE
+              - INSTANT_TRANSLATE_COMPLETED
+              - INSTANT_TRANSLATE_FAILED
+          description: The list of event types that will trigger the webhook notification.
+      required:
+        - id
+        - webhookName
+        - webhookUrl
+        - eventType
+    create_webhook_options:
+      type: object
+      properties:
+        webhookName:
+          type: string
+          description: The name of the webhook configuration.
+        webhookUrl:
+          type: string
+          format: uri
+          description: The URL to which the webhook notifications will be sent.
+        eventType:
+          type: array
+          items:
+            type: string
+            enum:
+              - JOB_DELIVER
+              - JOB_UPDATE
+              - PROJECT_DELIVER
+              - PROJECT_UPDATE
+              - INSTANT_TRANSLATE_COMPLETED
+              - INSTANT_TRANSLATE_FAILED
+          description: The list of event types that will trigger the webhook notification.
+      required:
+        - webhookName
+        - webhookUrl
+        - eventType
+    Domain:
+      type: object
+      properties:
+        domainId:
+          type: integer
+          format: int32
+          description: The unique identifier for the domain.
+          example: 123
+        domainName:
+          type: string
+          description: The name of the domain.
+          example: Example Domain
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/Model'
+          description: The models associated with the domain.
+          example:
+            - id: 456
+              name: Example Model
+              provider: Google Translate
+              status: Active
+              srcLang: en
+              trgLang: es
+              srcLocale: US
+              trgLocale: ES
+        filterConfigs:
+          type: array
+          items:
+            $ref: '#/components/schemas/FilterConfig'
+          description: The filter configurations associated with the domain.
+          example:
+            - id: 789
+              isDefault: true
+              filterConfig: Example Filter Config
+              filterName: Example Filter
+              configName: Example Config Name
+              configDescription: Example Config Description
+              subfilters: '{}'
+              segmentationConfigSetting: SENTENCE
+              srx: Example SRX
+              segmentationConfigName: Example Segmentation Config
+              domains:
+                - id: 101
+                  name: Example Domain Ref
+              createdAt: '2024-01-01T00:00:00Z'
+              updatedAt: '2024-01-02T00:00:00Z'
+              default: true
+        domainMetadata:
+          type: array
+          items:
+            $ref: '#/components/schemas/DomainMetadata'
+          description: Metadata associated with the domain.
+          example:
+            - id: 131
+              key: Example Key
+              value: Example Value
+      required:
+        - domainId
+        - domainName
+        - models
+        - filterConfigs
+        - domainMetadata
+    DomainList:
+      type: object
+      properties:
+        items:
+          type: array
+          description: The list of domains in the response.
+          items:
+            $ref: '#/components/schemas/Domain'
+          example:
+            - domainId: 123
+              domainName: Example Domain
+              models:
+                - id: 456
+                  name: Example Model
+                  provider: Google Translate
+                  status: Active
+                  srcLang: en
+                  trgLang: es
+                  srcLocale: US
+                  trgLocale: ES
+              filterConfigs:
+                - id: 789
+                  isDefault: true
+                  filterConfig: Example Filter Config
+                  filterName: Example Filter
+                  configName: Example Config Name
+                  configDescription: Example Config Description
+                  subfilters: Example Subfilters
+                  segmentationConfigSetting: SENTENCE
+                  srx: Example SRX
+                  segmentationConfigName: Example Segmentation Config
+                  domains:
+                    - id: 101
+                      name: Example Domain Ref
+                  createdAt: '2024-01-01T00:00:00Z'
+                  updatedAt: '2024-01-02T00:00:00Z'
+                  default: true
+              domainMetadata:
+                - id: 131
+                  key: Example Key
+                  value: Example Value
+        size:
+          type: integer
+          description: The total number of domains in the list.
+          format: int32
+          example: 1
+      required:
+        - items
+        - size
+    Model:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: The unique identifier for the model.
+          example: 456
+        name:
+          type: string
+          description: The name of the model.
+          example: Example Model
+        provider:
+          type: string
+          description: The provider of the model.
+          example: Google Translate
+        status:
+          type: string
+          description: The status of the model.
+          example: Active
+        srcLang:
+          type: string
+          description: The source language of the model.
+          example: en
+        trgLang:
+          type: string
+          description: The target language of the model.
+          example: es
+        srcLocale:
+          type: string
+          description: The source locale of the model.
+          example: en-US
+        trgLocale:
+          type: string
+          description: The target locale of the model.
+          example: es-ES
+    FilterConfig:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: The unique identifier for the filter configuration.
+          example: 789
+        isDefault:
+          type: boolean
+          description: Indicates if the filter configuration is the default.
+          example: true
+        filterConfig:
+          type: string
+          description: The filter configuration.
+          example: Example Filter Config
+        filterName:
+          type: string
+          description: The name of the filter.
+          example: Example Filter
+        configName:
+          type: string
+          description: The name of the configuration.
+          example: Example Config Name
+        configDescription:
+          type: string
+          description: The description of the configuration.
+          example: Example Config Description
+        subfilters:
+          type: string
+          description: The subfilters.
+          example: Example Subfilters
+        segmentationConfigSetting:
+          type: string
+          description: The segmentation configuration setting.
+          enum:
+            - SENTENCE
+          example: SENTENCE
+        srx:
+          type: string
+          description: The SRX (Segmentation Rules eXchange) data.
+          example: Example SRX
+        segmentationConfigName:
+          type: string
+          description: The name of the segmentation configuration.
+          example: Example Segmentation Config
+        domains:
+          type: array
+          items:
+            $ref: '#/components/schemas/DomainReference'
+          description: The domains associated with the filter configuration.
+          example:
+            - id: 101
+              name: Example Domain Ref
+        createdAt:
+          type: string
+          format: date-time
+          description: The creation timestamp.
+          example: '2024-01-01T00:00:00Z'
+        updatedAt:
+          type: string
+          format: date-time
+          description: The last update timestamp.
+          example: '2024-01-02T00:00:00Z'
+        default:
+          type: boolean
+          description: Indicates if the filter configuration is the default.
+          example: true
+    DomainMetadata:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: The unique identifier for the metadata.
+          example: 131
+        key:
+          type: string
+          description: The key of the metadata.
+          example: Example Key
+        value:
+          type: string
+          description: The value of the metadata.
+          example: Example Value
+    DomainReference:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: The unique identifier for the domain.
+          example: 101
+        name:
+          type: string
+          description: The name of the domain.
+          example: Example Domain Ref
+    JobDomain:
+      type: object
+      description: A domain assigned to a Job.
+      properties:
+        id:
+          type: integer
+          description: A unique number identifying the Domain.
+          example: 12
+        name:
+          type: string
+          description: The Domain name.
+          example: Marketing
+      required:
+        - id
+        - name
+  responses:
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/octet-stream:
+          schema:
+            type: string
+        text/plain:
+          schema:
+            type: string

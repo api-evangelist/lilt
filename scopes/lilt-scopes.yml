@@ -1,0 +1,56 @@
+generated: '2026-07-19'
+method: searched
+source: https://mcp.lilt.com/.well-known/oauth-authorization-server
+docs: https://support.lilt.com/kb/LILT-mcp
+description: >-
+  The LILT REST API at api.lilt.com does NOT use OAuth — it authenticates with
+  an organization API key over HTTP Basic (or a `key` query parameter), so it
+  has no scope surface (see authentication/lilt-authentication.yml). The OAuth
+  surface documented here belongs to LILT's hosted remote MCP server at
+  mcp.lilt.com, whose RFC 8414 authorization-server metadata was fetched live.
+  Authorization is delegated to WorkOS AuthKit; the advertised scopes are the
+  standard OIDC set, so LILT does not expose per-capability translation scopes —
+  tool-level authorization is enforced by the MCP server, not by scope.
+applies_to: LILT MCP server (https://mcp.lilt.com/mcp)
+schemes:
+- name: MCPOAuth
+  type: oauth2
+  source: well-known/lilt-mcp-oauth-authorization-server.json
+  issuer: https://blissful-celebration-62.authkit.app
+  dynamic_client_registration: https://blissful-celebration-62.authkit.app/oauth2/register
+  jwks_uri: https://blissful-celebration-62.authkit.app/oauth2/jwks
+  introspection_endpoint: https://blissful-celebration-62.authkit.app/oauth2/introspection
+  code_challenge_methods_supported: [S256]
+  token_endpoint_auth_methods_supported: [none, client_secret_post, client_secret_basic]
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://blissful-celebration-62.authkit.app/oauth2/authorize
+    tokenUrl: https://blissful-celebration-62.authkit.app/oauth2/token
+  - flow: deviceCode
+    deviceAuthorizationUrl: https://blissful-celebration-62.authkit.app/oauth2/device_authorization
+    tokenUrl: https://blissful-celebration-62.authkit.app/oauth2/token
+  - flow: refreshToken
+    tokenUrl: https://blissful-celebration-62.authkit.app/oauth2/token
+scopes:
+- scope: openid
+  description: OIDC — issue an ID token identifying the LILT MCP app user.
+  flows: [authorizationCode]
+  sources: [well-known/lilt-mcp-oauth-authorization-server.json]
+- scope: profile
+  description: OIDC — access the user's basic profile claims.
+  flows: [authorizationCode]
+  sources: [well-known/lilt-mcp-oauth-authorization-server.json]
+- scope: email
+  description: OIDC — access the user's email address claim.
+  flows: [authorizationCode]
+  sources: [well-known/lilt-mcp-oauth-authorization-server.json]
+- scope: offline_access
+  description: Issue a refresh token so the MCP host can act without re-prompting.
+  flows: [authorizationCode, refreshToken]
+  sources: [well-known/lilt-mcp-oauth-authorization-server.json]
+notes:
+- >-
+  No LILT-specific (translation, job, model) scopes are advertised. Agent
+  capability is bounded by the MCP tool set in mcp/lilt-mcp.yml, not by scope.
+- >-
+  MCP app accounts at mcp.lilt.com are separate from lilt.com platform accounts.

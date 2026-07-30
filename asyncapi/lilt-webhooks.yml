@@ -1,0 +1,93 @@
+generated: '2026-07-19'
+method: searched
+source: https://support.lilt.com/developers/guides/webhooks
+spec_type: Webhooks
+description: >-
+  LILT documents a webhook event surface but publishes no AsyncAPI document
+  (searched the docs, the llms.txt index, github.com/lilt and
+  /asyncapi.yaml — none found). This artifact captures the webhook catalog
+  verbatim from the published guide. Webhook configurations are managed through
+  the REST API under /v3/connectors/configuration/webhooks.
+delivery:
+  transport: HTTP POST
+  target: subscriber-supplied URL
+  payload: JSON object; shape varies by event type.
+  signing: null
+  retries: null
+  note: >-
+    LILT does not publish a webhook signature/verification scheme, a retry
+    policy, or delivery guarantees.
+management:
+  api_base: https://api.lilt.com/v3/connectors/configuration/webhooks
+  operations:
+  - openapi/lilt-openapi-original.yml#webhooksCreate
+  - openapi/lilt-openapi-original.yml#webhooksGetMany
+  - openapi/lilt-openapi-original.yml#webhooksGet
+  - openapi/lilt-openapi-original.yml#webhooksUpdate
+  - openapi/lilt-openapi-original.yml#services.configuration_api.webhooks.delete
+  config_schema: 'components.schemas.create_webhook_options (webhookName, webhookUrl, eventType)'
+  note: >-
+    One event type per webhook configuration. LILT recommends a separate
+    configuration per event type pointing at distinct endpoints so the consumer
+    does not have to infer the event from payload shape.
+events:
+- name: JOB_UPDATE
+  description: Triggered when a job is updated.
+  payload_fields:
+    OrganizationId: integer — the organization id
+    due: string — due date, ISO 8601
+    id: integer — the job id
+    isDelivered: integer — delivery status (0 = not delivered)
+    name: string — the job name
+- name: JOB_DELIVER
+  description: Triggered when a job is delivered.
+  payload_fields:
+    OrganizationId: integer — the organization id
+    deliveredAt: string — delivery timestamp, ISO 8601
+    due: string — due date, ISO 8601
+    id: integer — the job id
+    isDelivered: integer — delivery status (1 = delivered)
+    name: string — the job name
+- name: PROJECT_UPDATE
+  description: Triggered when a project is updated.
+  payload_fields:
+    OrganizationId: integer — the organization id
+    id: integer — the project id
+    name: string — the project name
+    due: string — due date, ISO 8601
+- name: PROJECT_DELIVER
+  description: Triggered when a project is delivered.
+  payload_fields:
+    OrganizationId: integer — the organization id
+    id: integer — the project id
+- name: INSTANT_TRANSLATE_COMPLETED
+  description: Triggered when an instant file translation task completes successfully.
+  payload_fields:
+    eventType: string — the event type
+    translationId: integer — instant file translation id
+    fileId: integer — id of the file translated
+- name: INSTANT_TRANSLATE_FAILED
+  description: Triggered when an instant file translation task fails.
+  payload_fields:
+    eventType: string — the event type
+    translationId: integer — instant file translation id
+    fileId: integer — id of the file translated
+event_type_discrimination:
+  note: >-
+    Instant-translate events carry an explicit `eventType` field. Job and
+    project events do NOT, so the consumer must infer the type from payload
+    shape.
+  rules:
+  - if: isDelivered = 1 and deliveredAt present
+    then: JOB_DELIVER
+  - if: isDelivered = 0 and name (job name) present
+    then: JOB_UPDATE
+  - if: name (project name) and due present, but no isDelivered
+    then: PROJECT_UPDATE
+  - if: only OrganizationId and id present
+    then: PROJECT_DELIVER
+asyncapi_document: null
+asyncapi_searched:
+- https://support.lilt.com/llms.txt
+- https://support.lilt.com/developers/guides/webhooks
+- https://github.com/lilt

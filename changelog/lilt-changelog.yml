@@ -1,0 +1,112 @@
+generated: '2026-07-19'
+method: searched
+source: https://support.lilt.com/kb/what-s-new-in-the-lilt-platform
+description: >-
+  LILT publishes a dated Product Updates feed grouped by month covering the SaaS
+  platform, the API and the connector estate, plus separate numbered release
+  notes for the self-managed (on-prem) LILT platform. This artifact captures the
+  recent window; the live feed is the source of truth.
+scheme:
+  api: uri-path major versions (v2, v3) — the SaaS API is not semver-tagged.
+  platform: 'semver-style numbered releases for self-managed LILT (5.1, 5.2, 5.3).'
+  cadence: monthly product updates; quarterly numbered on-prem releases.
+current:
+  api_versions: [v2, v3]
+  self_managed_release: '5.3'
+feeds:
+  product_updates: https://support.lilt.com/kb/what-s-new-in-the-lilt-platform
+  infrastructure_release_notes: https://support.lilt.com/kb/infrastructure-release-notes
+entries:
+- date: '2026-07'
+  breaking: true
+  highlights:
+  - >-
+    API rate limits — per-organization fair-use limits (300 requests/min and
+    2,500,000 characters/min) took effect 2026-06-30 on POST
+    /v2/documents/pretranslate, POST /v2/translate/file and MT-invoking POST
+    /v2/documents/files. Connectors are out of scope.
+  - '[Beta] Amplience connector.'
+  - '[Beta] Inriver connector.'
+  - '[Beta] AEM connector now translates DAM document assets (Word, Excel, PowerPoint, text, HTML).'
+- date: '2026-06'
+  breaking: false
+  highlights:
+  - Secure enterprise controls and advanced tooling.
+  - DOCX download for the PDF workflow (Instant and Verified).
+  - AI QA interface refresh.
+  - Usage analytics.
+  - AEM Cloud Connector v1.7.1.
+  - Updated quality analytics.
+  - API access token improvements.
+  - Adobe Workfront connector.
+- date: '2026-05'
+  breaking: false
+  highlights:
+  - >-
+    Job Form Editor — organization- and domain-level custom job properties
+    (billing codes, PO numbers, department) on the job submission flow.
+  - >-
+    Unified PDF translation pipeline — text-based and scanned PDFs now follow
+    one path; the separate browser-side OCR step at job creation is gone.
+  - Sanity connector enhancements (finer content selection, search, pagination).
+- date: '2026-04'
+  breaking: false
+  highlights:
+  - >-
+    LILT V4.0 — language support doubled with 67 new languages including
+    low-resource languages.
+  - New platform home page featuring LILT Assist.
+  - AEM Connector Cloud 1.5.1 — submission performance and reliability.
+  - Usage analytics (word volumes, throughput, user activity).
+  - Unified Job Submission updates — editable and filterable job custom properties.
+  - Instant translation reengineered for a 7.5x speed increase.
+- date: '2026-03'
+  breaking: true
+  highlights:
+  - >-
+    API: job creation now supports the full range of job submission fields,
+    including job-level instructions and custom metadata (POST /v2/jobs).
+  - Third-party model provider support for Type & Translate.
+  - AEM Cloud Connector v1.5.0 supports Content Fragment Variations.
+  - 'DEPRECATION: Reviewed and Unreviewed translation memory states deprecated.'
+  - Instant Translate supports 99% matches.
+- date: '2026-02'
+  breaking: false
+  highlights:
+  - Unified Job Submission.
+  - Job-level custom properties.
+  - Secure file delivery.
+  - Detect and redact sensitive data (PII).
+  - Webhooks for instant translation alerts (INSTANT_TRANSLATE_COMPLETED / _FAILED).
+  - Salesforce Commerce Cloud connector.
+  - LILT listing on the Anthropic marketplace.
+- date: '2025-12'
+  breaking: false
+  highlights:
+  - Connector updates and TM editor improvements.
+  - LILT platform localized into German.
+  - Third-party model provider updates; reorganized domain navigation.
+- date: '2025-11'
+  breaking: false
+  highlights:
+  - AI QA.
+  - AI Review with AI-optimized workflows; Anthropic Claude added as a review provider.
+  - Separate secondary review assignment email; improved TMX export.
+numbered_releases:
+- version: '5.3'
+  label: 2025 Q4 Release
+  url: https://support.lilt.com/kb/5.3.0ReleaseNotes.md
+  highlights:
+  - Multimodal neural OCR service for image and scanned-PDF translation.
+  - >-
+    LLM inference split into dedicated services (Llama vLLM, Whisper
+    speech-to-text).
+- version: '5.2'
+  label: 2025 Q2-Q3 Release
+  url: https://support.lilt.com/kb/2025Q2ReleaseNotes.md
+- version: '5.1'
+  label: 2025 Q1 Release
+  url: https://support.lilt.com/kb/2025-q1-lilt-5-1-0-release-notes.md
+- version: '2024 Q4'
+  label: 2024 Q4 Release Notes
+  url: https://support.lilt.com/kb/2024-q4-release-what-s-new-in-the-lilt-platform.md

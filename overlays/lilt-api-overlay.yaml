@@ -1,0 +1,114 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the LILT API
+  version: 1.0.0
+extends: openapi/lilt-openapi-original.yml
+x-generated: '2026-07-19'
+x-method: generated
+x-source: >-
+  Generated from the artifacts harvested in this repo. Captures API Evangelist
+  enhancements over the provider's published OpenAPI 3.0.3 bundle without
+  mutating it.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-slug: lilt
+    x-apievangelist-artifacts:
+      conventions: conventions/lilt-conventions.yml
+      errors: errors/lilt-problem-types.yml
+      lifecycle: lifecycle/lilt-lifecycle.yml
+      rate_limits: rate-limits/lilt-rate-limits.yml
+      authentication: authentication/lilt-authentication.yml
+      data_model: data-model/lilt-data-model.yml
+      webhooks: asyncapi/lilt-webhooks.yml
+      mcp: mcp/lilt-mcp.yml
+      packages: packages/lilt-packages.yml
+      skills: skills/_index.yml
+    x-apievangelist-notes:
+    - >-
+      The spec declares no tags[] at the document level even though every
+      operation is tagged; the tag descriptions below supply the missing
+      taxonomy.
+    - >-
+      45 of 65 operations declare a bare 401 with no description or schema, and
+      no operation declares a 400 validation response.
+    - No idempotency contract exists; write operations are not safe to blindly retry.
+- target: $.servers
+  update:
+  - url: https://api.lilt.com
+    description: Production. The API responds only to HTTPS requests.
+- target: $
+  update:
+    tags:
+    - name: Languages
+      description: The languages and language pairs LILT can translate between.
+    - name: Memories
+      description: >-
+        Translation memories — the per-language-pair training and leverage
+        substrate, plus termbase import/export.
+    - name: Segments
+      description: Source/target sentence pairs inside a memory or document.
+    - name: Translate
+      description: Adaptive machine translation of strings and of uploaded files.
+    - name: Create
+      description: Lilt Create — generation of new multilingual content from templates.
+    - name: Workflows
+      description: Workflow templates that sequence AI, translator and reviewer stages.
+    - name: Jobs
+      description: Jobs — the top-level unit of submission, delivery, archiving and export.
+    - name: Projects
+      description: Per-language-pair collections of documents bound to one memory.
+    - name: Documents
+      description: Translatable files inside a project, with async import/export/pretranslate state.
+    - name: Files
+      description: Unprocessed uploaded assets, not yet bound to a project or memory.
+    - name: Uploads
+      description: Cloud and multipart upload orchestration for large files.
+    - name: Webhook Configuration
+      description: Event subscriptions binding an event type to a callback URL.
+    - name: Domains
+      description: Organizational grouping of custom models, filter configuration and metadata.
+- target: $.components.securitySchemes.BasicAuth
+  update:
+    description: >-
+      Supply the organization API key as BOTH the HTTP Basic username and the
+      password. Requires the Business plan. Keys are issued in the LILT web app
+      under Manage > API keys.
+- target: $.components.securitySchemes.ApiKeyAuth
+  update:
+    description: >-
+      Development-only alternative to HTTP Basic. LILT documents the `key` query
+      parameter as less secure and not recommended for production, since the key
+      is exposed in URLs, logs and referrers.
+    x-apievangelist-discouraged: true
+- target: $.paths['/v2/documents/pretranslate'].post
+  update:
+    x-rate-limited: true
+    x-rate-limits:
+      requests_per_minute: 300
+      characters_per_minute: 2500000
+      scope: organization
+      effective: '2026-06-30'
+      docs: https://support.lilt.com/developers/guides/rate-limits
+- target: $.paths['/v2/translate/file'].post
+  update:
+    x-rate-limited: true
+    x-rate-limits:
+      requests_per_minute: 300
+      characters_per_minute: 2500000
+      scope: organization
+      effective: '2026-06-30'
+      docs: https://support.lilt.com/developers/guides/rate-limits
+- target: $.paths['/v2/documents/files'].post
+  update:
+    x-rate-limited: conditional
+    x-rate-limits:
+      requests_per_minute: 300
+      characters_per_minute: 2500000
+      scope: organization
+      effective: '2026-06-30'
+      note: >-
+        Counts against the character-throughput limit only when the upload
+        invokes machine translation. A non-MT upload is measured as zero
+        characters.
+      docs: https://support.lilt.com/developers/guides/rate-limits

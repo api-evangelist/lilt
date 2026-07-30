@@ -1,0 +1,183 @@
+generated: '2026-07-19'
+method: derived
+source: >-
+  openapi/lilt-openapi-original.yml — components.schemas $ref links and
+  id-reference fields across 33 schemas and 65 operations.
+description: >-
+  The LILT domain graph. An Organization owns Jobs; a Job fans out into one
+  Project per language pair; a Project holds Documents and is bound to exactly
+  one Memory; Documents hold Segments. Memory is the training/leverage substrate
+  shared by translation, and Domain groups Models and filter configuration.
+  Files and Uploads are a separate pre-processing lane — unprocessed assets that
+  later feed the project/document workflow.
+entities:
+- name: Job
+  schema: components.schemas.Job
+  description: >-
+    A collection of Projects. Spans multiple language pairs; the unit of
+    submission, delivery, archiving and export.
+  key_fields: [id, name, status, creationStatus, due, deliveredAt, isProcessing, stats, domains]
+  operations: [createJob, retrieveAllJobs, getJob, updateJob, deleteJob, archiveJob, unarchiveJob,
+    deliverJob, reactivateJob, exportJob, downloadJob, getJobLeverageStats]
+  relationships:
+  - type: has_many
+    target: JobProject
+    via: stats.projects
+  - type: has_many
+    target: Domain
+    via: domains (JobDomain)
+  - type: has_one
+    target: JobStats
+    via: stats
+  - type: has_one
+    target: WorkflowTemplate
+    via: LanguagePair.workflowTemplateId
+- name: Project
+  schema: components.schemas.Project
+  description: >-
+    A collection of Documents for one language pair, associated with exactly one
+    Memory.
+  key_fields: [id, memory_id, job_id, srclang, trglang, name, state, due_date, archived, metadata,
+    sample_review_percentage, workflowStatus]
+  operations: [createProject, getProjects, deleteProject]
+  relationships:
+  - type: belongs_to
+    target: Job
+    via: job_id
+  - type: belongs_to
+    target: Memory
+    via: memory_id
+  - type: has_many
+    target: DocumentWithSegments
+    via: document
+- name: Document
+  schema: components.schemas.DocumentWithSegments / DocumentWithoutSegments
+  description: >-
+    A translatable file inside a Project. Carries async state flags for import,
+    export and pretranslation.
+  key_fields: [id, project_id, srclang, trglang, name, status, import_in_progress, import_succeeded,
+    export_in_progress, export_succeeded, is_pretranslating, is_review_complete, translator_email,
+    reviewer_email, customer_reviewer_email]
+  operations: [uploadDocument, downloadDocument, pretranslateDocuments]
+  relationships:
+  - type: belongs_to
+    target: Project
+    via: project_id
+  - type: has_many
+    target: Segment
+    via: segments
+- name: Segment
+  schema: components.schemas.Segment
+  description: >-
+    A source/target pair — the atom that trains the MT system and populates the
+    translation memory.
+  key_fields: [id, document_id, memory_id, source, srclang, target, trglang, is_confirmed, is_reviewed]
+  operations: [createSegment, getSegment, updateSegment, deleteSegment, tagSegment, unlockSegments,
+    deleteSegmentFromMemory]
+  relationships:
+  - type: belongs_to
+    target: Document
+    via: document_id
+  - type: belongs_to
+    target: Memory
+    via: memory_id
+- name: Memory
+  schema: components.schemas.Memory
+  description: >-
+    A container collecting source/target sentences for one language pair. Trains
+    the MT system, populates the TM and updates the lexicon. Private to the
+    account — data is not shared across organizations.
+  key_fields: [id, srclang, trglang, srclocale, trglocale, name, is_processing, version, resources]
+  operations: [createMemory, getMemory, updateMemory, deleteMemory, queryMemory, importMemoryFile,
+    exportTermbase, downloadTermbase]
+  relationships:
+  - type: has_many
+    target: Segment
+    via: memory_id
+  - type: has_many
+    target: TranslationMemoryEntry
+    via: queryMemory result
+- name: Domain
+  schema: components.schemas.Domain
+  description: >-
+    An organizational grouping that binds custom models, file filter
+    configuration and metadata. Served under /v3.
+  key_fields: [domainId, domainName, models, filterConfigs, domainMetadata]
+  operations: [getDomains]
+  relationships:
+  - type: has_many
+    target: Model
+    via: models
+  - type: has_many
+    target: FilterConfig
+    via: filterConfigs
+  - type: has_many
+    target: DomainMetadata
+    via: domainMetadata
+- name: Model
+  schema: components.schemas.Model
+  description: A trained translation model for a language pair, LILT-hosted or third-party.
+  key_fields: [id, name, provider, status, srcLang, trgLang, srcLocale, trgLocale]
+  relationships:
+  - type: belongs_to
+    target: Domain
+    via: models
+- name: SourceFile
+  schema: components.schemas.SourceFile
+  description: >-
+    An unprocessed uploaded asset, not yet associated with a project or memory.
+    Feeds the project/document workflow or instant file translation.
+  key_fields: [id, name, file_hash, detected_lang, detected_lang_confidence, category, labels]
+  operations: [uploadFile, getFiles, deleteFile, download, addLabel, removeLabel]
+  relationships:
+  - type: has_many
+    target: TranslationInfo
+    via: fileId
+- name: TranslationInfo
+  schema: components.schemas.TranslationInfo
+  description: A machine-translation task over an uploaded File.
+  key_fields: [id, fileId, status, createdAt, errorMsg]
+  operations: [batchTranslateFile, monitorFileTranslation, downloadFile]
+  relationships:
+  - type: belongs_to
+    target: SourceFile
+    via: fileId
+- name: WorkflowTemplate
+  schema: components.schemas.WorkflowTemplate
+  description: >-
+    A named sequence of stages (AI, translator, reviewer) that a Job's language
+    pair is run through.
+  key_fields: [id, name, TeamId, stages]
+  operations: [getWorkflowTemplates]
+  relationships:
+  - type: has_many
+    target: WorkflowStageTemplate
+    via: stages
+  - type: has_many
+    target: WorkflowStageAssignment
+    via: LanguagePair.workflowStageAssignments
+- name: LiltCreateContent
+  schema: components.schemas.LiltCreateContent
+  description: Generated multilingual content produced by Lilt Create from a template.
+  key_fields: [id, name, language, template, templateParams, preferences]
+  operations: [generateLiltCreateContent, getLiltCreateContent, getLiltCreateById, updateLiltCreateContent,
+    deleteLiltCreateContent]
+- name: WebhookConfiguration
+  schema: components.schemas.webhook_response
+  description: A subscription binding one event type to a callback URL for the organization.
+  key_fields: [id, webhookName, webhookUrl, eventType]
+  operations: [webhooksCreate, webhooksGetMany, webhooksGet, webhooksUpdate]
+  relationships:
+  - type: references
+    target: Job
+    via: 'event payloads (JOB_UPDATE, JOB_DELIVER)'
+  - type: references
+    target: Project
+    via: 'event payloads (PROJECT_UPDATE, PROJECT_DELIVER)'
+  detail: asyncapi/lilt-webhooks.yml
+id_conventions:
+  format: >-
+    All entity ids are integers, not prefixed strings. There is no type-encoded
+    id prefix scheme, so ids are only meaningful alongside their entity type.
+  language_tags: IETF BCP 47 for srclang/trglang; separate srclocale/trglocale fields carry the locale.
+render: null

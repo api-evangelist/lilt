@@ -1,0 +1,92 @@
+generated: '2026-07-19'
+method: derived
+source: >-
+  openapi/lilt-openapi-original.yml (every 4xx/5xx response across 65
+  operations), enriched from
+  https://support.lilt.com/developers/guides/rate-limits.
+format: json
+rfc9457: false
+description: >-
+  LILT does not publish an RFC 9457 problem-details contract or a numbered error
+  registry. Errors are plain application/json with a single `message` string
+  (components.schemas.Error); the 429 rate-limit response is the one exception
+  and adds a machine-readable `error` code. The catalog below is derived from
+  the declared responses in the published OpenAPI.
+envelope:
+  schema: components.schemas.Error
+  fields:
+    message: Human-readable description of the failure.
+  example:
+    message: Memory not found.
+problems:
+- status: 401
+  title: Unauthorized
+  meaning: >-
+    Missing or invalid organization API key. Declared on 45 of the 65 published
+    operations — it is the default failure mode for every authenticated call.
+  remediation: >-
+    Send the API key as both the HTTP Basic username and password (or, for
+    development only, as the `key` query parameter). Confirm the key is active
+    in Manage > API keys and that the organization is on the Business plan.
+  operations_count: 45
+  source_operation: openapi/lilt-openapi-original.yml#getLanguages
+- status: 403
+  title: Forbidden
+  meaning: The authenticated user does not have permission for the provided file.
+  remediation: >-
+    Verify the file belongs to your organization and that your role grants
+    access. Resources created in the web app under a different account may need
+    to be explicitly shared.
+  source_operation: openapi/lilt-openapi-original.yml#getFiles
+- status: 404
+  title: Memory not found
+  meaning: The requested Memory does not exist or is not visible to this API key.
+  remediation: >-
+    Check the memory id. A 401/404 on a Memory often means a permissions gap —
+    a Memory created via the web app under a different account must be
+    explicitly shared with the API user.
+  content_type: application/json
+  source_operation: openapi/lilt-openapi-original.yml#getMemory
+- status: 404
+  title: Not Found
+  meaning: The requested Domain does not exist.
+  content_type: application/json
+  source_operation: openapi/lilt-openapi-original.yml#getDomains
+- status: 410
+  title: File deleted
+  meaning: The File existed but has been deleted.
+  remediation: Re-upload the source file; deleted files are not recoverable via the API.
+  source_operation: openapi/lilt-openapi-original.yml#getFiles
+- status: 429
+  title: Rate limit exceeded
+  code: rate_limit_exceeded
+  meaning: >-
+    Either the per-organization request-rate ceiling (300/min) or the character
+    throughput ceiling (2,500,000 chars/min) was exceeded on an MT-consuming
+    endpoint. The two limits are independent.
+  envelope:
+    error: rate_limit_exceeded
+    message: Request rate limit reached. Retry after 38 seconds.
+  headers: [X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset]
+  remediation: >-
+    Read X-RateLimit-Reset, sleep that many seconds plus jitter, then retry.
+    Batch document ids into single pretranslate calls to reduce request count.
+  docs: https://support.lilt.com/developers/guides/rate-limits
+  source_operation: openapi/lilt-openapi-original.yml#pretranslateDocuments
+- status: 502
+  title: File in pretranslation
+  meaning: >-
+    The document cannot be downloaded because an export or pre-translation
+    operation is currently in progress.
+  remediation: >-
+    Poll the document's is_pretranslating / export_in_progress flags (or
+    subscribe to webhooks) and retry the download once the operation completes.
+  source_operation: openapi/lilt-openapi-original.yml#downloadDocument
+gaps:
+- >-
+  No published error-code registry. 45 operations declare only a bare 401 with
+  no response description or schema, so most failure modes are undocumented in
+  the contract.
+- >-
+  No 400 (validation) responses are declared anywhere in the spec despite most
+  write operations taking required parameters.

@@ -1,0 +1,41 @@
+generated: '2026-07-19'
+method: searched
+probe: true
+source: https://trust.lilt.com/
+url: https://trust.lilt.com/
+platform: Wolfia
+certifications:
+- SOC 2 Type II
+- ISO 9001
+- ISO 18587
+regulatory:
+- GDPR
+notes:
+- >-
+  ISO 18587 is the translation-industry standard for post-editing of machine
+  translation output — a domain-specific certification rather than a general
+  security one.
+- >-
+  No vulnerability disclosure program, bug bounty, or security contact is
+  published on the trust center or elsewhere on the LILT surface — see
+  security/lilt-vulnerability-disclosure.yml for the probe record.
+- >-
+  This pipeline records the certification claims as published; it does not
+  verify the underlying attestation reports.
+related_pages:
+  product_security: https://lilt.com/products/security
+  encryption_and_access_control: https://support.lilt.com/kb/encryption-and-access-control
+  information_assurance: https://support.lilt.com/kb/information-assurance-ia
+  audit_logs: https://support.lilt.com/kb/audit-logs
+  pii_omitted_segments: https://support.lilt.com/kb/PII-Omitted-Segments
+  brute_force_protection: https://support.lilt.com/kb/brute-force-protection
+  sso: https://support.lilt.com/kb/single-sign-on-sso-for-lilt-com
+evidence:
+- source: https://trust.lilt.com/
+  keywords:
+  - soc 2 type ii
+  - iso 9001
+  - iso 18587
+  - trust center
+  - compliance certification
+  - gdpr

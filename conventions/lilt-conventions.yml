@@ -1,0 +1,141 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  https://support.lilt.com/developers/introduction,
+  https://support.lilt.com/developers/quickstart,
+  https://support.lilt.com/developers/guides/rate-limits, and derived from
+  openapi/lilt-openapi-original.yml.
+description: >-
+  Cross-cutting request/response semantics for the LILT REST API — the
+  conventions that apply across every operation rather than to any single
+  endpoint.
+
+base_url: https://api.lilt.com
+api_style: >-
+  REST over HTTPS. JSON requests and responses; the API responds only to
+  HTTPS/SSL requests. Several endpoints take their parameters as a JSON object
+  in a `LILT-API` request header (file upload) or as query-string parameters
+  rather than a JSON body.
+
+authentication:
+  scheme: >-
+    HTTP Basic — the organization API key is supplied as BOTH the username and
+    the password. A `key` query parameter is also accepted but LILT documents it
+    as development-only and less secure.
+  key_type: organization API key
+  key_provisioning: LILT web app > Manage > API keys (administrator role).
+  plan_requirement: Business plan.
+  docs: https://support.lilt.com/developers/introduction
+  detail: authentication/lilt-authentication.yml
+
+idempotency:
+  supported: false
+  evidence: >-
+    No idempotency key header or parameter appears anywhere in the published
+    OpenAPI (0 matches for /idempoten/i across 65 operations), and the developer
+    docs document no idempotency contract. Retries of write operations are not
+    deduplicated by the API.
+  retry_guidance: >-
+    LILT's only published retry contract is for 429s — honour X-RateLimit-Reset
+    and back off with jitter. Because writes are not idempotent, clients should
+    track created resource ids (job/project/document/file) themselves rather
+    than blindly re-issuing a POST.
+
+pagination:
+  style: offset
+  request_params:
+    start: >-
+      Zero-based index of the first record to return. Defaults to 0 when
+      omitted.
+    limit: >-
+      Maximum number of records to return. On /v2/jobs the default is 25 and the
+      maximum is 50.
+  applies_to:
+  - GET /v2/jobs
+  - GET /v2/upload
+  response_fields: >-
+    List endpoints return a bare JSON array of objects; there is no envelope
+    with has_more/next-cursor. GET /v3/domains is the exception — it returns
+    {items, size}.
+  source: openapi/lilt-openapi-original.yml
+
+filtering:
+  style: query parameters
+  note: >-
+    Retrieval endpoints filter by explicit query parameters (e.g. memory `id`,
+    `srclang`/`trglang` pairs, file `id`, upload `statuses`). Several endpoints
+    accept comma-separated or repeated ids (e.g. ?fileId=1,2,3 or
+    ?fileId=1&fileId=2) as the batching mechanism.
+
+field_expansion:
+  supported: false
+  note: >-
+    No expand[]/include mechanism. Related data is instead exposed by dedicated
+    shapes — GET /v2/projects returns documents inline, and Document is modelled
+    as both DocumentWithSegments and DocumentWithoutSegments so the caller picks
+    the depth by endpoint rather than by parameter.
+
+metadata:
+  supported: true
+  note: >-
+    Project carries a free-form `metadata` field; Domain carries structured
+    `domainMetadata` as key/value DomainMetadata entries. Jobs support
+    organization-defined custom properties configured through the Job Form
+    Editor.
+  docs: https://support.lilt.com/kb/Job-Form-Editor
+
+request_tracing:
+  request_id_header: null
+  note: >-
+    LILT does not document a request-id/correlation header, and none appears in
+    the OpenAPI. Support escalation is via the LILT service desk rather than a
+    request id.
+
+versioning:
+  scheme: uri-path
+  current: v2
+  also_present: v3
+  note: >-
+    The bulk of the API is under /v2. Webhook configuration
+    (/v3/connectors/configuration/webhooks) and domains (/v3/domains) are served
+    under /v3, so a client talks to both major versions concurrently. There is
+    no version header or date-pinning mechanism.
+  detail: lifecycle/lilt-lifecycle.yml
+
+error_envelope:
+  shape: 'JSON object with a single `message` string (components.schemas.Error).'
+  example:
+    message: Memory not found.
+  rate_limit_shape: >-
+    The 429 response uses a different, two-field envelope: {"error":
+    "rate_limit_exceeded", "message": "Request rate limit reached. Retry after
+    38 seconds."}
+  rfc9457: false
+  note: >-
+    Responses are application/json, not application/problem+json; there is no
+    type/title/status/detail structure.
+  detail: errors/lilt-problem-types.yml
+
+rate_limiting:
+  headers: [X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset]
+  status: 429
+  detail: rate-limits/lilt-rate-limits.yml
+
+async_operations:
+  style: polling + webhooks
+  note: >-
+    Long-running work (document import/export, pretranslation, file translation,
+    job export) is asynchronous. Documents expose boolean state flags
+    (import_in_progress, export_in_progress, is_pretranslating,
+    import_succeeded, export_succeeded) that the client polls; file translation
+    returns an id used with GET /v2/translate/file to monitor. Completion can
+    also be pushed via webhooks.
+  detail: asyncapi/lilt-webhooks.yml
+
+uploads:
+  note: >-
+    Large files use a dedicated S3-backed flow: initiate (POST
+    /v2/upload/s3/params), or multipart initiate/sign-part/complete/cancel under
+    /v2/upload/s3/multipart. Parameters for POST /v2/documents/files are passed
+    as a JSON object in the `LILT-API` header.
+  docs: https://support.lilt.com/developers/guides/upload/file-upload

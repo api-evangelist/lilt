@@ -1,0 +1,82 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  https://support.lilt.com/kb/what-s-new-in-the-lilt-platform,
+  https://status.lilt.com/, and derived from
+  openapi/lilt-openapi-original.yml.
+description: >-
+  Versioning, deprecation and operational-transparency posture for the LILT API.
+  LILT ships a dated product-updates feed and an Atlassian Statuspage, and
+  announces breaking changes there, but publishes no formal deprecation policy
+  document, no Sunset/Deprecation header support, and no public SLA.
+
+versioning:
+  scheme: uri-path
+  current: v2
+  concurrent: [v2, v3]
+  note: >-
+    Most of the API is under /v2; webhook configuration and domains are served
+    under /v3. There is no version request header and no date-pinning. LILT does
+    not publish a version-support window.
+  source: openapi/lilt-openapi-original.yml
+
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  announcement_channel: https://support.lilt.com/kb/what-s-new-in-the-lilt-platform
+  note: >-
+    Deprecations are announced in the dated Product Updates feed rather than via
+    a standing policy page or RFC 8594 response headers. Observed example: the
+    March 2026 update "Reviewed and Unreviewed Translation Memory States
+    Deprecated".
+  observed_announcements:
+  - date: '2026-03'
+    change: Reviewed and Unreviewed Translation Memory states deprecated.
+    source: https://support.lilt.com/kb/what-s-new-in-the-lilt-platform
+  - date: '2026-06-30'
+    change: >-
+      Per-organization rate limits introduced on the pretranslation and
+      file-translation endpoints — a behavioural break for high-volume clients,
+      pre-announced in the Product Updates feed and a dedicated guide.
+    source: https://support.lilt.com/developers/guides/rate-limits
+
+deprecated_operations: []
+deprecated_parameters:
+- parameter: 'n'
+  operations:
+  - openapi/lilt-openapi-original.yml#translateSegmentGet
+  - openapi/lilt-openapi-original.yml#translateSegmentPost
+  note: >-
+    "Return top n translations (deprecated)" — marked deprecated in the
+    parameter description only, not with the OpenAPI `deprecated: true` flag.
+  source: openapi/lilt-openapi-original.yml
+
+status_page:
+  url: https://status.lilt.com/
+  provider: Atlassian Statuspage
+  verified: '2026-07-19'
+
+sla:
+  url: null
+  uptime_target: null
+  note: No public SLA or uptime commitment is published on lilt.com or the trust center.
+
+release_notes:
+  product_updates: https://support.lilt.com/kb/what-s-new-in-the-lilt-platform
+  numbered_releases:
+  - version: '5.3'
+    label: 2025 Q4 Release
+    url: https://support.lilt.com/kb/5.3.0ReleaseNotes.md
+  - version: '5.2'
+    label: 2025 Q2-Q3 Release
+    url: https://support.lilt.com/kb/2025Q2ReleaseNotes.md
+  - version: '5.1'
+    label: 2025 Q1 Release
+    url: https://support.lilt.com/kb/2025-q1-lilt-5-1-0-release-notes.md
+  infrastructure: https://support.lilt.com/kb/infrastructure-release-notes
+  note: >-
+    The numbered 5.x releases version the self-managed / on-prem LILT platform.
+    The SaaS API is versioned only by URI path.
+  detail: changelog/lilt-changelog.yml

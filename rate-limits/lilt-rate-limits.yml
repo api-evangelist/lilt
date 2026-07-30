@@ -1,0 +1,80 @@
+generated: '2026-07-19'
+method: searched
+source: https://support.lilt.com/developers/guides/rate-limits
+description: >-
+  LILT publishes two rate-limit regimes. A general platform quota of 4,000
+  requests per minute is stated in the OpenAPI info block. On top of that,
+  effective 2026-06-30, LILT introduced per-organization fair-use limits on the
+  three MT-consuming endpoints, enforced as two independent ceilings (request
+  rate and character throughput). LILT Connectors are explicitly out of scope
+  for the per-organization limits — they apply to the API only.
+scope: per-organization
+rate_limits:
+- name: General platform quota
+  limit_count: 4000
+  limit_interval: minute
+  unit: requests
+  applies_to: all endpoints
+  source: 'openapi/lilt-openapi-original.yml#info.description (Quotas section)'
+  note: >-
+    On exceeding the quota you must wait 60 seconds before sending another
+    request.
+- name: Request rate (MT endpoints)
+  limit_count: 300
+  limit_interval: minute
+  unit: requests
+  effective: '2026-06-30'
+  applies_to:
+  - POST /v2/documents/pretranslate
+  - POST /v2/translate/file
+  - POST /v2/documents/files
+  source: https://support.lilt.com/developers/guides/rate-limits
+- name: Character throughput (MT endpoints)
+  limit_count: 2500000
+  limit_interval: minute
+  unit: characters
+  effective: '2026-06-30'
+  applies_to:
+  - POST /v2/documents/pretranslate
+  - POST /v2/translate/file
+  - POST /v2/documents/files
+  source: https://support.lilt.com/developers/guides/rate-limits
+  note: >-
+    The two limits are independent — either can be hit alone. A
+    POST /v2/documents/files upload that does not invoke MT is measured as zero
+    characters and does not draw down the throughput budget; only uploads that
+    trigger pretranslation count.
+headers:
+  limit: X-RateLimit-Limit
+  remaining: X-RateLimit-Remaining
+  reset: X-RateLimit-Reset
+  reset_units: seconds until the current one-minute window resets
+  note: >-
+    X-RateLimit-Limit reflects whichever ceiling was hit (requests or
+    characters), so check both headers when handling a 429.
+exceeded:
+  status: 429
+  error_code: rate_limit_exceeded
+  envelope:
+    error: rate_limit_exceeded
+    message: Request rate limit reached. Retry after N seconds.
+  retry_guidance: >-
+    Read X-RateLimit-Reset, sleep that many seconds plus jitter, then re-send.
+    Do not tight-loop — retrying immediately wastes quota and re-triggers 429s.
+    LILT publishes Python and Node.js retry examples with a five-attempt ceiling.
+batching:
+  source: https://support.lilt.com/developers/guides/rate-limits
+  guidance:
+  - endpoint: POST /v2/documents/pretranslate
+    approach: Pass an array of document IDs in a single request body.
+  - endpoint: POST /v2/translate/file
+    approach: >-
+      Reference multiple already-uploaded files in one call via the fileId query
+      parameter (?fileId=1,2,3 or repeated ?fileId=1&fileId=2). Does not accept
+      multiple source files in the multipart body — files must be uploaded
+      first.
+  - note: >-
+      Batching lowers request count but not character count; spread very large
+      documents across multiple windows and stagger burst workloads.
+exclusions:
+- LILT Connectors are out of scope for the per-organization rate limits.

@@ -1,0 +1,38 @@
+{
+  "provider": "lilt",
+  "sources": [
+    "lilt-create-api-openapi.yml",
+    "lilt-documents-api-openapi.yml",
+    "lilt-domains-api-openapi.yml",
+    "lilt-files-api-openapi.yml",
+    "lilt-jobs-api-openapi.yml",
+    "lilt-languages-api-openapi.yml",
+    "lilt-memories-api-openapi.yml",
+    "lilt-projects-api-openapi.yml",
+    "lilt-segments-api-openapi.yml",
+    "lilt-translate-api-openapi.yml",
+    "lilt-uploads-api-openapi.yml",
+    "lilt-webhook-configuration-api-openapi.yml",
+    "lilt-workflows-api-openapi.yml"
+  ],
+  "outputs": [
+    "lilt-create-api-openapi.yml",
+    "lilt-documents-api-openapi.yml",
+    "lilt-domains-api-openapi.yml",
+    "lilt-files-api-openapi.yml",
+    "lilt-jobs-api-openapi.yml",
+    "lilt-languages-api-openapi.yml",
+    "lilt-memories-api-openapi.yml",
+    "lilt-projects-api-openapi.yml",
+    "lilt-segments-api-openapi.yml",
+    "lilt-translate-api-openapi.yml",
+    "lilt-uploads-api-openapi.yml",
+    "lilt-webhook-configuration-api-openapi.yml",
+    "lilt-workflows-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

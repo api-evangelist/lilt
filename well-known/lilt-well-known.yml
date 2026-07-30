@@ -1,0 +1,61 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  Live probes of the /.well-known/ discovery surface on every LILT host in
+  apis.yml and in the OpenAPI servers[] block, 2026-07-19. Absence (404) is
+  recorded as valid data.
+hosts:
+- host: https://api.lilt.com
+  note: OpenAPI servers[0] — the production REST API host.
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://lilt.com
+  note: Corporate website.
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://mcp.lilt.com
+  note: >-
+    LILT's hosted remote MCP server. This host is the only LILT surface that
+    publishes real .well-known discovery metadata.
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: lilt-mcp-oauth-authorization-server.json
+    format: RFC 8414 OAuth 2.0 Authorization Server Metadata
+    issuer: https://blissful-celebration-62.authkit.app
+    note: >-
+      Delegated to WorkOS AuthKit. Advertises dynamic client registration
+      (RFC 7591), PKCE S256, and the authorization_code / refresh_token /
+      device_code grants — the MCP authorization profile.
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 200
+    saved: false
+    note: >-
+      Returns HTTP 200 but serves the single-page-app HTML shell, not JSON
+      discovery metadata. Not a real OIDC discovery document; not saved.
+summary:
+  security_txt: false
+  openid_configuration: false
+  oauth_authorization_server: true
+  api_catalog: false
+  ai_plugin: false
