@@ -338,7 +338,7 @@ common:
 - type: Compliance
   url: https://trust.lilt.com/
 - type: OpenAPI
-  url: openapi/lilt-openapi-original.yml
+  url: openapi/_original/lilt-openapi-original.yml
 - type: LLMsTxt
   url: llms/lilt-llms.txt
 - type: MCPServer
