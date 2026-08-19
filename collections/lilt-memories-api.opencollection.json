@@ -1,0 +1,220 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LILT Create Memories API",
+    "version": "v3.0.3"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Memories",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a Memory",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lilt.com/v2/memories",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "An optional Memory identifier."
+              }
+            ]
+          },
+          "docs": "Retrieve a Memory. If you cannot access the Memory (401 error) please check permissions (e.g. in case you created the Memory via the web app with a different account you may have to explicitly share that Memory).\n\n"
+        },
+        {
+          "info": {
+            "name": "Create a Memory",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lilt.com/v2/memories",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Memory. A Memory is a container that collects source/target\nsentences for a specific language pair (e.g., English>French). The data\nin the Memory is used to train the MT system, populate the TM, and\nupdate the lexicon. Memories are private to your account - the data is\nnot shared across users - unless you explicitly share a Memory with your\nteam (via web app only).\n\n<a href=\"/kb/introduction-to-lilt-translation\" target=_blank>Refer\nto our KB</a> for a more detailed description.\n\n"
+        },
+        {
+          "info": {
+            "name": "Update the name of a Memory",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.lilt.com/v2/memories",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Memory.\n"
+        },
+        {
+          "info": {
+            "name": "Delete a Memory",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lilt.com/v2/memories",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "A unique Memory identifier."
+              }
+            ]
+          },
+          "docs": "Delete a Memory.\n"
+        },
+        {
+          "info": {
+            "name": "Query a Memory",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lilt.com/v2/memories/query",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "A unique Memory identifier."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "A source query."
+              },
+              {
+                "name": "n",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return."
+              }
+            ]
+          },
+          "docs": "Perform a translation memory query.\n"
+        },
+        {
+          "info": {
+            "name": "File import for a Memory",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lilt.com/v2/memories/import",
+            "headers": [
+              {
+                "name": "memory_id",
+                "value": ""
+              },
+              {
+                "name": "name",
+                "value": ""
+              },
+              {
+                "name": "sdlxliff_filters",
+                "value": ""
+              },
+              {
+                "name": "has_header_row",
+                "value": ""
+              },
+              {
+                "name": "skip_duplicates",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Imports common translation memory or termbase file formats to a specific LILT memory. Currently supported file formats are `*.tmx`, `*.sdltm`, `*.sdlxliff`(With custom Filters), '*.xliff', and `*.tmq` for TM data; `*.csv` and `*.tbx` for termbase data. Request parameters should be passed as JSON object with the header field `LILT-API`.\n\nExample CURL command to upload a translation memory file named `my_memory.sdltm` in the current working directory:\n```bash\n  curl -X POST https://api.lilt.com/v2"
+        },
+        {
+          "info": {
+            "name": "Termbase export for a Memory",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lilt.com/v2/memories/termbase/export",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "A unique Memory identifier."
+              }
+            ]
+          },
+          "docs": "Exports the termbase entries for the given memory into a CSV file.\n\nCalling this endpoint will begin the export process in the background.\nCheck that the processing is complete by polling the `GET /2/memories`\nendpoint. When the `is_processing` value is 0 then call the\n`POST /2/memories/termbase/download` endpoint.\n\n```bash\n  curl -X POST https://api.lilt.com/v2/memories/termbase/export?key=API_KEY&id=ID\n```\n"
+        },
+        {
+          "info": {
+            "name": "Termbase download for a Memory",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lilt.com/v2/memories/termbase/download",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "A unique Memory identifier."
+              }
+            ]
+          },
+          "docs": "Downloads the termbase export for the given memory as a CSV file.\n\nEnsure you first call the `/2/memories/termbase/export` endpoint to\nstart the export process before you try to download it.\n\n```bash\n  curl -X GET https://api.lilt.com/v2/memories/termbase/download?key=API_KEY&id=ID\n```\n"
+        },
+        {
+          "info": {
+            "name": "Delete a segment from a memory.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lilt.com/v2/memories/segment",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "A unique Memory identifier."
+              },
+              {
+                "name": "segment_id",
+                "value": "",
+                "type": "query",
+                "description": "A unique Segment identifier."
+              }
+            ]
+          },
+          "docs": "Delete a segment from a memory.\n\n```bash\n  curl -X DELETE https://api.lilt.com/v2/memories/segment?key=API_KEY&id=ID&segment_id=$SEGMENT_ID\n```\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,145 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LILT Create Segments API",
+    "version": "v3.0.3"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Segments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a Segment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lilt.com/v2/segments",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "A unique Segment identifier."
+              },
+              {
+                "name": "include_comments",
+                "value": "",
+                "type": "query",
+                "description": "Include comments in the response."
+              }
+            ]
+          },
+          "docs": "Retrieve a Segment.\n\n"
+        },
+        {
+          "info": {
+            "name": "Create a Segment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lilt.com/v2/segments",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Segment and add it to a Memory or a Document. A Segment is a source/target\npair that is used to train the machine translation system and populate\nthe translation memory.\n\nThe maximum source length is 5,000 characters.\n\n"
+        },
+        {
+          "info": {
+            "name": "Update a Segment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.lilt.com/v2/segments",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Segment in memory. The Memory will be updated with the new target string.\n\n"
+        },
+        {
+          "info": {
+            "name": "Delete a Segment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lilt.com/v2/segments",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "A unique Segment identifier."
+              }
+            ]
+          },
+          "docs": "Delete a Segment from memory. This will not delete a segment from a document.\n"
+        },
+        {
+          "info": {
+            "name": "Unaccept and unlock segments",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lilt.com/v2/segments/review/unlock",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Unaccept and unlock segments.\nSets individual segments' \"Review Done\" to false. Confirmed segments will remain confirmed.\n\nExample curl:\n```\n  curl --X --request POST 'https://lilt.com/2/segments/review/unlock?key=API_KEY' \\\n  --header 'Content-Type: application/json' \\\n  --data-raw '{\n      \"segmentIds\": [23921, 23922]\n  }'\n```\n"
+        },
+        {
+          "info": {
+            "name": "Tag a Segment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lilt.com/v2/segments/tag",
+            "params": [
+              {
+                "name": "source_tagged",
+                "value": "",
+                "type": "query",
+                "description": "The tagged source string."
+              },
+              {
+                "name": "target",
+                "value": "",
+                "type": "query",
+                "description": "The target string."
+              },
+              {
+                "name": "memory_id",
+                "value": "",
+                "type": "query",
+                "description": "A unique Memory identifier."
+              }
+            ]
+          },
+          "docs": "Project tags for a segment. The `source_tagged` string contains one or more SGML\ntags. The `target` string is untagged. This endpoint will automatically place the\nsource tags in the target.\n\nUsage charges apply to this endpoint for production REST API keys.\n\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

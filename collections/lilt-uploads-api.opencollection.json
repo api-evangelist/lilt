@@ -1,0 +1,239 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LILT Create Uploads API",
+    "version": "v3.0.3"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Uploads",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get All Pending Uploads or specific list of uploads by ids or statuses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lilt.com/v2/upload",
+            "params": [
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of upload IDs to filter by."
+              },
+              {
+                "name": "statuses",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of upload statuses to filter by."
+              }
+            ]
+          },
+          "docs": "Retrieve all pending uploads for the current user and organization.\n\nExample CURL command:\n```\n  curl -X GET https://lilt.com/2/upload?key=API_KEY\n```\n"
+        },
+        {
+          "info": {
+            "name": "Get Upload by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lilt.com/v2/upload/:uploadId",
+            "params": [
+              {
+                "name": "uploadId",
+                "value": "",
+                "type": "path",
+                "description": "Unique upload identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific upload by its unique identifier.\n\nExample CURL command:\n```\n  curl -X GET https://lilt.com/2/upload/12345?key=API_KEY\n```\n"
+        },
+        {
+          "info": {
+            "name": "Get S3 Upload Parameters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lilt.com/v2/upload/s3/params",
+            "params": [
+              {
+                "name": "filename",
+                "value": "",
+                "type": "query",
+                "description": "A file name including file extension."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "The content-type or mime-type of the file to upload."
+              },
+              {
+                "name": "metadata.size",
+                "value": "",
+                "type": "query",
+                "description": "The size of the file to upload in bytes."
+              },
+              {
+                "name": "metadata.category",
+                "value": "",
+                "type": "query",
+                "description": "File category metadata."
+              },
+              {
+                "name": "metadata.uuid",
+                "value": "",
+                "type": "query",
+                "description": "File UUID metadata."
+              },
+              {
+                "name": "metadata.labels",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of label names to be added to the file after upload completes."
+              }
+            ]
+          },
+          "docs": "Get S3 upload parameters via query string. This endpoint provides the necessary information\nto complete the file upload process using GET parameters.\n\nExample CURL command:\n```\n  curl -X GET \"https://lilt.com/v2/upload/s3/params?key=API_KEY&filename=example.json&type=application/json&metadata.size=1024&metadata.labels=important,review-needed\"\n```\n"
+        },
+        {
+          "info": {
+            "name": "Initiate File Upload to Cloud Storage",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lilt.com/v2/upload/s3/params",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiate the upload of a file to cloud storage. This endpoint provides the necessary information\nto complete the file upload process.\n\nSupports both single file and bulk upload requests. For bulk uploads, pass an array of upload\nobjects (maximum 100 items). The response format matches the request format - a single object\nfor single file requests, or an array for bulk requests.\n\nExample CURL command (single file):\n```\n  curl -X POST https://lilt.com/v2/upload/s3/params?key=API_KEY \\\n  --header \"C"
+        },
+        {
+          "info": {
+            "name": "Initiate Multipart Upload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lilt.com/v2/upload/s3/multipart",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiate a multipart upload for large files. This endpoint provides the necessary information\nto start a multipart upload process.\n\nSupports both single file and bulk upload requests. For bulk uploads, pass an array of upload\nobjects (maximum 100 items). The response format matches the request format - a single object\nfor single file requests, or an array for bulk requests.\n\nExample CURL command (single file):\n```\n  curl -X POST https://lilt.com/v2/upload/s3/multipart?key=API_KEY \\\n  --header \"C"
+        },
+        {
+          "info": {
+            "name": "Complete Multipart Upload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lilt.com/v2/upload/s3/multipart/:uploadId/complete",
+            "params": [
+              {
+                "name": "uploadId",
+                "value": "",
+                "type": "path",
+                "description": "Multipart upload ID from initiate response"
+              },
+              {
+                "name": "s3Key",
+                "value": "",
+                "type": "query",
+                "description": "Upload key from initiate response"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Complete a multipart upload by providing all uploaded parts information.\n\nExample CURL command:\n```\n  curl -X POST \"https://lilt.com/v2/upload/s3/multipart/abc123def456/complete?key=API_KEY&key=uploads/user123/file456.zip\" \\\n  --header \"Content-Type: application/json\" \\\n  --data-raw '{\n    \"parts\": [\n      {\"ETag\": \"etag1\", \"PartNumber\": 1},\n      {\"ETag\": \"etag2\", \"PartNumber\": 2}\n    ]\n  }'\n```\n"
+        },
+        {
+          "info": {
+            "name": "Sign Upload Part",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lilt.com/v2/upload/s3/multipart/:uploadId/:partNumber",
+            "params": [
+              {
+                "name": "uploadId",
+                "value": "",
+                "type": "path",
+                "description": "Multipart upload ID from initiate response"
+              },
+              {
+                "name": "partNumber",
+                "value": "",
+                "type": "path",
+                "description": "Part number (1-based)"
+              },
+              {
+                "name": "s3Key",
+                "value": "",
+                "type": "query",
+                "description": "Upload key from initiate response"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "Size of this part in bytes"
+              }
+            ]
+          },
+          "docs": "Get a signed URL for uploading a specific part of a multipart upload.\n\nMake sure to set the part size to 8MB (8388608 bytes).\n\nExample CURL command:\n```\n  curl -X GET \"https://lilt.com/v2/upload/s3/multipart/abc123def456/1?key=API_KEY&key=uploads/user123/file456.zip&size=5242880\"\n```\n"
+        },
+        {
+          "info": {
+            "name": "Cancel Multipart Upload",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lilt.com/v2/upload/s3/multipart/:uploadId",
+            "params": [
+              {
+                "name": "uploadId",
+                "value": "",
+                "type": "path",
+                "description": "Multipart upload ID to cancel"
+              },
+              {
+                "name": "s3Key",
+                "value": "",
+                "type": "query",
+                "description": "Upload key from initiate response"
+              }
+            ]
+          },
+          "docs": "Cancel/abort a multipart upload and clean up any uploaded parts.\n\nExample CURL command:\n```\n  curl -X DELETE \"https://lilt.com/v2/upload/s3/multipart/abc123def456?key=API_KEY&key=uploads/user123/file456.zip\"\n```\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

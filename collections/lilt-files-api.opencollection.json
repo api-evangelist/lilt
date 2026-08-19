@@ -1,0 +1,191 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LILT Create Files API",
+    "version": "v3.0.3"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a File",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lilt.com/v2/files",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "A unique File identifier."
+              },
+              {
+                "name": "labels",
+                "value": "",
+                "type": "query",
+                "description": "One or more labels. This will return the files which contain all of\nthe given labels.\n"
+              }
+            ]
+          },
+          "docs": "Retrieves one or more files available to your user. Files are not associated with a project or a memory. They are unprocessed and can be used later in the project/document creation workflow step.\n\nTo retrieve a specific file, specify the <strong>id</strong> request parameter. To retrieve all files, omit the <strong>id</strong> request parameter.\n\nExample CURL command:\n```bash\n curl -X GET https://api.lilt.com/v2/files?key=API_KEY&id=274\n```"
+        },
+        {
+          "info": {
+            "name": "Upload a File",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lilt.com/v2/files",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "A file name."
+              },
+              {
+                "name": "file_hash",
+                "value": "",
+                "type": "query",
+                "description": "A hash value to associate with the file. The MD5 hash of the body contents will be used by default if a value isn't provided."
+              },
+              {
+                "name": "langId",
+                "value": "",
+                "type": "query",
+                "description": "Flag indicating whether to perform language detection on the uploaded file. Default is false."
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "The project to associate the uploaded file with."
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "The category of the file. The options are `REFERENCE`, or `API`. The default is API. Files with the `REFERENCE` category will be displayed as reference material."
+              },
+              {
+                "name": "labels",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of labels to add to the uploaded document."
+              },
+              {
+                "name": "job_type",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the job type when adding this file to a job."
+              }
+            ]
+          },
+          "docs": "Upload a File in any of the formats [documented in our knowledge\nbase](/kb/supported-file-formats).\nRequest parameters should be passed in as query string parameters.\n\nExample CURL command:\n```bash\n  curl -X POST https://api.lilt.com/v2/files?key=API_KEY&name=en_US.json \\\n  --header \"Content-Type: application/octet-stream\" \\\n  --data-binary @en_US.json\n```\nCalls to GET /files are used to monitor the language detection results. The API response will be augmented to include detected language and c"
+        },
+        {
+          "info": {
+            "name": "Delete a File",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lilt.com/v2/files",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "A unique File identifier."
+              }
+            ]
+          },
+          "docs": "Delete a File.\n\nExample CURL command:\n```bash\n  curl -X DELETE https://api.lilt.com/v2/files?key=API_KEY&id=123\n```\n\n"
+        },
+        {
+          "info": {
+            "name": "Download file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lilt.com/v2/files/download",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "A File id."
+              }
+            ]
+          },
+          "docs": "Download a File.\n\nExample CURL:\n```bash\ncurl -X GET 'https://api.lilt.com/v2/files/download?key=API_KEY&id=1'\n```\n"
+        },
+        {
+          "info": {
+            "name": "Add Label to File",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lilt.com/v2/files/labels",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "A File id."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a label to a File.\n\nExample CURL:\n```bash\ncurl -X POST 'https://api.lilt.com/v2/files/labels?key=API_KEY&id=1'\n--header 'Content-Type: application/json' \\\n--data-raw '{\n    \"name\": \"label_name\"\n}'\n```\n"
+        },
+        {
+          "info": {
+            "name": "Remove Label from File",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lilt.com/v2/files/labels",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "A File id."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "A label name."
+              }
+            ]
+          },
+          "docs": "Remove a label from a File.\n\nExample CURL:\n```bash\ncurl -X DELETE 'https://api.lilt.com/v2/files/labels?key=API_KEY&id=1&name=label_name'\n```\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

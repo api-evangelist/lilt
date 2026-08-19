@@ -1,0 +1,206 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LILT Create Translate API",
+    "version": "v3.0.3"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Translate",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Translate a segment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lilt.com/v2/translate",
+            "params": [
+              {
+                "name": "source",
+                "value": "",
+                "type": "query",
+                "description": "The source string to translate."
+              },
+              {
+                "name": "memory_id",
+                "value": "",
+                "type": "query",
+                "description": "A unique Memory identifier."
+              },
+              {
+                "name": "source_hash",
+                "value": "",
+                "type": "query",
+                "description": "A source hash code."
+              },
+              {
+                "name": "n",
+                "value": "",
+                "type": "query",
+                "description": "Return top n translations (deprecated)."
+              },
+              {
+                "name": "prefix",
+                "value": "",
+                "type": "query",
+                "description": "A target prefix."
+              },
+              {
+                "name": "rich",
+                "value": "",
+                "type": "query",
+                "description": "Returns rich translation information (e.g., with word alignments)."
+              },
+              {
+                "name": "tm_matches",
+                "value": "",
+                "type": "query",
+                "description": "Include translation memory fuzzy matches."
+              },
+              {
+                "name": "project_tags",
+                "value": "",
+                "type": "query",
+                "description": "Project tags. Projects tags in source to target if set to true."
+              },
+              {
+                "name": "contains_icu_data",
+                "value": "",
+                "type": "query",
+                "description": "Contains ICU data. If true then tags in the source following the ICU standard will be parsed and retained."
+              }
+            ]
+          },
+          "docs": "Translate a source string.\n\nFunctionally identical to `POST /v2/translate`, with parameters passed\nas query string parameters instead of a JSON request body. Useful for\nsimple integrations that prefer a GET request.\n\nSetting the `rich` parameter to `true` will change the response format\nto include additional information about each translation including a\nmodel score, word alignments,  and formatting information.\n\nBy default, this endpoint also returns translation memory (TM) fuzzy matches, along"
+        },
+        {
+          "info": {
+            "name": "Translate a segment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lilt.com/v2/translate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Translate a source string.\n\nSetting the `rich` parameter to `true` will change the response format\nto include additional information about each translation including a\nmodel score, word alignments,  and formatting information. The rich\nformat can be seen in the example response on this page.\n\nBy default, this endpoint also returns translation memory (TM) fuzzy matches, along\nwith associated scores. Fuzzy matches always appear ahead of machine translation\noutput in the response.\n\nThe maximum sour"
+        },
+        {
+          "info": {
+            "name": "Monitor file translation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lilt.com/v2/translate/file",
+            "params": [
+              {
+                "name": "translationIds",
+                "value": "",
+                "type": "query",
+                "description": "List of translation ids, comma separated"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "One of the translation statuses - `InProgress`, `Completed`, `Failed`, `ReadyForDownload`"
+              },
+              {
+                "name": "fromTime",
+                "value": "",
+                "type": "query",
+                "description": "Results after this time (inclusive) will be returned, specified as seconds since the Unix epoch."
+              },
+              {
+                "name": "toTime",
+                "value": "",
+                "type": "query",
+                "description": "Results before this time (exclusive) will be returned, specified as seconds since the Unix epoch."
+              }
+            ]
+          },
+          "docs": "Get information about the one or more Files that are being translated with machine translation. Query filters are optional but at least one must be provided.\n\nExample CURL:\n```bash\ncurl -X GET 'https://api.lilt.com/v2/translate/file?key=API_KEY&translationIds=1,2&fromTime=1607966744&toTime=1707966744&status=InProgress'\n```\n\n"
+        },
+        {
+          "info": {
+            "name": "Translate a File",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lilt.com/v2/translate/file",
+            "params": [
+              {
+                "name": "fileId",
+                "value": "",
+                "type": "query",
+                "description": "List of File ids to be translated, comma separated."
+              },
+              {
+                "name": "memoryId",
+                "value": "",
+                "type": "query",
+                "description": "Id of Memory to use in translation."
+              },
+              {
+                "name": "configId",
+                "value": "",
+                "type": "query",
+                "description": "An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file."
+              },
+              {
+                "name": "withTM",
+                "value": "",
+                "type": "query",
+                "description": "An optional boolean parameter to toggle the use of Translation Memory in the translation of the file."
+              },
+              {
+                "name": "externalModelId",
+                "value": "",
+                "type": "query",
+                "description": "An optional parameter to specify a third-party model to use for translation. This allows you to use external MT providers instead of Lilt's built-in MT system."
+              }
+            ]
+          },
+          "docs": "Start machine translation of one or more Files that have previously been uploaded.  The response will include an `id` parameter that can be used to monitor and download the translations in subsequent calls.\n\nExample CURL:\n```bash\ncurl -X POST 'https://api.lilt.com/v2/translate/file?key=API_KEY&fileId=583&memoryId=2495&configId=123&withTM=true'\n```\n\n"
+        },
+        {
+          "info": {
+            "name": "Download translated file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lilt.com/v2/translate/files",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "A translation id."
+              }
+            ]
+          },
+          "docs": "Download a translated File.\n\nExample CURL:\n```bash\ncurl -X GET 'https://api.lilt.com/v2/translate/files?key=API_KEY&id=1'\n```\n\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

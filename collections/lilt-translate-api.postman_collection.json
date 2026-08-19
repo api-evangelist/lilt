@@ -1,0 +1,1292 @@
+{
+  "item": [
+    {
+      "id": "0b2da332-3583-468e-a6b8-3bcf3294425f",
+      "name": "Translate",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c3e51954-cd29-4260-8dca-3895d42d6d64",
+          "name": "Translate a segment",
+          "request": {
+            "name": "Translate a segment",
+            "description": {
+              "content": "Translate a source string.\n\nFunctionally identical to `POST /v2/translate`, with parameters passed\nas query string parameters instead of a JSON request body. Useful for\nsimple integrations that prefer a GET request.\n\nSetting the `rich` parameter to `true` will change the response format\nto include additional information about each translation including a\nmodel score, word alignments,  and formatting information.\n\nBy default, this endpoint also returns translation memory (TM) fuzzy matches, along\nwith associated scores. Fuzzy matches always appear ahead of machine translation\noutput in the response.\n\nThe maximum source length is 5,000 characters.\n\nUsage charges apply to this endpoint for production API keys.\n\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "translate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "source",
+                  "value": "<string>",
+                  "description": "The source string to translate."
+                },
+                {
+                  "disabled": false,
+                  "key": "memory_id",
+                  "value": "<integer>",
+                  "description": "(Required) A unique Memory identifier."
+                },
+                {
+                  "disabled": false,
+                  "key": "source_hash",
+                  "value": "<integer>",
+                  "description": "A source hash code."
+                },
+                {
+                  "disabled": false,
+                  "key": "n",
+                  "value": "<integer>",
+                  "description": "Return top n translations (deprecated)."
+                },
+                {
+                  "disabled": false,
+                  "key": "prefix",
+                  "value": "<string>",
+                  "description": "A target prefix."
+                },
+                {
+                  "disabled": false,
+                  "key": "rich",
+                  "value": "false",
+                  "description": "Returns rich translation information (e.g., with word alignments)."
+                },
+                {
+                  "disabled": false,
+                  "key": "tm_matches",
+                  "value": "true",
+                  "description": "Include translation memory fuzzy matches."
+                },
+                {
+                  "disabled": false,
+                  "key": "project_tags",
+                  "value": "false",
+                  "description": "Project tags. Projects tags in source to target if set to true."
+                },
+                {
+                  "disabled": false,
+                  "key": "contains_icu_data",
+                  "value": "false",
+                  "description": "Contains ICU data. If true then tags in the source following the ICU standard will be parsed and retained."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5e59bdd5-fde3-4a88-b98d-65a0263d30ad",
+              "name": "A TranslationList object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "translate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "memory_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "source_hash",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "n",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "prefix",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "rich",
+                      "value": "false"
+                    },
+                    {
+                      "key": "tm_matches",
+                      "value": "true"
+                    },
+                    {
+                      "key": "project_tags",
+                      "value": "false"
+                    },
+                    {
+                      "key": "contains_icu_data",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"untokenizedSource\": \"Authentication not required.\",\n  \"tokenizedSource\": \"Authentication not required .\",\n  \"sourceDelimiters\": [\n    \"\",\n    \" \",\n    \" \",\n    \"\",\n    \"\"\n  ],\n  \"translation\": [\n    {\n      \"target\": \"string\",\n      \"targetWithTags\": \"string\",\n      \"align\": \"string\",\n      \"provenance\": \"string\",\n      \"score\": 5292.795827606049,\n      \"isTMMatch\": true,\n      \"targetDelimiters\": [\n        \"string\",\n        \"string\"\n      ],\n      \"targetWords\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"target\": \"string\",\n      \"targetWithTags\": \"string\",\n      \"align\": \"string\",\n      \"provenance\": \"string\",\n      \"score\": 5915.513643256572,\n      \"isTMMatch\": false,\n      \"targetDelimiters\": [\n        \"string\",\n        \"string\"\n      ],\n      \"targetWords\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5fcf7238-c011-47dd-9799-6eb209a2f11a",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "translate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "memory_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "source_hash",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "n",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "prefix",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "rich",
+                      "value": "false"
+                    },
+                    {
+                      "key": "tm_matches",
+                      "value": "true"
+                    },
+                    {
+                      "key": "project_tags",
+                      "value": "false"
+                    },
+                    {
+                      "key": "contains_icu_data",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "31fc4ca4-c838-4866-ab58-635950f6da4c",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "translate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "memory_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "source_hash",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "n",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "prefix",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "rich",
+                      "value": "false"
+                    },
+                    {
+                      "key": "tm_matches",
+                      "value": "true"
+                    },
+                    {
+                      "key": "project_tags",
+                      "value": "false"
+                    },
+                    {
+                      "key": "contains_icu_data",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal server error.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "499e7a3c-d366-4e14-b1c4-594b9319939a",
+          "name": "Translate a segment",
+          "request": {
+            "name": "Translate a segment",
+            "description": {
+              "content": "Translate a source string.\n\nSetting the `rich` parameter to `true` will change the response format\nto include additional information about each translation including a\nmodel score, word alignments,  and formatting information. The rich\nformat can be seen in the example response on this page.\n\nBy default, this endpoint also returns translation memory (TM) fuzzy matches, along\nwith associated scores. Fuzzy matches always appear ahead of machine translation\noutput in the response.\n\nThe maximum source length is 5,000 characters.\n\nUsage charges apply to this endpoint for production API keys.\n\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "translate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"memory_id\": \"<integer>\",\n  \"source\": \"<string>\",\n  \"source_hash\": \"<integer>\",\n  \"n\": \"<integer>\",\n  \"prefix\": \"<string>\",\n  \"rich\": false,\n  \"tm_matches\": true,\n  \"project_tags\": false,\n  \"containsICUData\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fa462a95-b0a0-4069-82a3-af73881df5e7",
+              "name": "A TranslationList object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "translate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"memory_id\": \"<integer>\",\n  \"source\": \"<string>\",\n  \"source_hash\": \"<integer>\",\n  \"n\": \"<integer>\",\n  \"prefix\": \"<string>\",\n  \"rich\": false,\n  \"tm_matches\": true,\n  \"project_tags\": false,\n  \"containsICUData\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"untokenizedSource\": \"Authentication not required.\",\n  \"tokenizedSource\": \"Authentication not required .\",\n  \"sourceDelimiters\": [\n    \"\",\n    \" \",\n    \" \",\n    \"\",\n    \"\"\n  ],\n  \"translation\": [\n    {\n      \"target\": \"string\",\n      \"targetWithTags\": \"string\",\n      \"align\": \"string\",\n      \"provenance\": \"string\",\n      \"score\": 264.2786132635366,\n      \"isTMMatch\": true,\n      \"targetDelimiters\": [\n        \"string\",\n        \"string\"\n      ],\n      \"targetWords\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"target\": \"string\",\n      \"targetWithTags\": \"string\",\n      \"align\": \"string\",\n      \"provenance\": \"string\",\n      \"score\": 8039.527116618371,\n      \"isTMMatch\": false,\n      \"targetDelimiters\": [\n        \"string\",\n        \"string\"\n      ],\n      \"targetWords\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "88c2c43d-8927-4f71-aa2a-f2c73544cd93",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "translate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"memory_id\": \"<integer>\",\n  \"source\": \"<string>\",\n  \"source_hash\": \"<integer>\",\n  \"n\": \"<integer>\",\n  \"prefix\": \"<string>\",\n  \"rich\": false,\n  \"tm_matches\": true,\n  \"project_tags\": false,\n  \"containsICUData\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c8a6aa0f-a0c9-46db-9490-c340de9466cb",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "translate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"memory_id\": \"<integer>\",\n  \"source\": \"<string>\",\n  \"source_hash\": \"<integer>\",\n  \"n\": \"<integer>\",\n  \"prefix\": \"<string>\",\n  \"rich\": false,\n  \"tm_matches\": true,\n  \"project_tags\": false,\n  \"containsICUData\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal server error.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ddd1d098-50f3-4826-8fbb-510b04c3ce44",
+          "name": "Monitor file translation",
+          "request": {
+            "name": "Monitor file translation",
+            "description": {
+              "content": "Get information about the one or more Files that are being translated with machine translation. Query filters are optional but at least one must be provided.\n\nExample CURL:\n```bash\ncurl -X GET 'https://api.lilt.com/v2/translate/file?key=API_KEY&translationIds=1,2&fromTime=1607966744&toTime=1707966744&status=InProgress'\n```\n\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "translate",
+                "file"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "translationIds",
+                  "value": "<string>",
+                  "description": "List of translation ids, comma separated"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "One of the translation statuses - `InProgress`, `Completed`, `Failed`, `ReadyForDownload`"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromTime",
+                  "value": "<number>",
+                  "description": "Results after this time (inclusive) will be returned, specified as seconds since the Unix epoch."
+                },
+                {
+                  "disabled": false,
+                  "key": "toTime",
+                  "value": "<number>",
+                  "description": "Results before this time (exclusive) will be returned, specified as seconds since the Unix epoch."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c61065cb-2adf-4a27-a727-534255f7a51f",
+              "name": "Translation Info",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "translate",
+                    "file"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "translationIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromTime",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "toTime",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 4058,\n    \"fileId\": 9332,\n    \"status\": \"string\",\n    \"createdAt\": 8134,\n    \"errorMsg\": \"string\"\n  },\n  {\n    \"id\": 1047,\n    \"fileId\": 9896,\n    \"status\": \"string\",\n    \"createdAt\": 8062,\n    \"errorMsg\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c2f17dc5-bf16-4b3f-959a-348c5c485c50",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "translate",
+                    "file"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "translationIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromTime",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "toTime",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "633510f8-a04e-4f59-94b7-f5a7f6bff440",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "translate",
+                    "file"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "translationIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromTime",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "toTime",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Unsupported_file_type\": {\n    \"message\": \"Customer gave us garbage.\"\n  },\n  \"File_extraction_error\": {\n    \"message\": \"Customer gave us garbage.\"\n  },\n  \"No_translatable_content\": {\n    \"message\": \"Customer gave us an empty file.\"\n  },\n  \"Batch_MT_initiation_failure\": {\n    \"message\": \"Something is wrong with MT.\"\n  },\n  \"Batch_MT_response_failure\": {\n    \"message\": \"Something is wrong with MT.\"\n  },\n  \"File_reassembly_error\": {\n    \"message\": \"We couldn't put the translated file back together.(okapi error)\"\n  },\n  \"Billing_error\": {\n    \"message\": \"We couldn't log the information about the MT to our billing system.\"\n  },\n  \"Invalid_memory\": {\n    \"message\": \"Something is wrong with the memory.\"\n  },\n  \"Storage_error\": {\n    \"message\": \"Error occurred interacting with file storage.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "54bf6ec4-9be7-43ac-905e-c6540aa98f3b",
+          "name": "Translate a File",
+          "request": {
+            "name": "Translate a File",
+            "description": {
+              "content": "Start machine translation of one or more Files that have previously been uploaded.  The response will include an `id` parameter that can be used to monitor and download the translations in subsequent calls.\n\nExample CURL:\n```bash\ncurl -X POST 'https://api.lilt.com/v2/translate/file?key=API_KEY&fileId=583&memoryId=2495&configId=123&withTM=true'\n```\n\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "translate",
+                "file"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fileId",
+                  "value": "<integer>",
+                  "description": "(Required) List of File ids to be translated, comma separated."
+                },
+                {
+                  "disabled": false,
+                  "key": "memoryId",
+                  "value": "<integer>",
+                  "description": "(Required) Id of Memory to use in translation."
+                },
+                {
+                  "disabled": false,
+                  "key": "configId",
+                  "value": "<integer>",
+                  "description": "An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file."
+                },
+                {
+                  "disabled": false,
+                  "key": "withTM",
+                  "value": "<boolean>",
+                  "description": "An optional boolean parameter to toggle the use of Translation Memory in the translation of the file."
+                },
+                {
+                  "disabled": false,
+                  "key": "externalModelId",
+                  "value": "<integer>",
+                  "description": "An optional parameter to specify a third-party model to use for translation. This allows you to use external MT providers instead of Lilt's built-in MT system."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c24fb417-87a8-4438-bd46-ae5ffd0f4ed5",
+              "name": "Translation Info",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "translate",
+                    "file"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fileId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "memoryId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "configId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "withTM",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "externalModelId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 6449,\n    \"fileId\": 1058,\n    \"status\": \"string\",\n    \"createdAt\": 6915,\n    \"errorMsg\": \"string\"\n  },\n  {\n    \"id\": 5019,\n    \"fileId\": 7632,\n    \"status\": \"string\",\n    \"createdAt\": 9218,\n    \"errorMsg\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f1afe507-733e-4f7a-b482-4a7840d8facc",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "translate",
+                    "file"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fileId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "memoryId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "configId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "withTM",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "externalModelId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6dc57722-8c9e-4c88-9628-752791856e44",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "translate",
+                    "file"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fileId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "memoryId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "configId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "withTM",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "externalModelId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal server error.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4961317b-1905-4ec6-a746-34876ed7bc4c",
+          "name": "Download translated file",
+          "request": {
+            "name": "Download translated file",
+            "description": {
+              "content": "Download a translated File.\n\nExample CURL:\n```bash\ncurl -X GET 'https://api.lilt.com/v2/translate/files?key=API_KEY&id=1'\n```\n\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "translate",
+                "files"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<integer>",
+                  "description": "(Required) A translation id."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "88205856-cd1b-469f-80bd-046b0bdadff1",
+              "name": "A file.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "translate",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5681c1e7-7e99-43ec-b1d2-8a6eafcf7614",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "translate",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1315a6ef-fc63-484e-85ec-56290f7dc84c",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "translate",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal server error.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.lilt.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8039e30c-7759-4368-9f3d-0732b9498bd9",
+    "name": "LILT Create Translate API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "LILT API Support: https://lilt.atlassian.net/servicedesk/customer/portals\n\nThe LILT API enables programmatic access to the full-range of LILT backend services including:\n  * Training of and translating with interactive, adaptive machine translation\n  * Large-scale translation memory\n  * The Lexicon (a large-scale termbase)\n  * Programmatic control of the LILT CAT environment\n  * Translation memory synchronization\n\n\nRequests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests.\n\nThe base url for this REST API is `https://api.lilt.com/`.\n\n## Authentication\n\nRequests are authenticated via API key, which requires the Business plan.\n\nRequests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your API key as both the `username` and `password`.\n\nFor development, you may also pass the API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use.\n\n## Quotas\n\nOur services have a general quota of 4000 requests per minute. Should you hit the maximum requests per minute, you will need to wait 60 seconds before you can send another request.\n",
+      "type": "text/plain"
+    }
+  }
+}

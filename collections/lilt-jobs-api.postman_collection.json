@@ -1,0 +1,2617 @@
+{
+  "item": [
+    {
+      "id": "27579a65-df32-4169-8daf-505416e8845e",
+      "name": "Jobs",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a04df0d8-2010-49a9-a1bf-e2e5905c9b6b",
+          "name": "Retrieve all Jobs",
+          "request": {
+            "name": "Retrieve all Jobs",
+            "description": {
+              "content": "Get all Jobs within a given offset and limit. You can retrieve jobs from your account using the above API.\n\nExample CURL command:\n\n```bash\ncurl -X GET 'https://api.lilt.com/v2/jobs?key=API_KEY&isArchived=false'\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "jobs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "isArchived",
+                  "value": "<boolean>",
+                  "description": "Retrieves all jobs that are archived."
+                },
+                {
+                  "disabled": false,
+                  "key": "isDelivered",
+                  "value": "<boolean>",
+                  "description": "Retrieves all jobs that are delivered."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "Return jobs starting at the offset row. If not given the default offset will be 0."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "The maximum number of jobs to be returned. If not given the default limit will be 25."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "744547ab-36ff-4d4f-82b7-558656023d46",
+              "name": "A list of Job objects.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "isArchived",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "isDelivered",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"name\": \"My New Job\",\n    \"creationStatus\": \"COMPLETE\",\n    \"deliveredAt\": \"2021-06-03T13:43:00Z\",\n    \"status\": \"active\",\n    \"due\": \"2021-06-03T13:43:00Z\",\n    \"id\": 241,\n    \"isProcessing\": 0,\n    \"stats\": {\n      \"exactWords\": 0,\n      \"fuzzyWords\": 0,\n      \"newWords\": 0,\n      \"numDeliveredProjects\": 0,\n      \"numLanguagePairs\": 0,\n      \"numProjects\": 0,\n      \"percentReviewed\": 0,\n      \"percentTranslated\": 0,\n      \"projects\": [\n        {\n          \"id\": 3010,\n          \"srcLang\": \"en\",\n          \"srcLocale\": \"US\",\n          \"trgLang\": \"fr\",\n          \"trgLocale\": \"CA\",\n          \"name\": \"My new project\",\n          \"due\": \"2021-10-03T13:43:00.000Z\",\n          \"isComplete\": false,\n          \"isArchived\": false,\n          \"state\": \"inProgress\",\n          \"numSourceTokens\": 2134,\n          \"createdAt\": \"2021-04-01T13:43:00.000Z\",\n          \"updatedAt\": \"2021-06-03T13:43:00.000Z\",\n          \"isDeleted\": false,\n          \"memoryId\": 2134,\n          \"workflowStatus\": \"READY_TO_START\",\n          \"workflowName\": \"Translate > Review > Analyst Review\"\n        },\n        {\n          \"id\": 6879,\n          \"srcLang\": \"en\",\n          \"srcLocale\": \"US\",\n          \"trgLang\": \"fr\",\n          \"trgLocale\": \"CA\",\n          \"name\": \"My new project\",\n          \"due\": \"2021-10-03T13:43:00.000Z\",\n          \"isComplete\": false,\n          \"isArchived\": false,\n          \"state\": \"inProgress\",\n          \"numSourceTokens\": 2134,\n          \"createdAt\": \"2021-04-01T13:43:00.000Z\",\n          \"updatedAt\": \"2021-06-03T13:43:00.000Z\",\n          \"isDeleted\": false,\n          \"memoryId\": 2134,\n          \"workflowStatus\": \"READY_TO_START\",\n          \"workflowName\": \"Translate > Review > Analyst Review\"\n        }\n      ],\n      \"sourceWords\": 0,\n      \"uniqueLanguagePairs\": 1,\n      \"uniqueLinguists\": 1,\n      \"workflowStatus\": \"READY_TO_START\"\n    },\n    \"domains\": [\n      {\n        \"id\": 12,\n        \"name\": \"Marketing\"\n      },\n      {\n        \"id\": 12,\n        \"name\": \"Marketing\"\n      }\n    ]\n  },\n  {\n    \"name\": \"My New Job\",\n    \"creationStatus\": \"COMPLETE\",\n    \"deliveredAt\": \"2021-06-03T13:43:00Z\",\n    \"status\": \"active\",\n    \"due\": \"2021-06-03T13:43:00Z\",\n    \"id\": 241,\n    \"isProcessing\": 0,\n    \"stats\": {\n      \"exactWords\": 0,\n      \"fuzzyWords\": 0,\n      \"newWords\": 0,\n      \"numDeliveredProjects\": 0,\n      \"numLanguagePairs\": 0,\n      \"numProjects\": 0,\n      \"percentReviewed\": 0,\n      \"percentTranslated\": 0,\n      \"projects\": [\n        {\n          \"id\": 3420,\n          \"srcLang\": \"en\",\n          \"srcLocale\": \"US\",\n          \"trgLang\": \"fr\",\n          \"trgLocale\": \"CA\",\n          \"name\": \"My new project\",\n          \"due\": \"2021-10-03T13:43:00.000Z\",\n          \"isComplete\": false,\n          \"isArchived\": false,\n          \"state\": \"inProgress\",\n          \"numSourceTokens\": 2134,\n          \"createdAt\": \"2021-04-01T13:43:00.000Z\",\n          \"updatedAt\": \"2021-06-03T13:43:00.000Z\",\n          \"isDeleted\": false,\n          \"memoryId\": 2134,\n          \"workflowStatus\": \"READY_TO_START\",\n          \"workflowName\": \"Translate > Review > Analyst Review\"\n        },\n        {\n          \"id\": 9107,\n          \"srcLang\": \"en\",\n          \"srcLocale\": \"US\",\n          \"trgLang\": \"fr\",\n          \"trgLocale\": \"CA\",\n          \"name\": \"My new project\",\n          \"due\": \"2021-10-03T13:43:00.000Z\",\n          \"isComplete\": false,\n          \"isArchived\": false,\n          \"state\": \"inProgress\",\n          \"numSourceTokens\": 2134,\n          \"createdAt\": \"2021-04-01T13:43:00.000Z\",\n          \"updatedAt\": \"2021-06-03T13:43:00.000Z\",\n          \"isDeleted\": false,\n          \"memoryId\": 2134,\n          \"workflowStatus\": \"READY_TO_START\",\n          \"workflowName\": \"Translate > Review > Analyst Review\"\n        }\n      ],\n      \"sourceWords\": 0,\n      \"uniqueLanguagePairs\": 1,\n      \"uniqueLinguists\": 1,\n      \"workflowStatus\": \"READY_TO_START\"\n    },\n    \"domains\": [\n      {\n        \"id\": 12,\n        \"name\": \"Marketing\"\n      },\n      {\n        \"id\": 12,\n        \"name\": \"Marketing\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e48e0656-a8ca-4579-a4a7-e161ec35fd33",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "isArchived",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "isDelivered",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8bcce15a-bc61-40e5-8f62-e104ed93e178",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "isArchived",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "isDelivered",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal server error.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aa5beae9-838f-4a21-b40a-4947e09a4977",
+          "name": "Create a Job",
+          "request": {
+            "name": "Create a Job",
+            "description": {
+              "content": "Create a Job. A Job is a collection of Projects.\nA Job will contain multiple projects, based on the language pair.\nA Project is associated with exactly one Memory.\n\nJobs appear in the Jobs dashboard of the web app.\n\nExample CURL command:\n\n```bash\ncurl -X POST 'https://api.lilt.com/v2/jobs?key=API_KEY' \\\n--header 'Content-Type: application/json' \\\n--data-raw '{\n  \"name\": \"test job\",\n  \"fileIds\": [5009, 5010, 5011],\n  \"due\": \"2022-05-05T10:56:44.985Z\",\n  \"srcLang\": \"en\",\n  \"srcLocale\": \"US\",\n  \"languagePairs\": [\n      { \"memoryId\": 3121, \"trgLang\": \"de\" },\n      { \"memoryId\": 2508, \"trgLang\": \"fr\" },\n      { \"memoryId\": 3037, \"trgLang\": \"zh\" }\n    ]\n}'\n```\n\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "jobs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fileIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"languagePairs\": [\n    {\n      \"memoryId\": \"<integer>\",\n      \"trgLang\": \"<string>\",\n      \"trgLocale\": \"<string>\",\n      \"dueDate\": \"<string>\",\n      \"externalModelId\": \"<integer>\",\n      \"pretranslate\": \"<boolean>\",\n      \"autoAccept\": \"<boolean>\",\n      \"caseSensitive\": \"<boolean>\",\n      \"takeMatchAttribution\": \"<boolean>\",\n      \"configId\": \"<integer>\",\n      \"workflowTemplateId\": \"<integer>\",\n      \"workflowTemplateName\": \"<integer>\",\n      \"workflowStageAssignments\": [\n        {\n          \"workflowStageTemplateId\": \"<integer>\",\n          \"userId\": \"<integer>\",\n          \"email\": \"<string>\"\n        },\n        {\n          \"workflowStageTemplateId\": \"<integer>\",\n          \"userId\": \"<integer>\",\n          \"email\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"memoryId\": \"<integer>\",\n      \"trgLang\": \"<string>\",\n      \"trgLocale\": \"<string>\",\n      \"dueDate\": \"<string>\",\n      \"externalModelId\": \"<integer>\",\n      \"pretranslate\": \"<boolean>\",\n      \"autoAccept\": \"<boolean>\",\n      \"caseSensitive\": \"<boolean>\",\n      \"takeMatchAttribution\": \"<boolean>\",\n      \"configId\": \"<integer>\",\n      \"workflowTemplateId\": \"<integer>\",\n      \"workflowTemplateName\": \"<integer>\",\n      \"workflowStageAssignments\": [\n        {\n          \"workflowStageTemplateId\": \"<integer>\",\n          \"userId\": \"<integer>\",\n          \"email\": \"<string>\"\n        },\n        {\n          \"workflowStageTemplateId\": \"<integer>\",\n          \"userId\": \"<integer>\",\n          \"email\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"name\": \"<string>\",\n  \"srcLang\": \"<string>\",\n  \"srcLocale\": \"<string>\",\n  \"due\": \"<string>\",\n  \"isPlural\": \"<boolean>\",\n  \"workflowTemplateId\": \"<integer>\",\n  \"domainId\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d2ef136d-15f3-439b-9f63-e99049b1f871",
+              "name": "A Job object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fileIds\": [\n    298,\n    299\n  ],\n  \"languagePairs\": [\n    {\n      \"memoryId\": 1241,\n      \"trgLang\": \"de\",\n      \"trgLocale\": \"DE\",\n      \"dueDate\": \"2021-10-03T13:43:00.000Z\",\n      \"externalModelId\": 44,\n      \"pretranslate\": \"<boolean>\",\n      \"autoAccept\": true,\n      \"caseSensitive\": \"<boolean>\",\n      \"takeMatchAttribution\": true,\n      \"configId\": 2332,\n      \"workflowTemplateId\": 14,\n      \"workflowTemplateName\": \"<integer>\",\n      \"workflowStageAssignments\": [\n        {\n          \"workflowStageTemplateId\": 12345,\n          \"userId\": 123,\n          \"email\": \"username@domain.com\"\n        },\n        {\n          \"workflowStageTemplateId\": 12345,\n          \"userId\": 123,\n          \"email\": \"username@domain.com\"\n        }\n      ]\n    },\n    {\n      \"memoryId\": 1241,\n      \"trgLang\": \"de\",\n      \"trgLocale\": \"DE\",\n      \"dueDate\": \"2021-10-03T13:43:00.000Z\",\n      \"externalModelId\": 44,\n      \"pretranslate\": \"<boolean>\",\n      \"autoAccept\": true,\n      \"caseSensitive\": \"<boolean>\",\n      \"takeMatchAttribution\": true,\n      \"configId\": 2332,\n      \"workflowTemplateId\": 14,\n      \"workflowTemplateName\": \"<integer>\",\n      \"workflowStageAssignments\": [\n        {\n          \"workflowStageTemplateId\": 12345,\n          \"userId\": 123,\n          \"email\": \"username@domain.com\"\n        },\n        {\n          \"workflowStageTemplateId\": 12345,\n          \"userId\": 123,\n          \"email\": \"username@domain.com\"\n        }\n      ]\n    }\n  ],\n  \"name\": \"My new Job\",\n  \"srcLang\": \"en\",\n  \"srcLocale\": \"US\",\n  \"due\": \"2021-10-05T14:48:00.000Z\",\n  \"isPlural\": true,\n  \"workflowTemplateId\": \"<integer>\",\n  \"domainId\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"My New Job\",\n  \"creationStatus\": \"COMPLETE\",\n  \"deliveredAt\": \"2021-06-03T13:43:00Z\",\n  \"status\": \"active\",\n  \"due\": \"2021-06-03T13:43:00Z\",\n  \"id\": 241,\n  \"isProcessing\": 0,\n  \"stats\": {\n    \"exactWords\": 0,\n    \"fuzzyWords\": 0,\n    \"newWords\": 0,\n    \"numDeliveredProjects\": 0,\n    \"numLanguagePairs\": 0,\n    \"numProjects\": 0,\n    \"percentReviewed\": 0,\n    \"percentTranslated\": 0,\n    \"projects\": [\n      {\n        \"id\": 5162,\n        \"srcLang\": \"en\",\n        \"srcLocale\": \"US\",\n        \"trgLang\": \"fr\",\n        \"trgLocale\": \"CA\",\n        \"name\": \"My new project\",\n        \"due\": \"2021-10-03T13:43:00.000Z\",\n        \"isComplete\": false,\n        \"isArchived\": false,\n        \"state\": \"inProgress\",\n        \"numSourceTokens\": 2134,\n        \"createdAt\": \"2021-04-01T13:43:00.000Z\",\n        \"updatedAt\": \"2021-06-03T13:43:00.000Z\",\n        \"isDeleted\": false,\n        \"memoryId\": 2134,\n        \"workflowStatus\": \"READY_TO_START\",\n        \"workflowName\": \"Translate > Review > Analyst Review\"\n      },\n      {\n        \"id\": 8317,\n        \"srcLang\": \"en\",\n        \"srcLocale\": \"US\",\n        \"trgLang\": \"fr\",\n        \"trgLocale\": \"CA\",\n        \"name\": \"My new project\",\n        \"due\": \"2021-10-03T13:43:00.000Z\",\n        \"isComplete\": false,\n        \"isArchived\": false,\n        \"state\": \"inProgress\",\n        \"numSourceTokens\": 2134,\n        \"createdAt\": \"2021-04-01T13:43:00.000Z\",\n        \"updatedAt\": \"2021-06-03T13:43:00.000Z\",\n        \"isDeleted\": false,\n        \"memoryId\": 2134,\n        \"workflowStatus\": \"READY_TO_START\",\n        \"workflowName\": \"Translate > Review > Analyst Review\"\n      }\n    ],\n    \"sourceWords\": 0,\n    \"uniqueLanguagePairs\": 1,\n    \"uniqueLinguists\": 1,\n    \"workflowStatus\": \"READY_TO_START\"\n  },\n  \"domains\": [\n    {\n      \"id\": 12,\n      \"name\": \"Marketing\"\n    },\n    {\n      \"id\": 12,\n      \"name\": \"Marketing\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5386b61a-357b-4499-a34b-45d4242cdda7",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fileIds\": [\n    298,\n    299\n  ],\n  \"languagePairs\": [\n    {\n      \"memoryId\": 1241,\n      \"trgLang\": \"de\",\n      \"trgLocale\": \"DE\",\n      \"dueDate\": \"2021-10-03T13:43:00.000Z\",\n      \"externalModelId\": 44,\n      \"pretranslate\": \"<boolean>\",\n      \"autoAccept\": true,\n      \"caseSensitive\": \"<boolean>\",\n      \"takeMatchAttribution\": true,\n      \"configId\": 2332,\n      \"workflowTemplateId\": 14,\n      \"workflowTemplateName\": \"<integer>\",\n      \"workflowStageAssignments\": [\n        {\n          \"workflowStageTemplateId\": 12345,\n          \"userId\": 123,\n          \"email\": \"username@domain.com\"\n        },\n        {\n          \"workflowStageTemplateId\": 12345,\n          \"userId\": 123,\n          \"email\": \"username@domain.com\"\n        }\n      ]\n    },\n    {\n      \"memoryId\": 1241,\n      \"trgLang\": \"de\",\n      \"trgLocale\": \"DE\",\n      \"dueDate\": \"2021-10-03T13:43:00.000Z\",\n      \"externalModelId\": 44,\n      \"pretranslate\": \"<boolean>\",\n      \"autoAccept\": true,\n      \"caseSensitive\": \"<boolean>\",\n      \"takeMatchAttribution\": true,\n      \"configId\": 2332,\n      \"workflowTemplateId\": 14,\n      \"workflowTemplateName\": \"<integer>\",\n      \"workflowStageAssignments\": [\n        {\n          \"workflowStageTemplateId\": 12345,\n          \"userId\": 123,\n          \"email\": \"username@domain.com\"\n        },\n        {\n          \"workflowStageTemplateId\": 12345,\n          \"userId\": 123,\n          \"email\": \"username@domain.com\"\n        }\n      ]\n    }\n  ],\n  \"name\": \"My new Job\",\n  \"srcLang\": \"en\",\n  \"srcLocale\": \"US\",\n  \"due\": \"2021-10-05T14:48:00.000Z\",\n  \"isPlural\": true,\n  \"workflowTemplateId\": \"<integer>\",\n  \"domainId\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3414ef99-aba1-4a5a-8f89-52c075a71a77",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fileIds\": [\n    298,\n    299\n  ],\n  \"languagePairs\": [\n    {\n      \"memoryId\": 1241,\n      \"trgLang\": \"de\",\n      \"trgLocale\": \"DE\",\n      \"dueDate\": \"2021-10-03T13:43:00.000Z\",\n      \"externalModelId\": 44,\n      \"pretranslate\": \"<boolean>\",\n      \"autoAccept\": true,\n      \"caseSensitive\": \"<boolean>\",\n      \"takeMatchAttribution\": true,\n      \"configId\": 2332,\n      \"workflowTemplateId\": 14,\n      \"workflowTemplateName\": \"<integer>\",\n      \"workflowStageAssignments\": [\n        {\n          \"workflowStageTemplateId\": 12345,\n          \"userId\": 123,\n          \"email\": \"username@domain.com\"\n        },\n        {\n          \"workflowStageTemplateId\": 12345,\n          \"userId\": 123,\n          \"email\": \"username@domain.com\"\n        }\n      ]\n    },\n    {\n      \"memoryId\": 1241,\n      \"trgLang\": \"de\",\n      \"trgLocale\": \"DE\",\n      \"dueDate\": \"2021-10-03T13:43:00.000Z\",\n      \"externalModelId\": 44,\n      \"pretranslate\": \"<boolean>\",\n      \"autoAccept\": true,\n      \"caseSensitive\": \"<boolean>\",\n      \"takeMatchAttribution\": true,\n      \"configId\": 2332,\n      \"workflowTemplateId\": 14,\n      \"workflowTemplateName\": \"<integer>\",\n      \"workflowStageAssignments\": [\n        {\n          \"workflowStageTemplateId\": 12345,\n          \"userId\": 123,\n          \"email\": \"username@domain.com\"\n        },\n        {\n          \"workflowStageTemplateId\": 12345,\n          \"userId\": 123,\n          \"email\": \"username@domain.com\"\n        }\n      ]\n    }\n  ],\n  \"name\": \"My new Job\",\n  \"srcLang\": \"en\",\n  \"srcLocale\": \"US\",\n  \"due\": \"2021-10-05T14:48:00.000Z\",\n  \"isPlural\": true,\n  \"workflowTemplateId\": \"<integer>\",\n  \"domainId\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal server error.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "68518608-45b7-4822-a5f5-ecbad1261921",
+          "name": "Retrieve a Job",
+          "request": {
+            "name": "Retrieve a Job",
+            "description": {
+              "content": "Retrieves a job data along with stats. To retrieve a specific job, you will need the job `id` in the url path.\n\nExample CURL command:\n\n```bash\ncurl -X GET 'https://api.lilt.com/v2/jobs/{id}?key=API_KEY'\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "jobs",
+                ":jobId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "jobId",
+                  "description": "(Required) A job id."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e09fd84e-096e-4be9-8708-929c8c33af86",
+              "name": "A job object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":jobId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "jobId",
+                      "description": "(Required) A job id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"My New Job\",\n  \"creationStatus\": \"COMPLETE\",\n  \"deliveredAt\": \"2021-06-03T13:43:00Z\",\n  \"status\": \"active\",\n  \"due\": \"2021-06-03T13:43:00Z\",\n  \"id\": 241,\n  \"isProcessing\": 0,\n  \"stats\": {\n    \"exactWords\": 0,\n    \"fuzzyWords\": 0,\n    \"newWords\": 0,\n    \"numDeliveredProjects\": 0,\n    \"numLanguagePairs\": 0,\n    \"numProjects\": 0,\n    \"percentReviewed\": 0,\n    \"percentTranslated\": 0,\n    \"projects\": [\n      {\n        \"id\": 5162,\n        \"srcLang\": \"en\",\n        \"srcLocale\": \"US\",\n        \"trgLang\": \"fr\",\n        \"trgLocale\": \"CA\",\n        \"name\": \"My new project\",\n        \"due\": \"2021-10-03T13:43:00.000Z\",\n        \"isComplete\": false,\n        \"isArchived\": false,\n        \"state\": \"inProgress\",\n        \"numSourceTokens\": 2134,\n        \"createdAt\": \"2021-04-01T13:43:00.000Z\",\n        \"updatedAt\": \"2021-06-03T13:43:00.000Z\",\n        \"isDeleted\": false,\n        \"memoryId\": 2134,\n        \"workflowStatus\": \"READY_TO_START\",\n        \"workflowName\": \"Translate > Review > Analyst Review\"\n      },\n      {\n        \"id\": 8317,\n        \"srcLang\": \"en\",\n        \"srcLocale\": \"US\",\n        \"trgLang\": \"fr\",\n        \"trgLocale\": \"CA\",\n        \"name\": \"My new project\",\n        \"due\": \"2021-10-03T13:43:00.000Z\",\n        \"isComplete\": false,\n        \"isArchived\": false,\n        \"state\": \"inProgress\",\n        \"numSourceTokens\": 2134,\n        \"createdAt\": \"2021-04-01T13:43:00.000Z\",\n        \"updatedAt\": \"2021-06-03T13:43:00.000Z\",\n        \"isDeleted\": false,\n        \"memoryId\": 2134,\n        \"workflowStatus\": \"READY_TO_START\",\n        \"workflowName\": \"Translate > Review > Analyst Review\"\n      }\n    ],\n    \"sourceWords\": 0,\n    \"uniqueLanguagePairs\": 1,\n    \"uniqueLinguists\": 1,\n    \"workflowStatus\": \"READY_TO_START\"\n  },\n  \"domains\": [\n    {\n      \"id\": 12,\n      \"name\": \"Marketing\"\n    },\n    {\n      \"id\": 12,\n      \"name\": \"Marketing\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4a896dd9-29b0-4701-9adb-4bb846a9f90b",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":jobId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "jobId",
+                      "description": "(Required) A job id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9669e1a0-10fd-4a27-b170-5b6a1550f24b",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":jobId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "jobId",
+                      "description": "(Required) A job id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal server error.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2a8e50c9-59d2-4f70-a87c-49008789b0d9",
+          "name": "Update a Job",
+          "request": {
+            "name": "Update a Job",
+            "description": {
+              "content": "Updates a job with the new job properties. To update a specific job, you will need the job `id` in the url path.\n\nYou can update job's name and due date by passing the property and new value in the body.\n\nExample CURL command:\n\n```bash\ncurl -X PUT 'https://api.lilt.com/v2/jobs/{id}?key=API_KEY' \\\n--header 'Content-Type: application/json' \\\n--data-raw '{\n  \"name\": \"test job\",\n  \"due\": \"2022-05-05T10:56:44.985Z\"\n}'\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "jobs",
+                ":jobId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "jobId",
+                  "description": "(Required) A job id."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"due\": \"<dateTime>\",\n  \"isProcessing\": \"<string>\",\n  \"processingErrorMsg\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6ff8f4b3-6e86-46d0-b48f-84687e2ac8fe",
+              "name": "A job object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":jobId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "jobId",
+                      "description": "(Required) A job id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"My new Job\",\n  \"due\": \"2021-10-05T14:48:00.000Z\",\n  \"isProcessing\": \"<string>\",\n  \"processingErrorMsg\": \"Authentication failed. Check your Contentful API Key.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"My New Job\",\n  \"creationStatus\": \"COMPLETE\",\n  \"deliveredAt\": \"2021-06-03T13:43:00Z\",\n  \"status\": \"active\",\n  \"due\": \"2021-06-03T13:43:00Z\",\n  \"id\": 241,\n  \"isProcessing\": 0,\n  \"stats\": {\n    \"exactWords\": 0,\n    \"fuzzyWords\": 0,\n    \"newWords\": 0,\n    \"numDeliveredProjects\": 0,\n    \"numLanguagePairs\": 0,\n    \"numProjects\": 0,\n    \"percentReviewed\": 0,\n    \"percentTranslated\": 0,\n    \"projects\": [\n      {\n        \"id\": 5162,\n        \"srcLang\": \"en\",\n        \"srcLocale\": \"US\",\n        \"trgLang\": \"fr\",\n        \"trgLocale\": \"CA\",\n        \"name\": \"My new project\",\n        \"due\": \"2021-10-03T13:43:00.000Z\",\n        \"isComplete\": false,\n        \"isArchived\": false,\n        \"state\": \"inProgress\",\n        \"numSourceTokens\": 2134,\n        \"createdAt\": \"2021-04-01T13:43:00.000Z\",\n        \"updatedAt\": \"2021-06-03T13:43:00.000Z\",\n        \"isDeleted\": false,\n        \"memoryId\": 2134,\n        \"workflowStatus\": \"READY_TO_START\",\n        \"workflowName\": \"Translate > Review > Analyst Review\"\n      },\n      {\n        \"id\": 8317,\n        \"srcLang\": \"en\",\n        \"srcLocale\": \"US\",\n        \"trgLang\": \"fr\",\n        \"trgLocale\": \"CA\",\n        \"name\": \"My new project\",\n        \"due\": \"2021-10-03T13:43:00.000Z\",\n        \"isComplete\": false,\n        \"isArchived\": false,\n        \"state\": \"inProgress\",\n        \"numSourceTokens\": 2134,\n        \"createdAt\": \"2021-04-01T13:43:00.000Z\",\n        \"updatedAt\": \"2021-06-03T13:43:00.000Z\",\n        \"isDeleted\": false,\n        \"memoryId\": 2134,\n        \"workflowStatus\": \"READY_TO_START\",\n        \"workflowName\": \"Translate > Review > Analyst Review\"\n      }\n    ],\n    \"sourceWords\": 0,\n    \"uniqueLanguagePairs\": 1,\n    \"uniqueLinguists\": 1,\n    \"workflowStatus\": \"READY_TO_START\"\n  },\n  \"domains\": [\n    {\n      \"id\": 12,\n      \"name\": \"Marketing\"\n    },\n    {\n      \"id\": 12,\n      \"name\": \"Marketing\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "540dbdea-01d0-4a9b-b1a7-0adcb615075b",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":jobId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "jobId",
+                      "description": "(Required) A job id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"My new Job\",\n  \"due\": \"2021-10-05T14:48:00.000Z\",\n  \"isProcessing\": \"<string>\",\n  \"processingErrorMsg\": \"Authentication failed. Check your Contentful API Key.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fd48b52e-1686-4a92-ad9d-cf828d4dc11e",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":jobId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "jobId",
+                      "description": "(Required) A job id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"My new Job\",\n  \"due\": \"2021-10-05T14:48:00.000Z\",\n  \"isProcessing\": \"<string>\",\n  \"processingErrorMsg\": \"Authentication failed. Check your Contentful API Key.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal server error.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f81fbef4-99b4-4dd8-bb67-8b2471005931",
+          "name": "Delete a Job",
+          "request": {
+            "name": "Delete a Job",
+            "description": {
+              "content": "Delete a job, deletes all projects and documents in the job, deletes all the segments from all the job's translation memories.\n\nExample CURL command:\n\n```bash\ncurl -X DELETE 'https://api.lilt.com/v2/jobs/{id}?key=API_KEY'\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "jobs",
+                ":jobId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "jobId",
+                  "description": "(Required) A job id."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c390d362-0ab6-4f77-a5dd-b563be439ac8",
+              "name": "A status object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":jobId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "jobId",
+                      "description": "(Required) A job id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 241\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b301c51e-32e4-483f-840f-1d320a551c3c",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":jobId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "jobId",
+                      "description": "(Required) A job id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6362ab3c-04b3-4a6c-8123-723c28cb6834",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":jobId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "jobId",
+                      "description": "(Required) A job id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal server error.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "58604fd6-0843-44c5-b9c7-0abeb3519018",
+          "name": "Retrieve Job Leverage Stats",
+          "request": {
+            "name": "Retrieve Job Leverage Stats",
+            "description": {
+              "content": "Get the TM leverage stats for the job (new/exact/fuzzy matches).\n\nExample CURL command:\n\n```bash\ncurl -X GET 'https://api.lilt.com/v2/jobs/{id}/stats?key=API_KEY'\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "jobs",
+                ":jobId",
+                "stats"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "jobId",
+                  "description": "(Required) A job id."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "190d52e7-2372-493d-81fb-ae3250486f57",
+              "name": "A job leverage stats object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":jobId",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "jobId",
+                      "description": "(Required) A job id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sourceWords\": 0,\n  \"exactWords\": 0,\n  \"fuzzyWords\": 0,\n  \"newWords\": 0,\n  \"projects\": [\n    {\n      \"exactWords\": 800,\n      \"fuzzyWords\": 150,\n      \"id\": 1,\n      \"newWords\": 50,\n      \"sourceWords\": 1000\n    },\n    {\n      \"exactWords\": 800,\n      \"fuzzyWords\": 150,\n      \"id\": 1,\n      \"newWords\": 50,\n      \"sourceWords\": 1000\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ccbb91dc-e999-4e2c-aaf2-dd30c326fde9",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":jobId",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "jobId",
+                      "description": "(Required) A job id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "11f21c62-2b7c-43a3-80ea-3379523cc9d6",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":jobId",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "jobId",
+                      "description": "(Required) A job id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal server error.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f0968a8c-cc2b-465f-93d4-90c6434645b2",
+          "name": "Archive a Job",
+          "request": {
+            "name": "Archive a Job",
+            "description": {
+              "content": "Set job to archived, unassign all linguists and archive all projects and documents inside the job.\n\nIt will return the archived job.\n\nExample CURL command:\n\n```bash\ncurl -X POST 'https://api.lilt.com/v2/jobs/{id}/archive?key=API_KEY'\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "jobs",
+                ":jobId",
+                "archive"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "jobId",
+                  "description": "(Required) A job id."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f7999388-8991-466c-86e9-7e3e6ec49104",
+              "name": "A job object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":jobId",
+                    "archive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "jobId",
+                      "description": "(Required) A job id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"My New Job\",\n  \"creationStatus\": \"COMPLETE\",\n  \"deliveredAt\": \"2021-06-03T13:43:00Z\",\n  \"status\": \"active\",\n  \"due\": \"2021-06-03T13:43:00Z\",\n  \"id\": 241,\n  \"isProcessing\": 0,\n  \"stats\": {\n    \"exactWords\": 0,\n    \"fuzzyWords\": 0,\n    \"newWords\": 0,\n    \"numDeliveredProjects\": 0,\n    \"numLanguagePairs\": 0,\n    \"numProjects\": 0,\n    \"percentReviewed\": 0,\n    \"percentTranslated\": 0,\n    \"projects\": [\n      {\n        \"id\": 5162,\n        \"srcLang\": \"en\",\n        \"srcLocale\": \"US\",\n        \"trgLang\": \"fr\",\n        \"trgLocale\": \"CA\",\n        \"name\": \"My new project\",\n        \"due\": \"2021-10-03T13:43:00.000Z\",\n        \"isComplete\": false,\n        \"isArchived\": false,\n        \"state\": \"inProgress\",\n        \"numSourceTokens\": 2134,\n        \"createdAt\": \"2021-04-01T13:43:00.000Z\",\n        \"updatedAt\": \"2021-06-03T13:43:00.000Z\",\n        \"isDeleted\": false,\n        \"memoryId\": 2134,\n        \"workflowStatus\": \"READY_TO_START\",\n        \"workflowName\": \"Translate > Review > Analyst Review\"\n      },\n      {\n        \"id\": 8317,\n        \"srcLang\": \"en\",\n        \"srcLocale\": \"US\",\n        \"trgLang\": \"fr\",\n        \"trgLocale\": \"CA\",\n        \"name\": \"My new project\",\n        \"due\": \"2021-10-03T13:43:00.000Z\",\n        \"isComplete\": false,\n        \"isArchived\": false,\n        \"state\": \"inProgress\",\n        \"numSourceTokens\": 2134,\n        \"createdAt\": \"2021-04-01T13:43:00.000Z\",\n        \"updatedAt\": \"2021-06-03T13:43:00.000Z\",\n        \"isDeleted\": false,\n        \"memoryId\": 2134,\n        \"workflowStatus\": \"READY_TO_START\",\n        \"workflowName\": \"Translate > Review > Analyst Review\"\n      }\n    ],\n    \"sourceWords\": 0,\n    \"uniqueLanguagePairs\": 1,\n    \"uniqueLinguists\": 1,\n    \"workflowStatus\": \"READY_TO_START\"\n  },\n  \"domains\": [\n    {\n      \"id\": 12,\n      \"name\": \"Marketing\"\n    },\n    {\n      \"id\": 12,\n      \"name\": \"Marketing\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "00bcd807-aa23-43bf-9a6e-f285f474d122",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":jobId",
+                    "archive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "jobId",
+                      "description": "(Required) A job id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "506292fb-b595-41de-bcd3-c5774d54bf59",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":jobId",
+                    "archive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "jobId",
+                      "description": "(Required) A job id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal server error.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "55f3d7c3-ac15-42fb-8a01-14dab5d49028",
+          "name": "Unarchive a Job",
+          "request": {
+            "name": "Unarchive a Job",
+            "description": {
+              "content": "Set job to unarchived, the job will move to active status.\n\nExample CURL command:\n\n```bash\ncurl -X POST 'https://api.lilt.com/v2/jobs/{id}/unarchive?key=API_KEY'\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "jobs",
+                ":jobId",
+                "unarchive"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "jobId",
+                  "description": "(Required) A job id."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5bab64f7-89f0-4e6a-900d-7e7ea6bda1a3",
+              "name": "A job object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":jobId",
+                    "unarchive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "jobId",
+                      "description": "(Required) A job id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"My New Job\",\n  \"creationStatus\": \"COMPLETE\",\n  \"deliveredAt\": \"2021-06-03T13:43:00Z\",\n  \"status\": \"active\",\n  \"due\": \"2021-06-03T13:43:00Z\",\n  \"id\": 241,\n  \"isProcessing\": 0,\n  \"stats\": {\n    \"exactWords\": 0,\n    \"fuzzyWords\": 0,\n    \"newWords\": 0,\n    \"numDeliveredProjects\": 0,\n    \"numLanguagePairs\": 0,\n    \"numProjects\": 0,\n    \"percentReviewed\": 0,\n    \"percentTranslated\": 0,\n    \"projects\": [\n      {\n        \"id\": 5162,\n        \"srcLang\": \"en\",\n        \"srcLocale\": \"US\",\n        \"trgLang\": \"fr\",\n        \"trgLocale\": \"CA\",\n        \"name\": \"My new project\",\n        \"due\": \"2021-10-03T13:43:00.000Z\",\n        \"isComplete\": false,\n        \"isArchived\": false,\n        \"state\": \"inProgress\",\n        \"numSourceTokens\": 2134,\n        \"createdAt\": \"2021-04-01T13:43:00.000Z\",\n        \"updatedAt\": \"2021-06-03T13:43:00.000Z\",\n        \"isDeleted\": false,\n        \"memoryId\": 2134,\n        \"workflowStatus\": \"READY_TO_START\",\n        \"workflowName\": \"Translate > Review > Analyst Review\"\n      },\n      {\n        \"id\": 8317,\n        \"srcLang\": \"en\",\n        \"srcLocale\": \"US\",\n        \"trgLang\": \"fr\",\n        \"trgLocale\": \"CA\",\n        \"name\": \"My new project\",\n        \"due\": \"2021-10-03T13:43:00.000Z\",\n        \"isComplete\": false,\n        \"isArchived\": false,\n        \"state\": \"inProgress\",\n        \"numSourceTokens\": 2134,\n        \"createdAt\": \"2021-04-01T13:43:00.000Z\",\n        \"updatedAt\": \"2021-06-03T13:43:00.000Z\",\n        \"isDeleted\": false,\n        \"memoryId\": 2134,\n        \"workflowStatus\": \"READY_TO_START\",\n        \"workflowName\": \"Translate > Review > Analyst Review\"\n      }\n    ],\n    \"sourceWords\": 0,\n    \"uniqueLanguagePairs\": 1,\n    \"uniqueLinguists\": 1,\n    \"workflowStatus\": \"READY_TO_START\"\n  },\n  \"domains\": [\n    {\n      \"id\": 12,\n      \"name\": \"Marketing\"\n    },\n    {\n      \"id\": 12,\n      \"name\": \"Marketing\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5072b680-e53a-4323-bf76-951863ff8145",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":jobId",
+                    "unarchive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "jobId",
+                      "description": "(Required) A job id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9b06c632-a88a-46e8-9ece-49f7287b3c23",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":jobId",
+                    "unarchive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "jobId",
+                      "description": "(Required) A job id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal server error.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bc0333ac-ada4-44eb-a0c8-26c6a0f5658a",
+          "name": "Deliver a Job",
+          "request": {
+            "name": "Deliver a Job",
+            "description": {
+              "content": "Set the job state to delivered and set all the projects in the job to done\n\nIt will return the delivered job.\n\nExample CURL command:\n\n```bash\ncurl -X POST 'https://api.lilt.com/v2/jobs/{id}/deliver?key=API_KEY'\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "jobs",
+                ":jobId",
+                "deliver"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "jobId",
+                  "description": "(Required) A job id."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9179bf27-b71a-4ff8-80f1-070ed108839a",
+              "name": "A job object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":jobId",
+                    "deliver"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "jobId",
+                      "description": "(Required) A job id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"My New Job\",\n  \"creationStatus\": \"COMPLETE\",\n  \"deliveredAt\": \"2021-06-03T13:43:00Z\",\n  \"status\": \"active\",\n  \"due\": \"2021-06-03T13:43:00Z\",\n  \"id\": 241,\n  \"isProcessing\": 0,\n  \"stats\": {\n    \"exactWords\": 0,\n    \"fuzzyWords\": 0,\n    \"newWords\": 0,\n    \"numDeliveredProjects\": 0,\n    \"numLanguagePairs\": 0,\n    \"numProjects\": 0,\n    \"percentReviewed\": 0,\n    \"percentTranslated\": 0,\n    \"projects\": [\n      {\n        \"id\": 5162,\n        \"srcLang\": \"en\",\n        \"srcLocale\": \"US\",\n        \"trgLang\": \"fr\",\n        \"trgLocale\": \"CA\",\n        \"name\": \"My new project\",\n        \"due\": \"2021-10-03T13:43:00.000Z\",\n        \"isComplete\": false,\n        \"isArchived\": false,\n        \"state\": \"inProgress\",\n        \"numSourceTokens\": 2134,\n        \"createdAt\": \"2021-04-01T13:43:00.000Z\",\n        \"updatedAt\": \"2021-06-03T13:43:00.000Z\",\n        \"isDeleted\": false,\n        \"memoryId\": 2134,\n        \"workflowStatus\": \"READY_TO_START\",\n        \"workflowName\": \"Translate > Review > Analyst Review\"\n      },\n      {\n        \"id\": 8317,\n        \"srcLang\": \"en\",\n        \"srcLocale\": \"US\",\n        \"trgLang\": \"fr\",\n        \"trgLocale\": \"CA\",\n        \"name\": \"My new project\",\n        \"due\": \"2021-10-03T13:43:00.000Z\",\n        \"isComplete\": false,\n        \"isArchived\": false,\n        \"state\": \"inProgress\",\n        \"numSourceTokens\": 2134,\n        \"createdAt\": \"2021-04-01T13:43:00.000Z\",\n        \"updatedAt\": \"2021-06-03T13:43:00.000Z\",\n        \"isDeleted\": false,\n        \"memoryId\": 2134,\n        \"workflowStatus\": \"READY_TO_START\",\n        \"workflowName\": \"Translate > Review > Analyst Review\"\n      }\n    ],\n    \"sourceWords\": 0,\n    \"uniqueLanguagePairs\": 1,\n    \"uniqueLinguists\": 1,\n    \"workflowStatus\": \"READY_TO_START\"\n  },\n  \"domains\": [\n    {\n      \"id\": 12,\n      \"name\": \"Marketing\"\n    },\n    {\n      \"id\": 12,\n      \"name\": \"Marketing\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2e23fdad-2246-4933-b525-1c7727d223b3",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":jobId",
+                    "deliver"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "jobId",
+                      "description": "(Required) A job id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0a088ac8-9d59-4523-9bd0-92f974e79e5a",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":jobId",
+                    "deliver"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "jobId",
+                      "description": "(Required) A job id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal server error.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "03899d1f-0f0a-41f4-b2ba-b959af651b83",
+          "name": "Reactivate a Job",
+          "request": {
+            "name": "Reactivate a Job",
+            "description": {
+              "content": "Set the job state to active. Does not change the state of projects associated with the given job.\n\nIt will return the reactivated job.\n\nExample CURL command:\n\n```bash\ncurl -X POST 'https://api.lilt.com/v2/jobs/{id}/reactivate?key=API_KEY'\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "jobs",
+                ":jobId",
+                "reactivate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "jobId",
+                  "description": "(Required) A job id."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f0afb940-33f7-4ef3-8a7a-6922c0b2574b",
+              "name": "A job object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":jobId",
+                    "reactivate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "jobId",
+                      "description": "(Required) A job id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"My New Job\",\n  \"creationStatus\": \"COMPLETE\",\n  \"deliveredAt\": \"2021-06-03T13:43:00Z\",\n  \"status\": \"active\",\n  \"due\": \"2021-06-03T13:43:00Z\",\n  \"id\": 241,\n  \"isProcessing\": 0,\n  \"stats\": {\n    \"exactWords\": 0,\n    \"fuzzyWords\": 0,\n    \"newWords\": 0,\n    \"numDeliveredProjects\": 0,\n    \"numLanguagePairs\": 0,\n    \"numProjects\": 0,\n    \"percentReviewed\": 0,\n    \"percentTranslated\": 0,\n    \"projects\": [\n      {\n        \"id\": 5162,\n        \"srcLang\": \"en\",\n        \"srcLocale\": \"US\",\n        \"trgLang\": \"fr\",\n        \"trgLocale\": \"CA\",\n        \"name\": \"My new project\",\n        \"due\": \"2021-10-03T13:43:00.000Z\",\n        \"isComplete\": false,\n        \"isArchived\": false,\n        \"state\": \"inProgress\",\n        \"numSourceTokens\": 2134,\n        \"createdAt\": \"2021-04-01T13:43:00.000Z\",\n        \"updatedAt\": \"2021-06-03T13:43:00.000Z\",\n        \"isDeleted\": false,\n        \"memoryId\": 2134,\n        \"workflowStatus\": \"READY_TO_START\",\n        \"workflowName\": \"Translate > Review > Analyst Review\"\n      },\n      {\n        \"id\": 8317,\n        \"srcLang\": \"en\",\n        \"srcLocale\": \"US\",\n        \"trgLang\": \"fr\",\n        \"trgLocale\": \"CA\",\n        \"name\": \"My new project\",\n        \"due\": \"2021-10-03T13:43:00.000Z\",\n        \"isComplete\": false,\n        \"isArchived\": false,\n        \"state\": \"inProgress\",\n        \"numSourceTokens\": 2134,\n        \"createdAt\": \"2021-04-01T13:43:00.000Z\",\n        \"updatedAt\": \"2021-06-03T13:43:00.000Z\",\n        \"isDeleted\": false,\n        \"memoryId\": 2134,\n        \"workflowStatus\": \"READY_TO_START\",\n        \"workflowName\": \"Translate > Review > Analyst Review\"\n      }\n    ],\n    \"sourceWords\": 0,\n    \"uniqueLanguagePairs\": 1,\n    \"uniqueLinguists\": 1,\n    \"workflowStatus\": \"READY_TO_START\"\n  },\n  \"domains\": [\n    {\n      \"id\": 12,\n      \"name\": \"Marketing\"\n    },\n    {\n      \"id\": 12,\n      \"name\": \"Marketing\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2b897921-d76d-47aa-a10e-ef0609f111f3",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":jobId",
+                    "reactivate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "jobId",
+                      "description": "(Required) A job id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e2593cb0-258d-4539-9ac6-f5305d0dc978",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":jobId",
+                    "reactivate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "jobId",
+                      "description": "(Required) A job id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal server error.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bf4f0d17-0a55-42dd-b969-9b8b1c127796",
+          "name": "Export a Job",
+          "request": {
+            "name": "Export a Job",
+            "description": {
+              "content": "Prepare job files for download.\nTo export translated documents from the job use the query parameter `type=files`:\n\nExample CURL command:\n\n```bash\ncurl -X GET 'https://api.lilt.com/v2/jobs/{id}/export?key=API_KEY&type=files'\n```\n\nTo export job memories use the query parameter `type=memory`.\n\nThe status of the export can be checked by requesting the job `GET /jobs/:jobId`, `job.isProcessing` will be `1` while in progress,\n`0` when idle and `-2` when the export failed.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "jobs",
+                ":jobId",
+                "export"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "(Required) category for files and memory."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "jobId",
+                  "description": "(Required) A job id."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6af0e218-bc00-40f7-872f-d9120cde1b0d",
+              "name": "200 status.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":jobId",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "jobId",
+                      "description": "(Required) A job id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7753ba68-be1a-46dd-b408-93f0a9b67092",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":jobId",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "jobId",
+                      "description": "(Required) A job id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e20b17b3-7677-453c-ac84-fc6102b2f62c",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":jobId",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "jobId",
+                      "description": "(Required) A job id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal server error.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9664de84-dd92-4faf-9228-5a109c0fe48d",
+          "name": "Download a Job",
+          "request": {
+            "name": "Download a Job",
+            "description": {
+              "content": "Make sure you have exported a job with the same id before using this api.\n\nDownloading files requires the exported job `id` in the param.\n\nExample CURL command:\n\n```bash\ncurl -X GET 'https://api.lilt.com/v2/jobs/{id}/download?key=API_KEY'\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "jobs",
+                ":jobId",
+                "download"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "jobId",
+                  "description": "(Required) A job id."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "043d6507-4596-4465-aa64-676151b4e796",
+              "name": "zipped file",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":jobId",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "jobId",
+                      "description": "(Required) A job id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3f3bfd4a-eb8e-4bfa-8d68-99f355ffbb7b",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":jobId",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "jobId",
+                      "description": "(Required) A job id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "71c94d91-7eb9-4733-b5cc-befd3cd8a6fc",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":jobId",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "jobId",
+                      "description": "(Required) A job id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal server error.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.lilt.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "536eb7e5-9e0a-49cf-b730-2be28750a322",
+    "name": "LILT Create Jobs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "LILT API Support: https://lilt.atlassian.net/servicedesk/customer/portals\n\nThe LILT API enables programmatic access to the full-range of LILT backend services including:\n  * Training of and translating with interactive, adaptive machine translation\n  * Large-scale translation memory\n  * The Lexicon (a large-scale termbase)\n  * Programmatic control of the LILT CAT environment\n  * Translation memory synchronization\n\n\nRequests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests.\n\nThe base url for this REST API is `https://api.lilt.com/`.\n\n## Authentication\n\nRequests are authenticated via API key, which requires the Business plan.\n\nRequests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your API key as both the `username` and `password`.\n\nFor development, you may also pass the API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use.\n\n## Quotas\n\nOur services have a general quota of 4000 requests per minute. Should you hit the maximum requests per minute, you will need to wait 60 seconds before you can send another request.\n",
+      "type": "text/plain"
+    }
+  }
+}

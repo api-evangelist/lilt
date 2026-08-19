@@ -1,0 +1,187 @@
+{
+  "item": [
+    {
+      "id": "710fc39e-e57b-4d63-ac62-f2f7ffd5533d",
+      "name": "Domains",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "09a87632-c7b8-41f8-8cd3-196109ef2be0",
+          "name": "Retrieve Domains",
+          "request": {
+            "name": "Retrieve Domains",
+            "description": {
+              "content": "Retrieve a list of Domains associated with the Organization's API key.\n\nEach Domain contains potentially 4 Arrays related to the Domain these are as follows:\n- models - the list of models associated with the Domain\n- filterConfigs - the list of filterConfigs associated with the Domain\n- domainMetadata - the list of Domain specific options that have been configured for this domain.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "domains"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) the ApiKey used to authenticate with LILT, used to look up the Organization's domain information.",
+                "key": "key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ff54cb11-e532-4715-9322-1c6c5dd4493e",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "domains"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) the ApiKey used to authenticate with LILT, used to look up the Organization's domain information.",
+                    "key": "key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"domainId\": 123,\n      \"domainName\": \"Example Domain\",\n      \"models\": [\n        {\n          \"id\": 456,\n          \"name\": \"Example Model\",\n          \"provider\": \"Google Translate\",\n          \"status\": \"Active\",\n          \"srcLang\": \"en\",\n          \"trgLang\": \"es\",\n          \"srcLocale\": \"US\",\n          \"trgLocale\": \"ES\"\n        }\n      ],\n      \"filterConfigs\": [\n        {\n          \"id\": 789,\n          \"isDefault\": true,\n          \"filterConfig\": \"Example Filter Config\",\n          \"filterName\": \"Example Filter\",\n          \"configName\": \"Example Config Name\",\n          \"configDescription\": \"Example Config Description\",\n          \"subfilters\": \"Example Subfilters\",\n          \"segmentationConfigSetting\": \"SENTENCE\",\n          \"srx\": \"Example SRX\",\n          \"segmentationConfigName\": \"Example Segmentation Config\",\n          \"domains\": [\n            {\n              \"id\": 101,\n              \"name\": \"Example Domain Ref\"\n            }\n          ],\n          \"createdAt\": \"2024-01-01T00:00:00Z\",\n          \"updatedAt\": \"2024-01-02T00:00:00Z\",\n          \"default\": true\n        }\n      ],\n      \"domainMetadata\": [\n        {\n          \"id\": 131,\n          \"key\": \"Example Key\",\n          \"value\": \"Example Value\"\n        }\n      ]\n    }\n  ],\n  \"size\": 1\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c81c1ab8-6a92-409d-8e62-8d14f48e8bf1",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "domains"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) the ApiKey used to authenticate with LILT, used to look up the Organization's domain information.",
+                    "key": "key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal server error.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.lilt.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d1b4a354-0020-4abc-be50-115c524628fb",
+    "name": "LILT Create Domains API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "LILT API Support: https://lilt.atlassian.net/servicedesk/customer/portals\n\nThe LILT API enables programmatic access to the full-range of LILT backend services including:\n  * Training of and translating with interactive, adaptive machine translation\n  * Large-scale translation memory\n  * The Lexicon (a large-scale termbase)\n  * Programmatic control of the LILT CAT environment\n  * Translation memory synchronization\n\n\nRequests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests.\n\nThe base url for this REST API is `https://api.lilt.com/`.\n\n## Authentication\n\nRequests are authenticated via API key, which requires the Business plan.\n\nRequests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your API key as both the `username` and `password`.\n\nFor development, you may also pass the API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use.\n\n## Quotas\n\nOur services have a general quota of 4000 requests per minute. Should you hit the maximum requests per minute, you will need to wait 60 seconds before you can send another request.\n",
+      "type": "text/plain"
+    }
+  }
+}

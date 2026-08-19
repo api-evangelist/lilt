@@ -1,0 +1,42 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LILT Create Domains API",
+    "version": "v3.0.3"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Domains",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve Domains",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lilt.com/v3/domains",
+            "headers": [
+              {
+                "name": "key",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieve a list of Domains associated with the Organization's API key.\n\nEach Domain contains potentially 4 Arrays related to the Domain these are as follows:\n- models - the list of models associated with the Domain\n- filterConfigs - the list of filterConfigs associated with the Domain\n- domainMetadata - the list of Domain specific options that have been configured for this domain.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

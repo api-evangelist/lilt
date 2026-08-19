@@ -1,0 +1,277 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LILT Create Jobs API",
+    "version": "v3.0.3"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Jobs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve all Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lilt.com/v2/jobs",
+            "params": [
+              {
+                "name": "isArchived",
+                "value": "",
+                "type": "query",
+                "description": "Retrieves all jobs that are archived."
+              },
+              {
+                "name": "isDelivered",
+                "value": "",
+                "type": "query",
+                "description": "Retrieves all jobs that are delivered."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Return jobs starting at the offset row. If not given the default offset will be 0."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of jobs to be returned. If not given the default limit will be 25."
+              }
+            ]
+          },
+          "docs": "Get all Jobs within a given offset and limit. You can retrieve jobs from your account using the above API.\n\nExample CURL command:\n\n```bash\ncurl -X GET 'https://api.lilt.com/v2/jobs?key=API_KEY&isArchived=false'\n```"
+        },
+        {
+          "info": {
+            "name": "Create a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lilt.com/v2/jobs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Job. A Job is a collection of Projects.\nA Job will contain multiple projects, based on the language pair.\nA Project is associated with exactly one Memory.\n\nJobs appear in the Jobs dashboard of the web app.\n\nExample CURL command:\n\n```bash\ncurl -X POST 'https://api.lilt.com/v2/jobs?key=API_KEY' \\\n--header 'Content-Type: application/json' \\\n--data-raw '{\n  \"name\": \"test job\",\n  \"fileIds\": [5009, 5010, 5011],\n  \"due\": \"2022-05-05T10:56:44.985Z\",\n  \"srcLang\": \"en\",\n  \"srcLocale\": \"US\",\n  \"la"
+        },
+        {
+          "info": {
+            "name": "Retrieve a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lilt.com/v2/jobs/:jobId",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "A job id."
+              }
+            ]
+          },
+          "docs": "Retrieves a job data along with stats. To retrieve a specific job, you will need the job `id` in the url path.\n\nExample CURL command:\n\n```bash\ncurl -X GET 'https://api.lilt.com/v2/jobs/{id}?key=API_KEY'\n```"
+        },
+        {
+          "info": {
+            "name": "Update a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.lilt.com/v2/jobs/:jobId",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "A job id."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a job with the new job properties. To update a specific job, you will need the job `id` in the url path.\n\nYou can update job's name and due date by passing the property and new value in the body.\n\nExample CURL command:\n\n```bash\ncurl -X PUT 'https://api.lilt.com/v2/jobs/{id}?key=API_KEY' \\\n--header 'Content-Type: application/json' \\\n--data-raw '{\n  \"name\": \"test job\",\n  \"due\": \"2022-05-05T10:56:44.985Z\"\n}'\n```"
+        },
+        {
+          "info": {
+            "name": "Delete a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lilt.com/v2/jobs/:jobId",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "A job id."
+              }
+            ]
+          },
+          "docs": "Delete a job, deletes all projects and documents in the job, deletes all the segments from all the job's translation memories.\n\nExample CURL command:\n\n```bash\ncurl -X DELETE 'https://api.lilt.com/v2/jobs/{id}?key=API_KEY'\n```"
+        },
+        {
+          "info": {
+            "name": "Retrieve Job Leverage Stats",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lilt.com/v2/jobs/:jobId/stats",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "A job id."
+              }
+            ]
+          },
+          "docs": "Get the TM leverage stats for the job (new/exact/fuzzy matches).\n\nExample CURL command:\n\n```bash\ncurl -X GET 'https://api.lilt.com/v2/jobs/{id}/stats?key=API_KEY'\n```"
+        },
+        {
+          "info": {
+            "name": "Archive a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lilt.com/v2/jobs/:jobId/archive",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "A job id."
+              }
+            ]
+          },
+          "docs": "Set job to archived, unassign all linguists and archive all projects and documents inside the job.\n\nIt will return the archived job.\n\nExample CURL command:\n\n```bash\ncurl -X POST 'https://api.lilt.com/v2/jobs/{id}/archive?key=API_KEY'\n```"
+        },
+        {
+          "info": {
+            "name": "Unarchive a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lilt.com/v2/jobs/:jobId/unarchive",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "A job id."
+              }
+            ]
+          },
+          "docs": "Set job to unarchived, the job will move to active status.\n\nExample CURL command:\n\n```bash\ncurl -X POST 'https://api.lilt.com/v2/jobs/{id}/unarchive?key=API_KEY'\n```"
+        },
+        {
+          "info": {
+            "name": "Deliver a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lilt.com/v2/jobs/:jobId/deliver",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "A job id."
+              }
+            ]
+          },
+          "docs": "Set the job state to delivered and set all the projects in the job to done\n\nIt will return the delivered job.\n\nExample CURL command:\n\n```bash\ncurl -X POST 'https://api.lilt.com/v2/jobs/{id}/deliver?key=API_KEY'\n```"
+        },
+        {
+          "info": {
+            "name": "Reactivate a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lilt.com/v2/jobs/:jobId/reactivate",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "A job id."
+              }
+            ]
+          },
+          "docs": "Set the job state to active. Does not change the state of projects associated with the given job.\n\nIt will return the reactivated job.\n\nExample CURL command:\n\n```bash\ncurl -X POST 'https://api.lilt.com/v2/jobs/{id}/reactivate?key=API_KEY'\n```"
+        },
+        {
+          "info": {
+            "name": "Export a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lilt.com/v2/jobs/:jobId/export",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "A job id."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "category for files and memory."
+              }
+            ]
+          },
+          "docs": "Prepare job files for download.\nTo export translated documents from the job use the query parameter `type=files`:\n\nExample CURL command:\n\n```bash\ncurl -X GET 'https://api.lilt.com/v2/jobs/{id}/export?key=API_KEY&type=files'\n```\n\nTo export job memories use the query parameter `type=memory`.\n\nThe status of the export can be checked by requesting the job `GET /jobs/:jobId`, `job.isProcessing` will be `1` while in progress,\n`0` when idle and `-2` when the export failed."
+        },
+        {
+          "info": {
+            "name": "Download a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lilt.com/v2/jobs/:jobId/download",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "A job id."
+              }
+            ]
+          },
+          "docs": "Make sure you have exported a job with the same id before using this api.\n\nDownloading files requires the exported job `id` in the param.\n\nExample CURL command:\n\n```bash\ncurl -X GET 'https://api.lilt.com/v2/jobs/{id}/download?key=API_KEY'\n```"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

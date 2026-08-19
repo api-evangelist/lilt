@@ -1,0 +1,112 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LILT Create Webhook Configuration API",
+    "version": "v3.0.3"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Webhook Configuration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a list of Webhook Configurations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lilt.com/v3/connectors/configuration/webhooks"
+          },
+          "docs": "Retrieves a list of webhook configurations available to your LILT organization.\nUse this to manage your webhook configurations.\n"
+        },
+        {
+          "info": {
+            "name": "Creates a new Webhook Configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lilt.com/v3/connectors/configuration/webhooks",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new webhook configuration for your LILT organization.\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve a specific Webhook Configuration by ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lilt.com/v3/connectors/configuration/webhooks/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Webhook Configuration ID."
+              }
+            ]
+          },
+          "docs": "Retrieves a specific webhook configuration by its ID.\nDeleted webhook configurations are not returned.\n"
+        },
+        {
+          "info": {
+            "name": "Update a specific Webhook Configuration by ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.lilt.com/v3/connectors/configuration/webhooks/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Webhook Configuration ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a specific webhook configuration by its ID.\nOnly the fields that are provided in the request body will be updated.\n"
+        },
+        {
+          "info": {
+            "name": "Delete a specific Webhook Configuration by ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lilt.com/v3/connectors/configuration/webhooks/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Webhook Configuration ID."
+              }
+            ]
+          },
+          "docs": "Delete a specific Webhook Configuration by ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

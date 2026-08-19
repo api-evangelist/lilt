@@ -2,12 +2,10 @@ generated: '2026-07-19'
 method: searched
 status: published
 source: https://support.lilt.com/kb/LILT-mcp
-description: >-
-  LILT publishes a hosted remote MCP server that exposes its translation
-  platform to Claude and other MCP hosts. It is a separate, self-service product
-  from the enterprise LILT platform — MCP app accounts are created at
-  mcp.lilt.com and are distinct from lilt.com accounts. Enterprise customers who
-  want their existing account connected are directed to contact@lilt.com.
+description: LILT publishes a hosted remote MCP server that exposes its translation platform to Claude
+  and other MCP hosts. It is a separate, self-service product from the enterprise LILT platform — MCP
+  app accounts are created at mcp.lilt.com and are distinct from lilt.com accounts. Enterprise customers
+  who want their existing account connected are directed to contact@lilt.com.
 server:
   name: LILT
   transport: http
@@ -20,9 +18,17 @@ authorization:
   issuer: https://blissful-celebration-62.authkit.app
   provider: WorkOS AuthKit
   dynamic_client_registration: true
-  pkce: [S256]
-  grant_types: [authorization_code, refresh_token, 'urn:ietf:params:oauth:grant-type:device_code']
-  scopes: [openid, profile, email, offline_access]
+  pkce:
+  - S256
+  grant_types:
+  - authorization_code
+  - refresh_token
+  - urn:ietf:params:oauth:grant-type:device_code
+  scopes:
+  - openid
+  - profile
+  - email
+  - offline_access
   detail: scopes/lilt-scopes.yml
 install:
   claude:
@@ -49,23 +55,27 @@ tools:
   description: Triggers a job export and returns a download link for the completed job.
 - name: upload_file
   group: File Handling
-  description: >-
-    Uploads a single file to LILT and polls until it is ready for processing.
-    Non-plain-text formats (PDF, DOCX, RTF, PPTX, XLSX) are expected to have
-    their text extracted by the client; the tool appends a .txt extension to the
-    filename to reflect this.
-  parameters: [name, content, content_type]
-  returns: 'Object with id, name, status on success; error and status on failure.'
+  description: Uploads a single file to LILT and polls until it is ready for processing. Non-plain-text
+    formats (PDF, DOCX, RTF, PPTX, XLSX) are expected to have their text extracted by the client; the
+    tool appends a .txt extension to the filename to reflect this.
+  parameters:
+  - name
+  - content
+  - content_type
+  returns: Object with id, name, status on success; error and status on failure.
 - name: create_trained_model
   group: Models & Resources
-  description: >-
-    Creates a new trained translation model for a language pair. Prerequisite
-    for using translate_files_with_verification with that language pair.
-  parameters: [src_lang, trg_lang]
+  description: Creates a new trained translation model for a language pair. Prerequisite for using translate_files_with_verification
+    with that language pair.
+  parameters:
+  - src_lang
+  - trg_lang
 - name: list_resources
   group: Models & Resources
   description: Lists and filters existing jobs or trained models.
-  parameters: [resource_type, archived]
+  parameters:
+  - resource_type
+  - archived
 roadmap:
   source: https://support.lilt.com/kb/LILT-mcp#coming-soon
   planned:
@@ -78,3 +88,10 @@ security_notes:
   - Secrets and credentials are managed exclusively through environment variables.
   - An HTTP-only session cookie authenticates users for the web interface.
   - CORS is restricted to a list of known and trusted origins.
+deployment:
+  mode: remote
+  endpoint: https://mcp.lilt.com/mcp
+  verified: probed
+  probe: gated
+  checked: '2026-08-12'
+  source: catalog MCP census

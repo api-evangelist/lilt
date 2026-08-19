@@ -1,0 +1,756 @@
+{
+  "item": [
+    {
+      "id": "a400c214-af0d-4141-967f-826eedccc6ce",
+      "name": "Projects",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "920bca89-efc6-4d12-9193-ebd9ffc01d50",
+          "name": "Retrieve a Project",
+          "request": {
+            "name": "Retrieve a Project",
+            "description": {
+              "content": "Retrieves one or more projects, including the documents associated with each project. Retrieving a project is the most efficient way to retrieve a single project, multiple projects or a list of all available projects.\n\nTo retrieve a specific project, specify the `id` request parameter or you can retrieve multiple projects by adding comma (,) between ids eg. `?id=1234,5678`. To retrieve all projects, omit the `id` request parameter. To limit the retrieved projects to those with a particular source language or target language, specify the corresponding ISO 639-1 language codes in the `srclang` and `trglang` request parameters, respectively.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "projects"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<integer>",
+                  "description": "A unique Project identifier. It can be a single id or multiple ids separated by a comma"
+                },
+                {
+                  "disabled": false,
+                  "key": "srclang",
+                  "value": "<string>",
+                  "description": "An ISO 639-1 language code."
+                },
+                {
+                  "disabled": false,
+                  "key": "trglang",
+                  "value": "<string>",
+                  "description": "An ISO 639-1 language code."
+                },
+                {
+                  "disabled": false,
+                  "key": "from_time",
+                  "value": "<integer>",
+                  "description": "Unix time stamp (epoch, in seconds) of Projects with `created_at` greater than or equal to the value."
+                },
+                {
+                  "disabled": false,
+                  "key": "to_time",
+                  "value": "<integer>",
+                  "description": "Unix time stamp (epoch, in seconds) of Projects with `created_at` less than the value."
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>",
+                  "description": "A project state (backlog, inProgress, inReview, inQA, done)."
+                },
+                {
+                  "disabled": false,
+                  "key": "archived",
+                  "value": "<boolean>",
+                  "description": "A flag that toggles whether to include archived projects in the response (the default is `true`)."
+                },
+                {
+                  "disabled": false,
+                  "key": "connector_id",
+                  "value": "<integer>",
+                  "description": "A unique Connector identifier."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "afb81531-3a72-47f9-ba79-d1ee2c4939e3",
+              "name": "A list of Project objects.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "srclang",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "trglang",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from_time",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "to_time",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "archived",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "connector_id",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 448,\n    \"memory_id\": 1234,\n    \"job_id\": 1234,\n    \"srclang\": \"en\",\n    \"trglang\": \"fr\",\n    \"srclocale\": \"US\",\n    \"trglocale\": \"FR\",\n    \"name\": \"My New Project\",\n    \"state\": \"backlog\",\n    \"due_date\": 1489147692,\n    \"archived\": false,\n    \"metadata\": {\n      \"connectorType\": \"github\",\n      \"notes\": \"example metadata\"\n    },\n    \"sample_review_percentage\": 20,\n    \"created_at\": 1489147692,\n    \"updated_at\": 1489147692,\n    \"workflowStatus\": \"READY_TO_START\",\n    \"document\": [\n      {\n        \"id\": 46530,\n        \"project_id\": 287,\n        \"srclang\": \"en\",\n        \"trglang\": \"de\",\n        \"name\": \"Introduction.xliff\",\n        \"import_in_progress\": false,\n        \"import_succeeded\": false,\n        \"import_error_message\": \"Could not parse XML.\",\n        \"export_in_progress\": false,\n        \"export_succeeded\": false,\n        \"export_error_message\": \"Could not parse XML.\",\n        \"is_pretranslating\": false,\n        \"status\": {\n          \"pretranslation\": \"idle\"\n        },\n        \"translator_email\": \"translator@example.com\",\n        \"reviewer_email\": \"reviewer@example.com\",\n        \"customer_reviewer_email\": \"reviewer@example.com\",\n        \"created_at\": 1489147692,\n        \"updated_at\": 1489147692,\n        \"is_review_complete\": true\n      },\n      {\n        \"id\": 46530,\n        \"project_id\": 287,\n        \"srclang\": \"en\",\n        \"trglang\": \"de\",\n        \"name\": \"Introduction.xliff\",\n        \"import_in_progress\": false,\n        \"import_succeeded\": false,\n        \"import_error_message\": \"Could not parse XML.\",\n        \"export_in_progress\": false,\n        \"export_succeeded\": false,\n        \"export_error_message\": \"Could not parse XML.\",\n        \"is_pretranslating\": false,\n        \"status\": {\n          \"pretranslation\": \"idle\"\n        },\n        \"translator_email\": \"translator@example.com\",\n        \"reviewer_email\": \"reviewer@example.com\",\n        \"customer_reviewer_email\": \"reviewer@example.com\",\n        \"created_at\": 1489147692,\n        \"updated_at\": 1489147692,\n        \"is_review_complete\": true\n      }\n    ]\n  },\n  {\n    \"id\": 448,\n    \"memory_id\": 1234,\n    \"job_id\": 1234,\n    \"srclang\": \"en\",\n    \"trglang\": \"fr\",\n    \"srclocale\": \"US\",\n    \"trglocale\": \"FR\",\n    \"name\": \"My New Project\",\n    \"state\": \"backlog\",\n    \"due_date\": 1489147692,\n    \"archived\": false,\n    \"metadata\": {\n      \"connectorType\": \"github\",\n      \"notes\": \"example metadata\"\n    },\n    \"sample_review_percentage\": 20,\n    \"created_at\": 1489147692,\n    \"updated_at\": 1489147692,\n    \"workflowStatus\": \"READY_TO_START\",\n    \"document\": [\n      {\n        \"id\": 46530,\n        \"project_id\": 287,\n        \"srclang\": \"en\",\n        \"trglang\": \"de\",\n        \"name\": \"Introduction.xliff\",\n        \"import_in_progress\": false,\n        \"import_succeeded\": false,\n        \"import_error_message\": \"Could not parse XML.\",\n        \"export_in_progress\": false,\n        \"export_succeeded\": false,\n        \"export_error_message\": \"Could not parse XML.\",\n        \"is_pretranslating\": false,\n        \"status\": {\n          \"pretranslation\": \"idle\"\n        },\n        \"translator_email\": \"translator@example.com\",\n        \"reviewer_email\": \"reviewer@example.com\",\n        \"customer_reviewer_email\": \"reviewer@example.com\",\n        \"created_at\": 1489147692,\n        \"updated_at\": 1489147692,\n        \"is_review_complete\": true\n      },\n      {\n        \"id\": 46530,\n        \"project_id\": 287,\n        \"srclang\": \"en\",\n        \"trglang\": \"de\",\n        \"name\": \"Introduction.xliff\",\n        \"import_in_progress\": false,\n        \"import_succeeded\": false,\n        \"import_error_message\": \"Could not parse XML.\",\n        \"export_in_progress\": false,\n        \"export_succeeded\": false,\n        \"export_error_message\": \"Could not parse XML.\",\n        \"is_pretranslating\": false,\n        \"status\": {\n          \"pretranslation\": \"idle\"\n        },\n        \"translator_email\": \"translator@example.com\",\n        \"reviewer_email\": \"reviewer@example.com\",\n        \"customer_reviewer_email\": \"reviewer@example.com\",\n        \"created_at\": 1489147692,\n        \"updated_at\": 1489147692,\n        \"is_review_complete\": true\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7b36607f-7fce-40e6-86da-8f6538b5c237",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "srclang",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "trglang",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from_time",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "to_time",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "archived",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "connector_id",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "589ca898-fa36-4675-aecb-dd49fc542581",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "srclang",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "trglang",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from_time",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "to_time",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "archived",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "connector_id",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal server error.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1b39ca54-4570-4c3b-ac45-3e9b47c5758a",
+          "name": "Create a Project",
+          "request": {
+            "name": "Create a Project",
+            "description": {
+              "content": "Create a Project. A Project is a collection of Documents.\n\nA Project is associated with exactly one Memory.\n\nProjects appear in the dashboard of the web app.\n\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "projects"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"memory_id\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"job_id\": \"<integer>\",\n  \"due_date\": \"<integer>\",\n  \"metadata\": {},\n  \"workflowTemplateId\": \"<integer>\",\n  \"workflow_template_name\": \"<string>\",\n  \"llm_provider\": \"<string>\",\n  \"external_model_id\": \"<integer>\",\n  \"is_plural\": \"<boolean>\",\n  \"require_batch_qa_translator\": \"<boolean>\",\n  \"enable_prompt_labeling\": \"<boolean>\",\n  \"job_type\": \"<string>\",\n  \"additional_guidelines\": \"<string>\",\n  \"is_enhanced_human_ai_optimized\": \"<boolean>\",\n  \"domainId\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "30071647-f90b-4602-a4c9-89067defa690",
+              "name": "A Project object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"memory_id\": 1234,\n  \"name\": \"My new project\",\n  \"job_id\": 1234,\n  \"due_date\": 1489147692,\n  \"metadata\": {\n    \"connectorType\": \"github\",\n    \"notes\": \"example metadata\"\n  },\n  \"workflowTemplateId\": 14,\n  \"workflow_template_name\": \"Translate > Review\",\n  \"llm_provider\": \"neural\",\n  \"external_model_id\": 111,\n  \"is_plural\": false,\n  \"require_batch_qa_translator\": false,\n  \"enable_prompt_labeling\": false,\n  \"job_type\": \"<string>\",\n  \"additional_guidelines\": \"Provide consistent style across all chapters.\",\n  \"is_enhanced_human_ai_optimized\": false,\n  \"domainId\": 234\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 448,\n  \"memory_id\": 1234,\n  \"job_id\": 1234,\n  \"srclang\": \"en\",\n  \"trglang\": \"fr\",\n  \"srclocale\": \"US\",\n  \"trglocale\": \"FR\",\n  \"name\": \"My New Project\",\n  \"state\": \"backlog\",\n  \"due_date\": 1489147692,\n  \"archived\": false,\n  \"metadata\": {\n    \"connectorType\": \"github\",\n    \"notes\": \"example metadata\"\n  },\n  \"sample_review_percentage\": 20,\n  \"created_at\": 1489147692,\n  \"updated_at\": 1489147692,\n  \"workflowStatus\": \"READY_TO_START\",\n  \"document\": [\n    {\n      \"id\": 46530,\n      \"project_id\": 287,\n      \"srclang\": \"en\",\n      \"trglang\": \"de\",\n      \"name\": \"Introduction.xliff\",\n      \"import_in_progress\": false,\n      \"import_succeeded\": false,\n      \"import_error_message\": \"Could not parse XML.\",\n      \"export_in_progress\": false,\n      \"export_succeeded\": false,\n      \"export_error_message\": \"Could not parse XML.\",\n      \"is_pretranslating\": false,\n      \"status\": {\n        \"pretranslation\": \"idle\"\n      },\n      \"translator_email\": \"translator@example.com\",\n      \"reviewer_email\": \"reviewer@example.com\",\n      \"customer_reviewer_email\": \"reviewer@example.com\",\n      \"created_at\": 1489147692,\n      \"updated_at\": 1489147692,\n      \"is_review_complete\": true\n    },\n    {\n      \"id\": 46530,\n      \"project_id\": 287,\n      \"srclang\": \"en\",\n      \"trglang\": \"de\",\n      \"name\": \"Introduction.xliff\",\n      \"import_in_progress\": false,\n      \"import_succeeded\": false,\n      \"import_error_message\": \"Could not parse XML.\",\n      \"export_in_progress\": false,\n      \"export_succeeded\": false,\n      \"export_error_message\": \"Could not parse XML.\",\n      \"is_pretranslating\": false,\n      \"status\": {\n        \"pretranslation\": \"idle\"\n      },\n      \"translator_email\": \"translator@example.com\",\n      \"reviewer_email\": \"reviewer@example.com\",\n      \"customer_reviewer_email\": \"reviewer@example.com\",\n      \"created_at\": 1489147692,\n      \"updated_at\": 1489147692,\n      \"is_review_complete\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7d0416ba-d34b-41e0-85ba-d57a3241dddb",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"memory_id\": 1234,\n  \"name\": \"My new project\",\n  \"job_id\": 1234,\n  \"due_date\": 1489147692,\n  \"metadata\": {\n    \"connectorType\": \"github\",\n    \"notes\": \"example metadata\"\n  },\n  \"workflowTemplateId\": 14,\n  \"workflow_template_name\": \"Translate > Review\",\n  \"llm_provider\": \"neural\",\n  \"external_model_id\": 111,\n  \"is_plural\": false,\n  \"require_batch_qa_translator\": false,\n  \"enable_prompt_labeling\": false,\n  \"job_type\": \"<string>\",\n  \"additional_guidelines\": \"Provide consistent style across all chapters.\",\n  \"is_enhanced_human_ai_optimized\": false,\n  \"domainId\": 234\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1ec1c738-bacf-405f-b3b0-8f76e5719e66",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"memory_id\": 1234,\n  \"name\": \"My new project\",\n  \"job_id\": 1234,\n  \"due_date\": 1489147692,\n  \"metadata\": {\n    \"connectorType\": \"github\",\n    \"notes\": \"example metadata\"\n  },\n  \"workflowTemplateId\": 14,\n  \"workflow_template_name\": \"Translate > Review\",\n  \"llm_provider\": \"neural\",\n  \"external_model_id\": 111,\n  \"is_plural\": false,\n  \"require_batch_qa_translator\": false,\n  \"enable_prompt_labeling\": false,\n  \"job_type\": \"<string>\",\n  \"additional_guidelines\": \"Provide consistent style across all chapters.\",\n  \"is_enhanced_human_ai_optimized\": false,\n  \"domainId\": 234\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal server error.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b667543b-ee1c-4873-b639-6a8a19ecdd80",
+          "name": "Delete a Project",
+          "request": {
+            "name": "Delete a Project",
+            "description": {
+              "content": "Delete a Project.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "projects"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<integer>",
+                  "description": "A unique Project identifier."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9024e91b-3cee-4160-a81d-5523902005b2",
+              "name": "A status object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 46530,\n  \"deleted\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a155a7f7-5137-4b8e-9a96-e9d53e25a1a6",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "37de7dc9-a7ae-49c1-b6e5-12c87112a54e",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal server error.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.lilt.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e9ec6741-df13-4633-942e-026e9cc02408",
+    "name": "LILT Create Projects API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "LILT API Support: https://lilt.atlassian.net/servicedesk/customer/portals\n\nThe LILT API enables programmatic access to the full-range of LILT backend services including:\n  * Training of and translating with interactive, adaptive machine translation\n  * Large-scale translation memory\n  * The Lexicon (a large-scale termbase)\n  * Programmatic control of the LILT CAT environment\n  * Translation memory synchronization\n\n\nRequests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests.\n\nThe base url for this REST API is `https://api.lilt.com/`.\n\n## Authentication\n\nRequests are authenticated via API key, which requires the Business plan.\n\nRequests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your API key as both the `username` and `password`.\n\nFor development, you may also pass the API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use.\n\n## Quotas\n\nOur services have a general quota of 4000 requests per minute. Should you hit the maximum requests per minute, you will need to wait 60 seconds before you can send another request.\n",
+      "type": "text/plain"
+    }
+  }
+}

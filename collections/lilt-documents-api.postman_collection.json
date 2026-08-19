@@ -1,0 +1,1015 @@
+{
+  "item": [
+    {
+      "id": "a46002c9-93b9-4d8d-9a3b-a2c3e9e1532f",
+      "name": "Documents",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0102ebad-5dfe-46db-b42f-a8fabfbbcb80",
+          "name": "Download a Document",
+          "request": {
+            "name": "Download a Document",
+            "description": {
+              "content": "Export a Document that has been translated in the Lilt web application.\nAny Document can be downloaded in XLIFF 1.2 format, or can be retrieved in its original uploaded format by setting `is_xliff=false`.\nThis endpoint will fail if either (a) export or (b) pre-translation operations are in-progress. The status of those operations can be determined by retrieving the Document resource.\nExample CURL command:\n```bash\n  curl -X GET https://api.lilt.com/v2/documents/files?key=API_KEY&id=274 -o from_lilt.xliff\n```\n\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "documents",
+                "files"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<integer>",
+                  "description": "(Required) An unique Document identifier."
+                },
+                {
+                  "disabled": false,
+                  "key": "is_xliff",
+                  "value": "true",
+                  "description": "Download the document in XLIFF 1.2 format."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "291195b3-60a4-41e0-8e05-c47d0cb9ae0b",
+              "name": "A file.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "documents",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "is_xliff",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "96036bd5-b0bd-433c-b251-5dae92efa7b7",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "documents",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "is_xliff",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "363a916f-cc45-4b6f-b115-41c927e5b475",
+              "name": "File in pretranslation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "documents",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "is_xliff",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4289dfb4-6697-4b47-81bc-a9d7959434e5",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "documents",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "is_xliff",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d9def366-f659-45c0-b7bb-2d7f927b837b",
+          "name": "Upload a File",
+          "request": {
+            "name": "Upload a File",
+            "description": {
+              "content": "Create a Document from a file in any of the formats [documented in our knowledge base](/kb/supported-file-formats).\nRequest parameters should be passed as JSON object with the header field `LILT-API`.\n\nFile names in the header can only contain [US-ASCII characters](https://en.wikipedia.org/wiki/ASCII). File names with characters outside of US-ASCII should be [URI encoded](https://en.wikipedia.org/wiki/Percent-encoding) or transliterated to US-ASCII strings.\n\nExample CURL command:\n```bash\n  curl -X POST https://api.lilt.com/v2/documents/files?key=API_KEY \\\n  --header \"LILT-API: {\\\"name\\\": \\\"introduction.xliff\\\",\\\"pretranslate\\\": \\\"tm+mt\\\",\\\"project_id\\\": 9}\" \\\n  --header \"Content-Type: application/octet-stream\" \\\n  --data-binary @Introduction.xliff\n```\n\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "documents",
+                "files"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) A file name.",
+                "key": "name",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) A unique Project identifier.",
+                "key": "project_id",
+                "value": "<integer>"
+              },
+              {
+                "disabled": false,
+                "description": "An optional parameter indicating if and how the document will be\npretranslated upon being uploaded.\nThe accepted values are `TM`, or `TM+MT`\n",
+                "key": "pretranslate",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "An optional parameter to auto-accept segments with 100% translation\nmemory matches when the `pretranslate` option is also set, or to\nauto-accept any target data that is present when the uploaded file\nis XLIFF. If omitted it will default to your organization settings for `Accept and lock exact matches`,\nif set to `false`, no segments will be auto-accepted.\n",
+                "key": "auto_accept",
+                "value": "<boolean>"
+              },
+              {
+                "disabled": false,
+                "description": "An optional parameter to use case sensitive translation memory matching when the `pretranslate`\noption is also enabled. Matches must have identical character-by-character case to qualify as matches.\nDefault value matches your organization settings for `Use case sensitive translation memory matching` setting\n",
+                "key": "case_sensitive",
+                "value": "<boolean>"
+              },
+              {
+                "disabled": false,
+                "description": "An optional parameter to attribute translation authorship of exact matches to the author of the file\nwhen the `pretranslate` option is also enabled. Default value matches your organization settings for `Translation authorship` setting\n",
+                "key": "match_attribution",
+                "value": "<boolean>"
+              },
+              {
+                "disabled": false,
+                "description": "An optional pararameter to specify an import configuration to\nbe applied when extracting translatable content from this file.\n",
+                "key": "config_id",
+                "value": "<integer>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/octet-stream"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "file"
+            }
+          },
+          "response": [
+            {
+              "id": "213cf3c0-8f9e-4075-80b7-f2baba9ad1df",
+              "name": "A Document object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "documents",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A file name.",
+                    "key": "name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique Project identifier.",
+                    "key": "project_id",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "An optional parameter indicating if and how the document will be\npretranslated upon being uploaded.\nThe accepted values are `TM`, or `TM+MT`\n",
+                    "key": "pretranslate",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "An optional parameter to auto-accept segments with 100% translation\nmemory matches when the `pretranslate` option is also set, or to\nauto-accept any target data that is present when the uploaded file\nis XLIFF. If omitted it will default to your organization settings for `Accept and lock exact matches`,\nif set to `false`, no segments will be auto-accepted.\n",
+                    "key": "auto_accept",
+                    "value": "<boolean>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "An optional parameter to use case sensitive translation memory matching when the `pretranslate`\noption is also enabled. Matches must have identical character-by-character case to qualify as matches.\nDefault value matches your organization settings for `Use case sensitive translation memory matching` setting\n",
+                    "key": "case_sensitive",
+                    "value": "<boolean>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "An optional parameter to attribute translation authorship of exact matches to the author of the file\nwhen the `pretranslate` option is also enabled. Default value matches your organization settings for `Translation authorship` setting\n",
+                    "key": "match_attribution",
+                    "value": "<boolean>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "An optional pararameter to specify an import configuration to\nbe applied when extracting translatable content from this file.\n",
+                    "key": "config_id",
+                    "value": "<integer>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "file"
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 46530,\n  \"project_id\": 287,\n  \"srclang\": \"en\",\n  \"trglang\": \"de\",\n  \"name\": \"Introduction.xliff\",\n  \"import_in_progress\": false,\n  \"import_succeeded\": false,\n  \"import_error_message\": \"Could not parse XML.\",\n  \"export_in_progress\": false,\n  \"export_succeeded\": false,\n  \"export_error_message\": \"Could not parse XML.\",\n  \"is_pretranslating\": false,\n  \"status\": {\n    \"pretranslation\": \"idle\"\n  },\n  \"translator_email\": \"translator@example.com\",\n  \"reviewer_email\": \"reviewer@example.com\",\n  \"created_at\": 1489147692,\n  \"updated_at\": 1489147692,\n  \"is_review_complete\": true,\n  \"segments\": [\n    {\n      \"id\": 84480010,\n      \"created_at\": 1489147692,\n      \"updated_at\": 1489147692,\n      \"document_id\": 1234,\n      \"memory_id\": 5678,\n      \"source\": \"The red bus.\",\n      \"srclang\": \"en\",\n      \"target\": \"Le bus rouge.\",\n      \"trglang\": \"fr\",\n      \"is_confirmed\": true,\n      \"is_reviewed\": true\n    },\n    {\n      \"id\": 84480010,\n      \"created_at\": 1489147692,\n      \"updated_at\": 1489147692,\n      \"document_id\": 1234,\n      \"memory_id\": 5678,\n      \"source\": \"The red bus.\",\n      \"srclang\": \"en\",\n      \"target\": \"Le bus rouge.\",\n      \"trglang\": \"fr\",\n      \"is_confirmed\": true,\n      \"is_reviewed\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4df93ec3-cc6d-486e-8e49-f3dc02e71f56",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "documents",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A file name.",
+                    "key": "name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique Project identifier.",
+                    "key": "project_id",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "An optional parameter indicating if and how the document will be\npretranslated upon being uploaded.\nThe accepted values are `TM`, or `TM+MT`\n",
+                    "key": "pretranslate",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "An optional parameter to auto-accept segments with 100% translation\nmemory matches when the `pretranslate` option is also set, or to\nauto-accept any target data that is present when the uploaded file\nis XLIFF. If omitted it will default to your organization settings for `Accept and lock exact matches`,\nif set to `false`, no segments will be auto-accepted.\n",
+                    "key": "auto_accept",
+                    "value": "<boolean>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "An optional parameter to use case sensitive translation memory matching when the `pretranslate`\noption is also enabled. Matches must have identical character-by-character case to qualify as matches.\nDefault value matches your organization settings for `Use case sensitive translation memory matching` setting\n",
+                    "key": "case_sensitive",
+                    "value": "<boolean>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "An optional parameter to attribute translation authorship of exact matches to the author of the file\nwhen the `pretranslate` option is also enabled. Default value matches your organization settings for `Translation authorship` setting\n",
+                    "key": "match_attribution",
+                    "value": "<boolean>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "An optional pararameter to specify an import configuration to\nbe applied when extracting translatable content from this file.\n",
+                    "key": "config_id",
+                    "value": "<integer>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "file"
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7e98bd09-2cd0-4bdd-a4e8-765a85673e08",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "documents",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A file name.",
+                    "key": "name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique Project identifier.",
+                    "key": "project_id",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "An optional parameter indicating if and how the document will be\npretranslated upon being uploaded.\nThe accepted values are `TM`, or `TM+MT`\n",
+                    "key": "pretranslate",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "An optional parameter to auto-accept segments with 100% translation\nmemory matches when the `pretranslate` option is also set, or to\nauto-accept any target data that is present when the uploaded file\nis XLIFF. If omitted it will default to your organization settings for `Accept and lock exact matches`,\nif set to `false`, no segments will be auto-accepted.\n",
+                    "key": "auto_accept",
+                    "value": "<boolean>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "An optional parameter to use case sensitive translation memory matching when the `pretranslate`\noption is also enabled. Matches must have identical character-by-character case to qualify as matches.\nDefault value matches your organization settings for `Use case sensitive translation memory matching` setting\n",
+                    "key": "case_sensitive",
+                    "value": "<boolean>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "An optional parameter to attribute translation authorship of exact matches to the author of the file\nwhen the `pretranslate` option is also enabled. Default value matches your organization settings for `Translation authorship` setting\n",
+                    "key": "match_attribution",
+                    "value": "<boolean>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "An optional pararameter to specify an import configuration to\nbe applied when extracting translatable content from this file.\n",
+                    "key": "config_id",
+                    "value": "<integer>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "file"
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal server error.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a321bdb8-99f2-456c-9412-e6805073c328",
+          "name": "Pretranslate Documents",
+          "request": {
+            "name": "Pretranslate Documents",
+            "description": {
+              "content": "Pretranslate one or more Documents using translation memory (TM) and,\noptionally, machine translation (MT). Only documents that are not\ncurrently importing/exporting and are not already pretranslating will\nbe pretranslated; the response always reflects the current state of\nevery requested Document id, whether or not it was eligible.\n\nThis is an asynchronous operation. The endpoint returns immediately\nwith a `202` response once pretranslation has been queued; poll the\nDocument resource (or the `is_pretranslating` / `status.pretranslation`\nfields it returns) to see when pretranslation has finished.\n\nThis endpoint is subject to a per-organization rate limit. See the\n[API Rate Limits guide](/developers/guides/rate-limits) for details on\nhow to read `429` responses and batch requests efficiently by passing\nmultiple document ids in a single call.\n\nExample CURL:\n```bash\ncurl -X POST 'https://api.lilt.com/v2/documents/pretranslate?key=API_KEY' \\\n--header 'Content-Type: application/json' \\\n--data-raw '{\"id\": [274, 275], \"mode\": \"TM+MT\", \"auto_accept\": true}'\n```\n\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "documents",
+                "pretranslate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "auto_accept",
+                  "value": "<boolean>",
+                  "description": "Auto-accept segments with 100% translation memory matches. Can also be passed in the request body. Defaults to your organization's `Accept and lock exact matches` setting."
+                },
+                {
+                  "disabled": false,
+                  "key": "case_sensitive",
+                  "value": "<boolean>",
+                  "description": "Use case-sensitive translation memory matching. Can also be passed in the request body. Defaults to your organization's `Use case sensitive translation memory matching` setting."
+                },
+                {
+                  "disabled": false,
+                  "key": "attribute_to_creator",
+                  "value": "<boolean>",
+                  "description": "Attribute translation authorship of exact matches to the author of the document. Can also be passed in the request body. Defaults to your organization's `Translation authorship` setting."
+                },
+                {
+                  "disabled": false,
+                  "key": "mode",
+                  "value": "TM",
+                  "description": "Pretranslation mode. Can also be passed in the request body. Defaults to `TM`."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<integer>\",\n  \"mode\": \"TM\",\n  \"auto_accept\": \"<boolean>\",\n  \"case_sensitive\": \"<boolean>\",\n  \"attribute_to_creator\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e72a7708-065c-4a17-a0f9-56f37d3407f7",
+              "name": "Pretranslation has been queued. Returns the current state of every requested Document.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "documents",
+                    "pretranslate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "auto_accept",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "case_sensitive",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "attribute_to_creator",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "mode",
+                      "value": "TM"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<integer>\",\n  \"mode\": \"TM\",\n  \"auto_accept\": \"<boolean>\",\n  \"case_sensitive\": \"<boolean>\",\n  \"attribute_to_creator\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": [\n    274,\n    275\n  ],\n  \"is_pretranslating\": true,\n  \"documents\": [\n    {\n      \"id\": 46530,\n      \"project_id\": 287,\n      \"srclang\": \"en\",\n      \"trglang\": \"de\",\n      \"name\": \"Introduction.xliff\",\n      \"import_in_progress\": false,\n      \"import_succeeded\": false,\n      \"import_error_message\": \"Could not parse XML.\",\n      \"export_in_progress\": false,\n      \"export_succeeded\": false,\n      \"export_error_message\": \"Could not parse XML.\",\n      \"is_pretranslating\": false,\n      \"status\": {\n        \"pretranslation\": \"idle\"\n      },\n      \"translator_email\": \"translator@example.com\",\n      \"reviewer_email\": \"reviewer@example.com\",\n      \"customer_reviewer_email\": \"reviewer@example.com\",\n      \"created_at\": 1489147692,\n      \"updated_at\": 1489147692,\n      \"is_review_complete\": true\n    },\n    {\n      \"id\": 46530,\n      \"project_id\": 287,\n      \"srclang\": \"en\",\n      \"trglang\": \"de\",\n      \"name\": \"Introduction.xliff\",\n      \"import_in_progress\": false,\n      \"import_succeeded\": false,\n      \"import_error_message\": \"Could not parse XML.\",\n      \"export_in_progress\": false,\n      \"export_succeeded\": false,\n      \"export_error_message\": \"Could not parse XML.\",\n      \"is_pretranslating\": false,\n      \"status\": {\n        \"pretranslation\": \"idle\"\n      },\n      \"translator_email\": \"translator@example.com\",\n      \"reviewer_email\": \"reviewer@example.com\",\n      \"customer_reviewer_email\": \"reviewer@example.com\",\n      \"created_at\": 1489147692,\n      \"updated_at\": 1489147692,\n      \"is_review_complete\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2431af86-2050-40da-93e2-7aa6f634ec42",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "documents",
+                    "pretranslate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "auto_accept",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "case_sensitive",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "attribute_to_creator",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "mode",
+                      "value": "TM"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<integer>\",\n  \"mode\": \"TM\",\n  \"auto_accept\": \"<boolean>\",\n  \"case_sensitive\": \"<boolean>\",\n  \"attribute_to_creator\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c8be4b4a-3b02-4780-a7a2-adfad3776961",
+              "name": "Rate limit exceeded. See the [API Rate Limits guide](/developers/guides/rate-limits) for details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "documents",
+                    "pretranslate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "auto_accept",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "case_sensitive",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "attribute_to_creator",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "mode",
+                      "value": "TM"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<integer>\",\n  \"mode\": \"TM\",\n  \"auto_accept\": \"<boolean>\",\n  \"case_sensitive\": \"<boolean>\",\n  \"attribute_to_creator\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal server error.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bf06f35e-41fd-4f1c-8f22-cc33a7780438",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "documents",
+                    "pretranslate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "auto_accept",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "case_sensitive",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "attribute_to_creator",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "mode",
+                      "value": "TM"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<integer>\",\n  \"mode\": \"TM\",\n  \"auto_accept\": \"<boolean>\",\n  \"case_sensitive\": \"<boolean>\",\n  \"attribute_to_creator\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal server error.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.lilt.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f2dbe7a8-1477-4ce7-8878-6f5982a38cf1",
+    "name": "LILT Create Documents API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "LILT API Support: https://lilt.atlassian.net/servicedesk/customer/portals\n\nThe LILT API enables programmatic access to the full-range of LILT backend services including:\n  * Training of and translating with interactive, adaptive machine translation\n  * Large-scale translation memory\n  * The Lexicon (a large-scale termbase)\n  * Programmatic control of the LILT CAT environment\n  * Translation memory synchronization\n\n\nRequests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests.\n\nThe base url for this REST API is `https://api.lilt.com/`.\n\n## Authentication\n\nRequests are authenticated via API key, which requires the Business plan.\n\nRequests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your API key as both the `username` and `password`.\n\nFor development, you may also pass the API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use.\n\n## Quotas\n\nOur services have a general quota of 4000 requests per minute. Should you hit the maximum requests per minute, you will need to wait 60 seconds before you can send another request.\n",
+      "type": "text/plain"
+    }
+  }
+}

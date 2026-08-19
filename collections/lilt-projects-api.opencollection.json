@@ -1,0 +1,120 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LILT Create Projects API",
+    "version": "v3.0.3"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Projects",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lilt.com/v2/projects",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "A unique Project identifier. It can be a single id or multiple ids separated by a comma"
+              },
+              {
+                "name": "srclang",
+                "value": "",
+                "type": "query",
+                "description": "An ISO 639-1 language code."
+              },
+              {
+                "name": "trglang",
+                "value": "",
+                "type": "query",
+                "description": "An ISO 639-1 language code."
+              },
+              {
+                "name": "from_time",
+                "value": "",
+                "type": "query",
+                "description": "Unix time stamp (epoch, in seconds) of Projects with `created_at` greater than or equal to the value."
+              },
+              {
+                "name": "to_time",
+                "value": "",
+                "type": "query",
+                "description": "Unix time stamp (epoch, in seconds) of Projects with `created_at` less than the value."
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "A project state (backlog, inProgress, inReview, inQA, done)."
+              },
+              {
+                "name": "archived",
+                "value": "",
+                "type": "query",
+                "description": "A flag that toggles whether to include archived projects in the response (the default is `true`)."
+              },
+              {
+                "name": "connector_id",
+                "value": "",
+                "type": "query",
+                "description": "A unique Connector identifier."
+              }
+            ]
+          },
+          "docs": "Retrieves one or more projects, including the documents associated with each project. Retrieving a project is the most efficient way to retrieve a single project, multiple projects or a list of all available projects.\n\nTo retrieve a specific project, specify the `id` request parameter or you can retrieve multiple projects by adding comma (,) between ids eg. `?id=1234,5678`. To retrieve all projects, omit the `id` request parameter. To limit the retrieved projects to those with a particular sourc"
+        },
+        {
+          "info": {
+            "name": "Create a Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lilt.com/v2/projects",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Project. A Project is a collection of Documents.\n\nA Project is associated with exactly one Memory.\n\nProjects appear in the dashboard of the web app.\n\n"
+        },
+        {
+          "info": {
+            "name": "Delete a Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lilt.com/v2/projects",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "A unique Project identifier."
+              }
+            ]
+          },
+          "docs": "Delete a Project.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

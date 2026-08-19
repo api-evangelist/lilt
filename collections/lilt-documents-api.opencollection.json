@@ -1,0 +1,132 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LILT Create Documents API",
+    "version": "v3.0.3"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Documents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Download a Document",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lilt.com/v2/documents/files",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "An unique Document identifier."
+              },
+              {
+                "name": "is_xliff",
+                "value": "",
+                "type": "query",
+                "description": "Download the document in XLIFF 1.2 format."
+              }
+            ]
+          },
+          "docs": "Export a Document that has been translated in the Lilt web application.\nAny Document can be downloaded in XLIFF 1.2 format, or can be retrieved in its original uploaded format by setting `is_xliff=false`.\nThis endpoint will fail if either (a) export or (b) pre-translation operations are in-progress. The status of those operations can be determined by retrieving the Document resource.\nExample CURL command:\n```bash\n  curl -X GET https://api.lilt.com/v2/documents/files?key=API_KEY&id=274 -o from_li"
+        },
+        {
+          "info": {
+            "name": "Upload a File",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lilt.com/v2/documents/files",
+            "headers": [
+              {
+                "name": "name",
+                "value": ""
+              },
+              {
+                "name": "project_id",
+                "value": ""
+              },
+              {
+                "name": "pretranslate",
+                "value": ""
+              },
+              {
+                "name": "auto_accept",
+                "value": ""
+              },
+              {
+                "name": "case_sensitive",
+                "value": ""
+              },
+              {
+                "name": "match_attribution",
+                "value": ""
+              },
+              {
+                "name": "config_id",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Create a Document from a file in any of the formats [documented in our knowledge base](/kb/supported-file-formats).\nRequest parameters should be passed as JSON object with the header field `LILT-API`.\n\nFile names in the header can only contain [US-ASCII characters](https://en.wikipedia.org/wiki/ASCII). File names with characters outside of US-ASCII should be [URI encoded](https://en.wikipedia.org/wiki/Percent-encoding) or transliterated to US-ASCII strings.\n\nExample CURL command:\n```bash\n  curl "
+        },
+        {
+          "info": {
+            "name": "Pretranslate Documents",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lilt.com/v2/documents/pretranslate",
+            "params": [
+              {
+                "name": "auto_accept",
+                "value": "",
+                "type": "query",
+                "description": "Auto-accept segments with 100% translation memory matches. Can also be passed in the request body. Defaults to your organization's `Accept and lock exact matches` setting."
+              },
+              {
+                "name": "case_sensitive",
+                "value": "",
+                "type": "query",
+                "description": "Use case-sensitive translation memory matching. Can also be passed in the request body. Defaults to your organization's `Use case sensitive translation memory matching` setting."
+              },
+              {
+                "name": "attribute_to_creator",
+                "value": "",
+                "type": "query",
+                "description": "Attribute translation authorship of exact matches to the author of the document. Can also be passed in the request body. Defaults to your organization's `Translation authorship` setting."
+              },
+              {
+                "name": "mode",
+                "value": "",
+                "type": "query",
+                "description": "Pretranslation mode. Can also be passed in the request body. Defaults to `TM`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Pretranslate one or more Documents using translation memory (TM) and,\noptionally, machine translation (MT). Only documents that are not\ncurrently importing/exporting and are not already pretranslating will\nbe pretranslated; the response always reflects the current state of\nevery requested Document id, whether or not it was eligible.\n\nThis is an asynchronous operation. The endpoint returns immediately\nwith a `202` response once pretranslation has been queued; poll the\nDocument resource (or the `i"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
