@@ -32,6 +32,16 @@ created: '2026-07-17'
 modified: '2026-07-19'
 tags:
 - Company
+- Artificial Intelligence
+- Translation
+- Localization
+- Machine Translation
+- Language
+- Content
+- Translation Memory
+- Agents
+tags_raw:
+- Company
 - Ai
 - Translation
 - Localization
@@ -51,7 +61,8 @@ apis:
   description: The Create API from Lilt — 2 operation(s) for create.
   humanURL: https://support.lilt.com/developers/introduction
   baseURL: https://api.lilt.com
-  tags:
+  tags: []
+  tags_raw:
   - Create
   properties:
   - type: OpenAPI
@@ -112,6 +123,8 @@ apis:
   humanURL: https://support.lilt.com/developers/introduction
   baseURL: https://api.lilt.com
   tags:
+  - File
+  tags_raw:
   - Files
   properties:
   - type: OpenAPI
@@ -132,6 +145,8 @@ apis:
   humanURL: https://support.lilt.com/developers/introduction
   baseURL: https://api.lilt.com
   tags:
+  - Job
+  tags_raw:
   - Jobs
   properties:
   - type: OpenAPI
@@ -152,6 +167,8 @@ apis:
   humanURL: https://support.lilt.com/developers/introduction
   baseURL: https://api.lilt.com
   tags:
+  - Language
+  tags_raw:
   - Languages
   properties:
   - type: OpenAPI
@@ -192,6 +209,8 @@ apis:
   humanURL: https://support.lilt.com/developers/introduction
   baseURL: https://api.lilt.com
   tags:
+  - Project
+  tags_raw:
   - Projects
   properties:
   - type: OpenAPI
