@@ -2,16 +2,16 @@
 kin_checks:
   slug: lilt
   schema_version: 0.22.0
-  scored_at: '2026-09-18'
-  run_ts: 2026-09-18T231945
+  scored_at: '2026-09-19'
+  run_ts: 2026-09-19T193153
   note: Actionable checks (missed + partial) in `checks`, plus the ids that did not
     apply in `na`. Everything else in rubric/scoring-0.22.0.yml was earned; counts
     below let you verify that.
   counts:
     total: 136
-    earned: 55
+    earned: 56
     partial: 13
-    missed: 43
+    missed: 42
     na: 25
   checks:
   - id: multiple_apis
@@ -100,8 +100,6 @@ kin_checks:
   - id: agent_card
     status: missed
   - id: dry_run_mode
-    status: missed
-  - id: protected_resource_metadata
     status: missed
   - id: agentic_commerce
     status: missed
