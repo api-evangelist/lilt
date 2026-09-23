@@ -1,19 +1,7 @@
 {
   "provider": "lilt",
   "sources": [
-    "lilt-create-api-openapi.yml",
-    "lilt-documents-api-openapi.yml",
-    "lilt-domains-api-openapi.yml",
-    "lilt-files-api-openapi.yml",
-    "lilt-jobs-api-openapi.yml",
-    "lilt-languages-api-openapi.yml",
-    "lilt-memories-api-openapi.yml",
-    "lilt-projects-api-openapi.yml",
-    "lilt-segments-api-openapi.yml",
-    "lilt-translate-api-openapi.yml",
-    "lilt-uploads-api-openapi.yml",
-    "lilt-webhook-configuration-api-openapi.yml",
-    "lilt-workflows-api-openapi.yml"
+    "_original/lilt-openapi-original.yml"
   ],
   "outputs": [
     "lilt-create-api-openapi.yml",
@@ -33,6 +21,37 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "lilt-openapi-original.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "lilt-openapi-original.yml: declared missing tag: Create",
+    "lilt-openapi-original.yml: declared missing tag: Documents",
+    "lilt-openapi-original.yml: declared missing tag: Domains",
+    "lilt-openapi-original.yml: declared missing tag: Files",
+    "lilt-openapi-original.yml: declared missing tag: Jobs",
+    "lilt-openapi-original.yml: declared missing tag: Languages",
+    "lilt-openapi-original.yml: declared missing tag: Memories",
+    "lilt-openapi-original.yml: declared missing tag: Projects",
+    "lilt-openapi-original.yml: declared missing tag: Segments",
+    "lilt-openapi-original.yml: declared missing tag: Translate",
+    "lilt-openapi-original.yml: declared missing tag: Uploads",
+    "lilt-openapi-original.yml: declared missing tag: Webhook Configuration",
+    "lilt-openapi-original.yml: declared missing tag: Workflows",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "lilt-create-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lilt-documents-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lilt-domains-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lilt-files-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lilt-jobs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lilt-languages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lilt-memories-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lilt-projects-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lilt-segments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lilt-translate-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lilt-uploads-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lilt-webhook-configuration-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lilt-workflows-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

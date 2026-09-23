@@ -1,9 +1,7 @@
-generated: '2026-07-19'
+generated: '2026-09-19'
 method: searched
-source: >-
-  Live probes of the /.well-known/ discovery surface on every LILT host in
-  apis.yml and in the OpenAPI servers[] block, 2026-07-19. Absence (404) is
-  recorded as valid data.
+source: Live probes of the /.well-known/ discovery surface on every LILT host in apis.yml and in the OpenAPI
+  servers[] block, 2026-07-19. Absence (404) is recorded as valid data.
 hosts:
 - host: https://api.lilt.com
   note: OpenAPI servers[0] — the production REST API host.
@@ -32,30 +30,54 @@ hosts:
   - path: /.well-known/ai-plugin.json
     status: 404
 - host: https://mcp.lilt.com
-  note: >-
-    LILT's hosted remote MCP server. This host is the only LILT surface that
-    publishes real .well-known discovery metadata.
+  note: LILT's hosted remote MCP server. This host is the only LILT surface that publishes real .well-known
+    discovery metadata.
   documents:
   - path: /.well-known/oauth-authorization-server
     status: 200
     file: lilt-mcp-oauth-authorization-server.json
     format: RFC 8414 OAuth 2.0 Authorization Server Metadata
     issuer: https://blissful-celebration-62.authkit.app
-    note: >-
-      Delegated to WorkOS AuthKit. Advertises dynamic client registration
-      (RFC 7591), PKCE S256, and the authorization_code / refresh_token /
-      device_code grants — the MCP authorization profile.
+    note: Delegated to WorkOS AuthKit. Advertises dynamic client registration (RFC 7591), PKCE S256, and
+      the authorization_code / refresh_token / device_code grants — the MCP authorization profile.
   - path: /.well-known/oauth-protected-resource
     status: 404
   - path: /.well-known/openid-configuration
     status: 200
     saved: false
-    note: >-
-      Returns HTTP 200 but serves the single-page-app HTML shell, not JSON
-      discovery metadata. Not a real OIDC discovery document; not saved.
+    note: Returns HTTP 200 but serves the single-page-app HTML shell, not JSON discovery metadata. Not
+      a real OIDC discovery document; not saved.
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: lilt-mcp-oauth-protected-resource.json
+    bytes: 172
+  path_echo_control: passed
+- host: https://blissful-celebration-62.authkit.app
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: lilt-blissful-celebration-62-oauth-authorization-server.json
+    bytes: 957
+  path_echo_control: passed
 summary:
   security_txt: false
   openid_configuration: false
   oauth_authorization_server: true
   api_catalog: false
   ai_plugin: false
+x-mcp-probe:
+  probed: '2026-09-19'
+  issue: roadmap#321, roadmap#337
+  documents:
+  - host: https://mcp.lilt.com
+    path: /.well-known/oauth-protected-resource
+    file: lilt-mcp-oauth-protected-resource.json
+  - host: https://blissful-celebration-62.authkit.app
+    path: /.well-known/oauth-authorization-server
+    file: lilt-blissful-celebration-62-oauth-authorization-server.json
+  validated_on: resource (RFC 9728) / issuer (RFC 8414, OIDC)
+  negative_control: one per host; a 2xx JSON object at an impossible path discards the host
+note: 'MCP-host OAuth discovery added 2026-09-19 (roadmap#321/#337): the harvest visits a provider''s
+  primary hosts, and RFC 9728 protected-resource metadata lives on the MCP host, so these documents existed
+  and were invisible to the scorer. Fetched live and validated on `resource`/`issuer`; one negative control
+  per host.'
