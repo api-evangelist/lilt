@@ -536,37 +536,6 @@ components:
         allowUnlockedSegments:
           type: boolean
           description: Boolean that tells Lilt whether we should allow unlocked Segments for this conf_name.
-    TranslationMemoryEntry:
-      type: object
-      properties:
-        source:
-          type: string
-          description: The source string.
-          example: The red bus.
-        target:
-          type: string
-          description: The target string. Tags will be automatically placed according to the query string.
-          example: Le bus rouge.
-        score:
-          type: integer
-          description: The fuzzy match score.
-          example: 100
-        metadata:
-          type: object
-          properties: {}
-          description: Attributes describing the translation memory entry.
-      description: A translation memory entry.
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A human-readable message describing the error.
-      description: 'Response in the event of an unexpected error.
-
-        '
-      example:
-        message: Internal server error.
     Memory:
       type: object
       properties:
@@ -626,6 +595,37 @@ components:
         bitexts can also be added to the Memory via the API.
 
         '
+    TranslationMemoryEntry:
+      type: object
+      properties:
+        source:
+          type: string
+          description: The source string.
+          example: The red bus.
+        target:
+          type: string
+          description: The target string. Tags will be automatically placed according to the query string.
+          example: Le bus rouge.
+        score:
+          type: integer
+          description: The fuzzy match score.
+          example: 100
+        metadata:
+          type: object
+          properties: {}
+          description: Attributes describing the translation memory entry.
+      description: A translation memory entry.
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable message describing the error.
+      description: 'Response in the event of an unexpected error.
+
+        '
+      example:
+        message: Internal server error.
   responses:
     UnauthorizedError:
       description: Unauthorized

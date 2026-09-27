@@ -268,6 +268,62 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    LiltCreateContent:
+      type: object
+      required:
+      - language
+      - template
+      - templateParams
+      properties:
+        name:
+          type: string
+          description: A name for the request content.
+        id:
+          type: integer
+          description: A unique identifier for the generated content.
+        language:
+          type: string
+          description: The language of the content.
+        template:
+          type: string
+          description: The template of the content.
+        templateParams:
+          type: object
+          description: The template parameters of the content.
+          required:
+          - language
+          properties:
+            contentLength:
+              type: integer
+              description: The length of the content.
+            memoryId:
+              type: integer
+              description: The ID referencing a Data Source.
+            language:
+              type: string
+              description: The language of the content.
+            sections:
+              type: array
+              description: The sections of the content.
+              items:
+                type: string
+                description: A section heading of the content.
+            summary:
+              type: string
+              description: The summary of the content.
+        preferences:
+          type: object
+          description: The preferences of the content.
+          properties:
+            tone:
+              type: string
+              description: The tone of the content.
+            styleguide:
+              type: string
+              description: The styleguide of the content.
+      description: 'Content Parameters for LiltCreate.
+
+        '
     LiltCreateContentRequest:
       type: object
       required:
@@ -332,62 +388,6 @@ components:
         '
       example:
         message: Internal server error.
-    LiltCreateContent:
-      type: object
-      required:
-      - language
-      - template
-      - templateParams
-      properties:
-        name:
-          type: string
-          description: A name for the request content.
-        id:
-          type: integer
-          description: A unique identifier for the generated content.
-        language:
-          type: string
-          description: The language of the content.
-        template:
-          type: string
-          description: The template of the content.
-        templateParams:
-          type: object
-          description: The template parameters of the content.
-          required:
-          - language
-          properties:
-            contentLength:
-              type: integer
-              description: The length of the content.
-            memoryId:
-              type: integer
-              description: The ID referencing a Data Source.
-            language:
-              type: string
-              description: The language of the content.
-            sections:
-              type: array
-              description: The sections of the content.
-              items:
-                type: string
-                description: A section heading of the content.
-            summary:
-              type: string
-              description: The summary of the content.
-        preferences:
-          type: object
-          description: The preferences of the content.
-          properties:
-            tone:
-              type: string
-              description: The tone of the content.
-            styleguide:
-              type: string
-              description: The styleguide of the content.
-      description: 'Content Parameters for LiltCreate.
-
-        '
   responses:
     UnauthorizedError:
       description: Unauthorized

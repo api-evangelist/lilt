@@ -253,6 +253,17 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable message describing the error.
+      description: 'Response in the event of an unexpected error.
+
+        '
+      example:
+        message: Internal server error.
     DocumentWithoutSegments:
       type: object
       properties:
@@ -345,17 +356,6 @@ components:
       description: 'A Document is a collection of zero or more Segments.
 
         '
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A human-readable message describing the error.
-      description: 'Response in the event of an unexpected error.
-
-        '
-      example:
-        message: Internal server error.
     Project:
       type: object
       properties:

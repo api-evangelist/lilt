@@ -75,6 +75,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 components:
+  responses:
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/octet-stream:
+          schema:
+            type: string
+        text/plain:
+          schema:
+            type: string
   schemas:
     Error:
       type: object
@@ -87,16 +97,6 @@ components:
         '
       example:
         message: Internal server error.
-  responses:
-    UnauthorizedError:
-      description: Unauthorized
-      content:
-        application/octet-stream:
-          schema:
-            type: string
-        text/plain:
-          schema:
-            type: string
   securitySchemes:
     BasicAuth:
       type: http

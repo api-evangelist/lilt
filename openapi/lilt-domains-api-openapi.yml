@@ -136,17 +136,6 @@ components:
           type: boolean
           description: Indicates if the filter configuration is the default.
           example: true
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A human-readable message describing the error.
-      description: 'Response in the event of an unexpected error.
-
-        '
-      example:
-        message: Internal server error.
     Domain:
       type: object
       properties:
@@ -259,6 +248,18 @@ components:
       required:
       - items
       - size
+    DomainReference:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: The unique identifier for the domain.
+          example: 101
+        name:
+          type: string
+          description: The name of the domain.
+          example: Example Domain Ref
     DomainMetadata:
       type: object
       properties:
@@ -275,18 +276,17 @@ components:
           type: string
           description: The value of the metadata.
           example: Example Value
-    DomainReference:
+    Error:
       type: object
       properties:
-        id:
-          type: integer
-          format: int32
-          description: The unique identifier for the domain.
-          example: 101
-        name:
+        message:
           type: string
-          description: The name of the domain.
-          example: Example Domain Ref
+          description: A human-readable message describing the error.
+      description: 'Response in the event of an unexpected error.
+
+        '
+      example:
+        message: Internal server error.
     Model:
       type: object
       properties:
