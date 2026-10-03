@@ -595,6 +595,17 @@ components:
         bitexts can also be added to the Memory via the API.
 
         '
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable message describing the error.
+      description: 'Response in the event of an unexpected error.
+
+        '
+      example:
+        message: Internal server error.
     TranslationMemoryEntry:
       type: object
       properties:
@@ -615,17 +626,6 @@ components:
           properties: {}
           description: Attributes describing the translation memory entry.
       description: A translation memory entry.
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A human-readable message describing the error.
-      description: 'Response in the event of an unexpected error.
-
-        '
-      example:
-        message: Internal server error.
   responses:
     UnauthorizedError:
       description: Unauthorized

@@ -267,7 +267,28 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 components:
+  responses:
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/octet-stream:
+          schema:
+            type: string
+        text/plain:
+          schema:
+            type: string
   schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable message describing the error.
+      description: 'Response in the event of an unexpected error.
+
+        '
+      example:
+        message: Internal server error.
     LiltCreateContent:
       type: object
       required:
@@ -377,27 +398,6 @@ components:
       description: 'Content Parameters for LiltCreate.
 
         '
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A human-readable message describing the error.
-      description: 'Response in the event of an unexpected error.
-
-        '
-      example:
-        message: Internal server error.
-  responses:
-    UnauthorizedError:
-      description: Unauthorized
-      content:
-        application/octet-stream:
-          schema:
-            type: string
-        text/plain:
-          schema:
-            type: string
   securitySchemes:
     BasicAuth:
       type: http

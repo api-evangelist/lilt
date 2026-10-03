@@ -367,7 +367,28 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 components:
+  responses:
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/octet-stream:
+          schema:
+            type: string
+        text/plain:
+          schema:
+            type: string
   schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable message describing the error.
+      description: 'Response in the event of an unexpected error.
+
+        '
+      example:
+        message: Internal server error.
     SourceFile:
       type: object
       properties:
@@ -412,27 +433,6 @@ components:
           format: date-time
           example: '2019-10-16T22:12:34Z'
       description: A SourceFile is an unprocessed source file that can later be added to a project.
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A human-readable message describing the error.
-      description: 'Response in the event of an unexpected error.
-
-        '
-      example:
-        message: Internal server error.
-  responses:
-    UnauthorizedError:
-      description: Unauthorized
-      content:
-        application/octet-stream:
-          schema:
-            type: string
-        text/plain:
-          schema:
-            type: string
   securitySchemes:
     BasicAuth:
       type: http

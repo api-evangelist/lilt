@@ -363,6 +363,109 @@ paths:
       x-codegen-request-body-name: body
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable message describing the error.
+      description: 'Response in the event of an unexpected error.
+
+        '
+      example:
+        message: Internal server error.
+    DocumentWithoutSegments:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: A unique number identifying the Document.
+          example: 46530
+        project_id:
+          type: integer
+          description: A unique number identifying the Project.
+          example: 287
+        srclang:
+          type: string
+          description: An ISO 639-1 language identifier.
+          example: en
+        trglang:
+          type: string
+          description: An ISO 639-1 language identifier.
+          example: de
+        name:
+          type: string
+          description: The document name.
+          example: Introduction.xliff
+        import_in_progress:
+          type: boolean
+          description: True if the document is currently being imported
+          example: false
+        import_succeeded:
+          type: boolean
+          description: True if the import process succeeded.
+          example: false
+        import_error_message:
+          type: string
+          description: Error message if `import_succeeded=false`
+          example: Could not parse XML.
+        export_in_progress:
+          type: boolean
+          description: True if the document is currently being exported for download
+          example: false
+        export_succeeded:
+          type: boolean
+          description: True if the export process succeeded.
+          example: false
+        export_error_message:
+          type: string
+          description: Error message if `export_succeeded=false`
+          example: Could not parse XML.
+        is_pretranslating:
+          type: boolean
+          description: True if the document is currently being pretranslated.
+          example: false
+        status:
+          type: object
+          properties:
+            pretranslation:
+              type: string
+              description: ''
+              example: idle
+              enum:
+              - idle
+              - pending
+              - running
+          description: A list of translations for the query term.
+          example:
+            pretranslation: idle
+        translator_email:
+          type: string
+          description: The email of the assigned translator.
+          example: translator@example.com
+        reviewer_email:
+          type: string
+          description: The email of the assigned reviewer.
+          example: reviewer@example.com
+        customer_reviewer_email:
+          type: string
+          description: The email of the assigned customer reviewer. Only present if the project was request by id.
+          example: reviewer@example.com
+        created_at:
+          type: integer
+          description: Time at which the object was created. Measured in seconds since the Unix epoch.
+          example: 1489147692
+        updated_at:
+          type: integer
+          description: Time at which the object was created. Measured in seconds since the Unix epoch.
+          example: 1489147692
+        is_review_complete:
+          type: boolean
+          description: Document review status.
+          example: true
+      description: 'A Document is a collection of zero or more Segments.
+
+        '
     Segment:
       type: object
       properties:
@@ -504,109 +607,6 @@ components:
           description: A list of Segments.
           items:
             $ref: '#/components/schemas/Segment'
-      description: 'A Document is a collection of zero or more Segments.
-
-        '
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A human-readable message describing the error.
-      description: 'Response in the event of an unexpected error.
-
-        '
-      example:
-        message: Internal server error.
-    DocumentWithoutSegments:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: A unique number identifying the Document.
-          example: 46530
-        project_id:
-          type: integer
-          description: A unique number identifying the Project.
-          example: 287
-        srclang:
-          type: string
-          description: An ISO 639-1 language identifier.
-          example: en
-        trglang:
-          type: string
-          description: An ISO 639-1 language identifier.
-          example: de
-        name:
-          type: string
-          description: The document name.
-          example: Introduction.xliff
-        import_in_progress:
-          type: boolean
-          description: True if the document is currently being imported
-          example: false
-        import_succeeded:
-          type: boolean
-          description: True if the import process succeeded.
-          example: false
-        import_error_message:
-          type: string
-          description: Error message if `import_succeeded=false`
-          example: Could not parse XML.
-        export_in_progress:
-          type: boolean
-          description: True if the document is currently being exported for download
-          example: false
-        export_succeeded:
-          type: boolean
-          description: True if the export process succeeded.
-          example: false
-        export_error_message:
-          type: string
-          description: Error message if `export_succeeded=false`
-          example: Could not parse XML.
-        is_pretranslating:
-          type: boolean
-          description: True if the document is currently being pretranslated.
-          example: false
-        status:
-          type: object
-          properties:
-            pretranslation:
-              type: string
-              description: ''
-              example: idle
-              enum:
-              - idle
-              - pending
-              - running
-          description: A list of translations for the query term.
-          example:
-            pretranslation: idle
-        translator_email:
-          type: string
-          description: The email of the assigned translator.
-          example: translator@example.com
-        reviewer_email:
-          type: string
-          description: The email of the assigned reviewer.
-          example: reviewer@example.com
-        customer_reviewer_email:
-          type: string
-          description: The email of the assigned customer reviewer. Only present if the project was request by id.
-          example: reviewer@example.com
-        created_at:
-          type: integer
-          description: Time at which the object was created. Measured in seconds since the Unix epoch.
-          example: 1489147692
-        updated_at:
-          type: integer
-          description: Time at which the object was created. Measured in seconds since the Unix epoch.
-          example: 1489147692
-        is_review_complete:
-          type: boolean
-          description: Document review status.
-          example: true
       description: 'A Document is a collection of zero or more Segments.
 
         '

@@ -199,43 +199,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A human-readable message describing the error.
-      description: 'Response in the event of an unexpected error.
-
-        '
-      example:
-        message: Internal server error.
-    create_webhook_options:
-      type: object
-      properties:
-        webhookName:
-          type: string
-          description: The name of the webhook configuration.
-        webhookUrl:
-          type: string
-          format: uri
-          description: The URL to which the webhook notifications will be sent.
-        eventType:
-          type: array
-          items:
-            type: string
-            enum:
-            - JOB_DELIVER
-            - JOB_UPDATE
-            - PROJECT_DELIVER
-            - PROJECT_UPDATE
-            - INSTANT_TRANSLATE_COMPLETED
-            - INSTANT_TRANSLATE_FAILED
-          description: The list of event types that will trigger the webhook notification.
-      required:
-      - webhookName
-      - webhookUrl
-      - eventType
     webhook_response:
       type: object
       properties:
@@ -267,6 +230,43 @@ components:
       - webhookName
       - webhookUrl
       - eventType
+    create_webhook_options:
+      type: object
+      properties:
+        webhookName:
+          type: string
+          description: The name of the webhook configuration.
+        webhookUrl:
+          type: string
+          format: uri
+          description: The URL to which the webhook notifications will be sent.
+        eventType:
+          type: array
+          items:
+            type: string
+            enum:
+            - JOB_DELIVER
+            - JOB_UPDATE
+            - PROJECT_DELIVER
+            - PROJECT_UPDATE
+            - INSTANT_TRANSLATE_COMPLETED
+            - INSTANT_TRANSLATE_FAILED
+          description: The list of event types that will trigger the webhook notification.
+      required:
+      - webhookName
+      - webhookUrl
+      - eventType
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable message describing the error.
+      description: 'Response in the event of an unexpected error.
+
+        '
+      example:
+        message: Internal server error.
   securitySchemes:
     BasicAuth:
       type: http

@@ -375,6 +375,43 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable message describing the error.
+      description: 'Response in the event of an unexpected error.
+
+        '
+      example:
+        message: Internal server error.
+    TranslationInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for this translation.
+        fileId:
+          type: integer
+          description: id of the File that is being translated.
+        status:
+          type: string
+          description: Status of the translation - `InProgress`, `ReadyForDownload`, `Completed`, `Failed`.
+        createdAt:
+          type: integer
+          description: Time when this translation was started, in seconds since the Unix epoch.
+        errorMsg:
+          type: string
+          description: Error message, present when status is `Failed`.
+      description: 'Information describing a batch translation process.
+
+        '
+      example:
+        id: 1
+        fileId: 2,
+        status: InProgress
+        createdAt: 1609357135
     TranslationList:
       type: object
       properties:
@@ -467,43 +504,6 @@ components:
         targetWithTags: Authentifizierung nicht erforderlich.
         isTMMatch: false
         provenance: 0 0 0 0
-    TranslationInfo:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Unique identifier for this translation.
-        fileId:
-          type: integer
-          description: id of the File that is being translated.
-        status:
-          type: string
-          description: Status of the translation - `InProgress`, `ReadyForDownload`, `Completed`, `Failed`.
-        createdAt:
-          type: integer
-          description: Time when this translation was started, in seconds since the Unix epoch.
-        errorMsg:
-          type: string
-          description: Error message, present when status is `Failed`.
-      description: 'Information describing a batch translation process.
-
-        '
-      example:
-        id: 1
-        fileId: 2,
-        status: InProgress
-        createdAt: 1609357135
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A human-readable message describing the error.
-      description: 'Response in the event of an unexpected error.
-
-        '
-      example:
-        message: Internal server error.
     MonitorFileTranslationTypeError:
       type: object
       description: 'Monitor file translation can have different errors based on reasons explained in the examples.
