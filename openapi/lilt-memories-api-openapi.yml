@@ -515,6 +515,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 components:
+  responses:
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/octet-stream:
+          schema:
+            type: string
+        text/plain:
+          schema:
+            type: string
   schemas:
     SDLXLIFFFilter:
       required:
@@ -536,6 +546,37 @@ components:
         allowUnlockedSegments:
           type: boolean
           description: Boolean that tells Lilt whether we should allow unlocked Segments for this conf_name.
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable message describing the error.
+      description: 'Response in the event of an unexpected error.
+
+        '
+      example:
+        message: Internal server error.
+    TranslationMemoryEntry:
+      type: object
+      properties:
+        source:
+          type: string
+          description: The source string.
+          example: The red bus.
+        target:
+          type: string
+          description: The target string. Tags will be automatically placed according to the query string.
+          example: Le bus rouge.
+        score:
+          type: integer
+          description: The fuzzy match score.
+          example: 100
+        metadata:
+          type: object
+          properties: {}
+          description: Attributes describing the translation memory entry.
+      description: A translation memory entry.
     Memory:
       type: object
       properties:
@@ -595,47 +636,6 @@ components:
         bitexts can also be added to the Memory via the API.
 
         '
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A human-readable message describing the error.
-      description: 'Response in the event of an unexpected error.
-
-        '
-      example:
-        message: Internal server error.
-    TranslationMemoryEntry:
-      type: object
-      properties:
-        source:
-          type: string
-          description: The source string.
-          example: The red bus.
-        target:
-          type: string
-          description: The target string. Tags will be automatically placed according to the query string.
-          example: Le bus rouge.
-        score:
-          type: integer
-          description: The fuzzy match score.
-          example: 100
-        metadata:
-          type: object
-          properties: {}
-          description: Attributes describing the translation memory entry.
-      description: A translation memory entry.
-  responses:
-    UnauthorizedError:
-      description: Unauthorized
-      content:
-        application/octet-stream:
-          schema:
-            type: string
-        text/plain:
-          schema:
-            type: string
   securitySchemes:
     BasicAuth:
       type: http

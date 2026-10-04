@@ -375,6 +375,58 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    MonitorFileTranslationTypeError:
+      type: object
+      description: 'Monitor file translation can have different errors based on reasons explained in the examples.
+
+        '
+      example:
+        Unsupported_file_type:
+          message: Customer gave us garbage.
+        File_extraction_error:
+          message: Customer gave us garbage.
+        No_translatable_content:
+          message: Customer gave us an empty file.
+        Batch_MT_initiation_failure:
+          message: Something is wrong with MT.
+        Batch_MT_response_failure:
+          message: Something is wrong with MT.
+        File_reassembly_error:
+          message: We couldn't put the translated file back together.(okapi error)
+        Billing_error:
+          message: We couldn't log the information about the MT to our billing system.
+        Invalid_memory:
+          message: Something is wrong with the memory.
+        Storage_error:
+          message: Error occurred interacting with file storage.
+    TranslationList:
+      type: object
+      properties:
+        untokenizedSource:
+          type: string
+          description: The untokenized source segment. Punctuation has not been separated from words.
+          example: Authentication not required.
+        tokenizedSource:
+          type: string
+          description: The tokenized source segment. Punctuation has been separated from words.
+          example: Authentication not required .
+        sourceDelimiters:
+          type: array
+          description: A format string that indicates, for each word, if the word should be preceded by a space.
+          example:
+          - ''
+          - ' '
+          - ' '
+          - ''
+          - ''
+          items:
+            type: string
+        translation:
+          type: array
+          description: A list of Translation objects.
+          items:
+            $ref: '#/components/schemas/Translation'
+      description: An ranked list of translations and associated metadata.
     Error:
       type: object
       properties:
@@ -412,34 +464,6 @@ components:
         fileId: 2,
         status: InProgress
         createdAt: 1609357135
-    TranslationList:
-      type: object
-      properties:
-        untokenizedSource:
-          type: string
-          description: The untokenized source segment. Punctuation has not been separated from words.
-          example: Authentication not required.
-        tokenizedSource:
-          type: string
-          description: The tokenized source segment. Punctuation has been separated from words.
-          example: Authentication not required .
-        sourceDelimiters:
-          type: array
-          description: A format string that indicates, for each word, if the word should be preceded by a space.
-          example:
-          - ''
-          - ' '
-          - ' '
-          - ''
-          - ''
-          items:
-            type: string
-        translation:
-          type: array
-          description: A list of Translation objects.
-          items:
-            $ref: '#/components/schemas/Translation'
-      description: An ranked list of translations and associated metadata.
     Translation:
       type: object
       properties:
@@ -504,30 +528,6 @@ components:
         targetWithTags: Authentifizierung nicht erforderlich.
         isTMMatch: false
         provenance: 0 0 0 0
-    MonitorFileTranslationTypeError:
-      type: object
-      description: 'Monitor file translation can have different errors based on reasons explained in the examples.
-
-        '
-      example:
-        Unsupported_file_type:
-          message: Customer gave us garbage.
-        File_extraction_error:
-          message: Customer gave us garbage.
-        No_translatable_content:
-          message: Customer gave us an empty file.
-        Batch_MT_initiation_failure:
-          message: Something is wrong with MT.
-        Batch_MT_response_failure:
-          message: Something is wrong with MT.
-        File_reassembly_error:
-          message: We couldn't put the translated file back together.(okapi error)
-        Billing_error:
-          message: We couldn't log the information about the MT to our billing system.
-        Invalid_memory:
-          message: Something is wrong with the memory.
-        Storage_error:
-          message: Error occurred interacting with file storage.
   responses:
     UnauthorizedError:
       description: Unauthorized

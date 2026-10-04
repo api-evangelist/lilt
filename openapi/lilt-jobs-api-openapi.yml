@@ -685,103 +685,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    ProjectStats:
-      required:
-      - exactWords
-      - fuzzyWords
-      - id
-      - newWords
-      - sourceWords
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 1
-        sourceWords:
-          type: integer
-          example: 1000
-        exactWords:
-          type: integer
-          example: 800
-        fuzzyWords:
-          type: integer
-          example: 150
-        newWords:
-          type: integer
-          example: 50
-    JobStats:
-      type: object
-      properties:
-        exactWords:
-          type: integer
-          description: Total number of exact words.
-          example: 0
-        fuzzyWords:
-          type: integer
-          description: Total number of fuzzy words.
-          example: 0
-        newWords:
-          type: integer
-          description: Total number of fuzzy words.
-          example: 0
-        numDeliveredProjects:
-          type: integer
-          description: Total number of delivered projects.
-          example: 0
-        numLanguagePairs:
-          type: integer
-          description: Total number of delivered projects.
-          example: 0
-        numProjects:
-          type: integer
-          description: Total number of projects.
-          example: 0
-        percentReviewed:
-          type: integer
-          description: Overall percentage of documents reviewed.
-          example: 0
-        percentTranslated:
-          type: integer
-          description: Overall percentage of documents translated.
-          example: 0
-        projects:
-          type: array
-          items:
-            $ref: '#/components/schemas/JobProject'
-        sourceWords:
-          type: integer
-          description: Total number of source words.
-          example: 0
-        uniqueLanguagePairs:
-          type: integer
-          description: Number of unique language pairs.
-          example: 1
-        uniqueLinguists:
-          type: integer
-          description: Number of unique linguists.
-          example: 1
-        workflowStatus:
-          type: string
-          description: The status of the Workflow for the current job.
-          example: READY_TO_START
-          enum:
-          - READY_TO_START
-          - IN_PROGRESS
-          - DONE
-      description: 'A job stats shows an overview of job''s statistical data including total number of exact words, fuzzy words, language pairs, projects, etc.
-
-        '
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A human-readable message describing the error.
-      description: 'Response in the event of an unexpected error.
-
-        '
-      example:
-        message: Internal server error.
     JobProject:
       type: object
       properties:
@@ -859,21 +762,71 @@ components:
       description: 'A job project contains project statistical data that belongs to a specific job.
 
         '
-    WorkflowStageAssignment:
-      required:
-      - workflowStageTemplateId
+    JobLeverageStats:
       type: object
       properties:
-        workflowStageTemplateId:
+        sourceWords:
           type: integer
-          example: 12345
-        userId:
+          description: Total number of source words.
+          example: 0
+        exactWords:
           type: integer
-          example: 123
-        email:
+          description: Total number of exact words.
+          example: 0
+        fuzzyWords:
+          type: integer
+          description: Total number of fuzzy words.
+          example: 0
+        newWords:
+          type: integer
+          description: Total number of new words.
+          example: 0
+        projects:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectStats'
+      description: 'A job leverage stats object shows an overview of job''s statistical data
+
+        including total number of exact words, fuzzy words, and exact words for
+
+        the job in total and for each project.
+
+        '
+    ProjectStats:
+      required:
+      - exactWords
+      - fuzzyWords
+      - id
+      - newWords
+      - sourceWords
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        sourceWords:
+          type: integer
+          example: 1000
+        exactWords:
+          type: integer
+          example: 800
+        fuzzyWords:
+          type: integer
+          example: 150
+        newWords:
+          type: integer
+          example: 50
+    Error:
+      type: object
+      properties:
+        message:
           type: string
-          example: username@domain.com
-      description: An assignment object that associates a user to a workflow stage template.
+          description: A human-readable message describing the error.
+      description: 'Response in the event of an unexpected error.
+
+        '
+      example:
+        message: Internal server error.
     LanguagePair:
       required:
       - memoryId
@@ -932,36 +885,6 @@ components:
       description: 'A language pair couples the source and target language along with memory and pre-translations settings associated to a project.
 
         '
-    JobLeverageStats:
-      type: object
-      properties:
-        sourceWords:
-          type: integer
-          description: Total number of source words.
-          example: 0
-        exactWords:
-          type: integer
-          description: Total number of exact words.
-          example: 0
-        fuzzyWords:
-          type: integer
-          description: Total number of fuzzy words.
-          example: 0
-        newWords:
-          type: integer
-          description: Total number of new words.
-          example: 0
-        projects:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProjectStats'
-      description: 'A job leverage stats object shows an overview of job''s statistical data
-
-        including total number of exact words, fuzzy words, and exact words for
-
-        the job in total and for each project.
-
-        '
     JobDomain:
       type: object
       description: A domain assigned to a Job.
@@ -977,6 +900,83 @@ components:
       required:
       - id
       - name
+    WorkflowStageAssignment:
+      required:
+      - workflowStageTemplateId
+      type: object
+      properties:
+        workflowStageTemplateId:
+          type: integer
+          example: 12345
+        userId:
+          type: integer
+          example: 123
+        email:
+          type: string
+          example: username@domain.com
+      description: An assignment object that associates a user to a workflow stage template.
+    JobStats:
+      type: object
+      properties:
+        exactWords:
+          type: integer
+          description: Total number of exact words.
+          example: 0
+        fuzzyWords:
+          type: integer
+          description: Total number of fuzzy words.
+          example: 0
+        newWords:
+          type: integer
+          description: Total number of fuzzy words.
+          example: 0
+        numDeliveredProjects:
+          type: integer
+          description: Total number of delivered projects.
+          example: 0
+        numLanguagePairs:
+          type: integer
+          description: Total number of delivered projects.
+          example: 0
+        numProjects:
+          type: integer
+          description: Total number of projects.
+          example: 0
+        percentReviewed:
+          type: integer
+          description: Overall percentage of documents reviewed.
+          example: 0
+        percentTranslated:
+          type: integer
+          description: Overall percentage of documents translated.
+          example: 0
+        projects:
+          type: array
+          items:
+            $ref: '#/components/schemas/JobProject'
+        sourceWords:
+          type: integer
+          description: Total number of source words.
+          example: 0
+        uniqueLanguagePairs:
+          type: integer
+          description: Number of unique language pairs.
+          example: 1
+        uniqueLinguists:
+          type: integer
+          description: Number of unique linguists.
+          example: 1
+        workflowStatus:
+          type: string
+          description: The status of the Workflow for the current job.
+          example: READY_TO_START
+          enum:
+          - READY_TO_START
+          - IN_PROGRESS
+          - DONE
+      description: 'A job stats shows an overview of job''s statistical data including total number of exact words, fuzzy words, language pairs, projects, etc.
+
+        '
     Job:
       type: object
       properties:

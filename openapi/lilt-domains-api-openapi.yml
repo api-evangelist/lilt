@@ -68,17 +68,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A human-readable message describing the error.
-      description: 'Response in the event of an unexpected error.
-
-        '
-      example:
-        message: Internal server error.
     DomainList:
       type: object
       properties:
@@ -140,6 +129,85 @@ components:
           type: string
           description: The name of the domain.
           example: Example Domain Ref
+    FilterConfig:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: The unique identifier for the filter configuration.
+          example: 789
+        isDefault:
+          type: boolean
+          description: Indicates if the filter configuration is the default.
+          example: true
+        filterConfig:
+          type: string
+          description: The filter configuration.
+          example: Example Filter Config
+        filterName:
+          type: string
+          description: The name of the filter.
+          example: Example Filter
+        configName:
+          type: string
+          description: The name of the configuration.
+          example: Example Config Name
+        configDescription:
+          type: string
+          description: The description of the configuration.
+          example: Example Config Description
+        subfilters:
+          type: string
+          description: The subfilters.
+          example: Example Subfilters
+        segmentationConfigSetting:
+          type: string
+          description: The segmentation configuration setting.
+          enum:
+          - SENTENCE
+          example: SENTENCE
+        srx:
+          type: string
+          description: The SRX (Segmentation Rules eXchange) data.
+          example: Example SRX
+        segmentationConfigName:
+          type: string
+          description: The name of the segmentation configuration.
+          example: Example Segmentation Config
+        domains:
+          type: array
+          items:
+            $ref: '#/components/schemas/DomainReference'
+          description: The domains associated with the filter configuration.
+          example:
+          - id: 101
+            name: Example Domain Ref
+        createdAt:
+          type: string
+          format: date-time
+          description: The creation timestamp.
+          example: '2024-01-01T00:00:00Z'
+        updatedAt:
+          type: string
+          format: date-time
+          description: The last update timestamp.
+          example: '2024-01-02T00:00:00Z'
+        default:
+          type: boolean
+          description: Indicates if the filter configuration is the default.
+          example: true
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable message describing the error.
+      description: 'Response in the event of an unexpected error.
+
+        '
+      example:
+        message: Internal server error.
     DomainMetadata:
       type: object
       properties:
@@ -255,74 +323,6 @@ components:
           type: string
           description: The target locale of the model.
           example: es-ES
-    FilterConfig:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-          description: The unique identifier for the filter configuration.
-          example: 789
-        isDefault:
-          type: boolean
-          description: Indicates if the filter configuration is the default.
-          example: true
-        filterConfig:
-          type: string
-          description: The filter configuration.
-          example: Example Filter Config
-        filterName:
-          type: string
-          description: The name of the filter.
-          example: Example Filter
-        configName:
-          type: string
-          description: The name of the configuration.
-          example: Example Config Name
-        configDescription:
-          type: string
-          description: The description of the configuration.
-          example: Example Config Description
-        subfilters:
-          type: string
-          description: The subfilters.
-          example: Example Subfilters
-        segmentationConfigSetting:
-          type: string
-          description: The segmentation configuration setting.
-          enum:
-          - SENTENCE
-          example: SENTENCE
-        srx:
-          type: string
-          description: The SRX (Segmentation Rules eXchange) data.
-          example: Example SRX
-        segmentationConfigName:
-          type: string
-          description: The name of the segmentation configuration.
-          example: Example Segmentation Config
-        domains:
-          type: array
-          items:
-            $ref: '#/components/schemas/DomainReference'
-          description: The domains associated with the filter configuration.
-          example:
-          - id: 101
-            name: Example Domain Ref
-        createdAt:
-          type: string
-          format: date-time
-          description: The creation timestamp.
-          example: '2024-01-01T00:00:00Z'
-        updatedAt:
-          type: string
-          format: date-time
-          description: The last update timestamp.
-          example: '2024-01-02T00:00:00Z'
-        default:
-          type: boolean
-          description: Indicates if the filter configuration is the default.
-          example: true
   securitySchemes:
     BasicAuth:
       type: http
