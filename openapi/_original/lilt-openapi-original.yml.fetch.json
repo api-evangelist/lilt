@@ -1,0 +1,12 @@
+{
+ "url": "https://support.lilt.com/api-reference/openapi-bundled.yaml",
+ "requested_url": "https://support.lilt.com/api-reference/openapi-bundled.yaml",
+ "status": 200,
+ "content_type": "text/yaml",
+ "bytes": 190261,
+ "sha256": "89f1cedb114cadaac60d7093e9cf6a166a2d20b65dd9431caa6aa6d2ef2512b5",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 0.915), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
