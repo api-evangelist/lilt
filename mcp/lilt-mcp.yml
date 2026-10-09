@@ -95,3 +95,17 @@ deployment:
   probe: gated
   checked: '2026-08-12'
   source: catalog MCP census
+rfc9728:
+  endpoint: https://mcp.lilt.com/mcp
+  metadata_url: https://mcp.lilt.com/.well-known/oauth-protected-resource/mcp
+  discovered_via: WWW-Authenticate resource_metadata on an anonymous POST initialize
+  fetched: '2026-09-25'
+  http_status: 200
+  content_type: application/json
+  document:
+    resource: https://mcp.lilt.com/mcp
+    authorization_servers:
+    - https://blissful-celebration-62.authkit.app/
+    scopes_supported: []
+    bearer_methods_supported:
+    - header
