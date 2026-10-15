@@ -15,3 +15,15 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
+- slug: lilt-contentful-own
+  label: Contentful (own)
+  partner: contentful
+  partner_name: Contentful (own)
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.contentful.com/marketplace/lilt/
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
