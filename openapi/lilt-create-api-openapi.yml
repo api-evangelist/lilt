@@ -268,7 +268,18 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    LiltCreateContent:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable message describing the error.
+      description: 'Response in the event of an unexpected error.
+
+        '
+      example:
+        message: Internal server error.
+    LiltCreateContentRequest:
       type: object
       required:
       - language
@@ -278,9 +289,6 @@ components:
         name:
           type: string
           description: A name for the request content.
-        id:
-          type: integer
-          description: A unique identifier for the generated content.
         language:
           type: string
           description: The language of the content.
@@ -324,18 +332,7 @@ components:
       description: 'Content Parameters for LiltCreate.
 
         '
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A human-readable message describing the error.
-      description: 'Response in the event of an unexpected error.
-
-        '
-      example:
-        message: Internal server error.
-    LiltCreateContentRequest:
+    LiltCreateContent:
       type: object
       required:
       - language
@@ -345,6 +342,9 @@ components:
         name:
           type: string
           description: A name for the request content.
+        id:
+          type: integer
+          description: A unique identifier for the generated content.
         language:
           type: string
           description: The language of the content.

@@ -60,24 +60,17 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    WorkflowStageTemplate:
+    Error:
       type: object
       properties:
-        name:
+        message:
           type: string
-          description: The human readable name of a Workflow stage.
-          example: Translate
-        assignmentType:
-          type: string
-          description: An enum to represent all possible types of Workflow stage.
-          example: TRANSLATE
-          enum:
-          - READY_TO_START
-          - TRANSLATE
-          - REVIEW
-          - SECONDARY_REVIEW
-          - DONE
-      description: A single stage within a Workflow Template.
+          description: A human-readable message describing the error.
+      description: 'Response in the event of an unexpected error.
+
+        '
+      example:
+        message: Internal server error.
     WorkflowTemplate:
       type: object
       properties:
@@ -98,17 +91,24 @@ components:
           items:
             $ref: '#/components/schemas/WorkflowStageTemplate'
       description: A workflow template which defines the workflow's possible steps (combination of Translation, Review and Customer Review).
-    Error:
+    WorkflowStageTemplate:
       type: object
       properties:
-        message:
+        name:
           type: string
-          description: A human-readable message describing the error.
-      description: 'Response in the event of an unexpected error.
-
-        '
-      example:
-        message: Internal server error.
+          description: The human readable name of a Workflow stage.
+          example: Translate
+        assignmentType:
+          type: string
+          description: An enum to represent all possible types of Workflow stage.
+          example: TRANSLATE
+          enum:
+          - READY_TO_START
+          - TRANSLATE
+          - REVIEW
+          - SECONDARY_REVIEW
+          - DONE
+      description: A single stage within a Workflow Template.
   responses:
     UnauthorizedError:
       description: Unauthorized

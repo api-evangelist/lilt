@@ -199,6 +199,17 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable message describing the error.
+      description: 'Response in the event of an unexpected error.
+
+        '
+      example:
+        message: Internal server error.
     create_webhook_options:
       type: object
       properties:
@@ -256,17 +267,6 @@ components:
       - webhookName
       - webhookUrl
       - eventType
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A human-readable message describing the error.
-      description: 'Response in the event of an unexpected error.
-
-        '
-      example:
-        message: Internal server error.
   securitySchemes:
     BasicAuth:
       type: http

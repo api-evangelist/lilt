@@ -515,17 +515,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 components:
-  responses:
-    UnauthorizedError:
-      description: Unauthorized
-      content:
-        application/octet-stream:
-          schema:
-            type: string
-        text/plain:
-          schema:
-            type: string
   schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable message describing the error.
+      description: 'Response in the event of an unexpected error.
+
+        '
+      example:
+        message: Internal server error.
     SDLXLIFFFilter:
       required:
       - confName
@@ -546,17 +547,6 @@ components:
         allowUnlockedSegments:
           type: boolean
           description: Boolean that tells Lilt whether we should allow unlocked Segments for this conf_name.
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A human-readable message describing the error.
-      description: 'Response in the event of an unexpected error.
-
-        '
-      example:
-        message: Internal server error.
     TranslationMemoryEntry:
       type: object
       properties:
@@ -636,6 +626,16 @@ components:
         bitexts can also be added to the Memory via the API.
 
         '
+  responses:
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/octet-stream:
+          schema:
+            type: string
+        text/plain:
+          schema:
+            type: string
   securitySchemes:
     BasicAuth:
       type: http
