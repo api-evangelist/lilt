@@ -27,3 +27,34 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
+- slug: lilt-pypi
+  label: PyPI
+  partner: pypi
+  partner_name: PyPI
+  category: official SDK (Python)
+  type: register
+  channel: package-registry
+  evidence: https://pypi.org/project/lilt/
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: PyPI (public registry JSON)
+    spec_file: null
+    language: Python
+    packages:
+    - name: lilt
+      version: 0.6.7
+      released: '2021-11-15'
+      released_field: upload_time
+      lapsed: true
+      page: https://pypi.org/project/lilt/
+      repo_leg: github-org:lilt
+      publisher_leg: email:lilt.com
+      matched_by: domain
+    current: false
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
