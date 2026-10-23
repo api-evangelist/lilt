@@ -16,6 +16,7 @@ checked:
 - https://www.indexventures.com/companies/
 - https://www.sequoiacap.com/our-companies/
 - https://www.sequoiacap.com/sitemap.xml
+- drupal/integrations/drupal-integration-edges.yml
 marketplace_apps: []
 edges:
 - partner_name: GitHub Marketplace (apps)
@@ -35,22 +36,6 @@ edges:
   - Verified domain
   detected_by: sweep-devtools.py
   detected: '2026-10-14'
-- partner_name: Contentful (own)
-  partner: contentful
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://www.contentful.com/marketplace/lilt/
-  mirror_of: contentful/integrations/contentful-integration-edges.yml
-  apps:
-  - LILT Connect
-  listing_count: 1
-  detected: '2026-10-15'
-  detected_by: mirror-platform-listings.py
 - partner_name: PyPI
   partner: pypi
   partner_match: register
@@ -107,5 +92,38 @@ edges:
     detected: '2026-10-21'
   detected_by: sweep-vc-portfolios.py
   first_seen: '2026-10-21'
+- partner_name: Contentful (own)
+  partner: contentful
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.contentful.com/marketplace/lilt/
+  mirror_of: contentful/integrations/contentful-integration-edges.yml
+  apps:
+  - LILT Connect
+  listing_count: 1
+  detected: '2026-10-15'
+  detected_by: mirror-platform-listings.py
+- partner_name: Drupal (own)
+  partner: drupal
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.drupal.org/project/tmgmt_lilt
+  mirror_of: drupal/integrations/drupal-integration-edges.yml
+  apps:
+  - LILT <> Drupal TMGMT Connector
+  listing_count: 1
+  detected: '2026-10-22'
+  detected_by: mirror-platform-listings.py
+  category: Drupal contributed module
 source:
 - https://github.com/marketplace?type=apps

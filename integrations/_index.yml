@@ -15,18 +15,6 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
-- slug: lilt-contentful-own
-  label: Contentful (own)
-  partner: contentful
-  partner_name: Contentful (own)
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://www.contentful.com/marketplace/lilt/
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
 - slug: lilt-pypi
   label: PyPI
   partner: pypi
@@ -83,5 +71,30 @@
       an ownership and participation record, not conformance or certification'
     detected_by: sweep-vc-portfolios.py
     detected: '2026-10-21'
+  status: not-a-workflow
+  arazzo: null
+- slug: lilt-contentful-own
+  label: Contentful (own)
+  partner: contentful
+  partner_name: Contentful (own)
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.contentful.com/marketplace/lilt/
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: lilt-drupal-own
+  label: Drupal (own)
+  partner: drupal
+  partner_name: Drupal (own)
+  category: Drupal contributed module
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.drupal.org/project/tmgmt_lilt
+  source: edge
+  relationship: platform-app
   status: not-a-workflow
   arazzo: null
