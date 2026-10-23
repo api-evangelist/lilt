@@ -345,6 +345,8 @@ apis:
   - type: RateLimits
     url: rate-limits/lilt-rate-limits.yml
 common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/lilt/overview
 - type: CapabilityMap
   url: capabilities/lilt-capability-edges.yml
   name: Lilt Business Capability Map
