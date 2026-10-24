@@ -1,1456 +1,1513 @@
 {
+  "info": {
+    "_postman_id": "d23c7756-8944-46c5-84d3-234c83ce00e7",
+    "name": "LILT Uploads API",
+    "description": "LILT API Support: https://lilt.atlassian.net/servicedesk/customer/portals\n\nThe LILT API enables programmatic access to the full-range of LILT backend services including:\n* Training of and translating with interactive, adaptive machine translation\n* Large-scale translation memory\n* The Lexicon (a large-scale termbase)\n* Programmatic control of the LILT CAT environment\n* Translation memory synchronization\n\nRequests and responses are in JSON format.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T20:03:40.000Z",
+    "updatedAt": "2026-10-21T20:03:40.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-d23c7756-8944-46c5-84d3-234c83ce00e7"
+  },
   "item": [
     {
-      "id": "1013aef2-7ec7-48b4-b5af-e8d27bbe1d5c",
-      "name": "Uploads",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
+      "name": "v2",
       "item": [
         {
-          "id": "3b8bf567-dc3b-497c-8d9a-554e7aeda3d2",
-          "name": "Get All Pending Uploads or specific list of uploads by ids or statuses",
-          "request": {
-            "name": "Get All Pending Uploads or specific list of uploads by ids or statuses",
-            "description": {
-              "content": "Retrieve all pending uploads for the current user and organization.\n\nExample CURL command:\n```\n  curl -X GET https://lilt.com/2/upload?key=API_KEY\n```\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v2",
-                "upload"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
+          "name": "upload",
+          "item": [
+            {
+              "name": "{uploadId}",
+              "item": [
                 {
-                  "disabled": false,
-                  "key": "ids",
-                  "value": "<string>",
-                  "description": "Comma-separated list of upload IDs to filter by."
-                },
-                {
-                  "disabled": false,
-                  "key": "statuses",
-                  "value": "<string>",
-                  "description": "Comma-separated list of upload statuses to filter by."
+                  "name": "Get Upload by ID",
+                  "id": "9e334646-bd64-40b0-8c13-58dceb819088",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/upload/:uploadId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "upload",
+                        ":uploadId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "4fe55764-5bd1-40b3-b151-bebba7d391f8",
+                          "key": "uploadId",
+                          "value": "<integer>",
+                          "description": "(Required) Unique upload identifier"
+                        }
+                      ]
+                    },
+                    "description": "Retrieve a specific upload by its unique identifier.\n\nExample CURL command:\n```\ncurl -X GET https://lilt.com/2/upload/12345?key=API_KEY\n```"
+                  },
+                  "response": [
+                    {
+                      "id": "1f529dbd-2d13-43ec-899f-4fe6fef9bef7",
+                      "name": "Upload details.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/upload/:uploadId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "upload",
+                            ":uploadId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "uploadId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<integer>\",\n  \"filename\": \"<string>\",\n  \"status\": \"<string>\",\n  \"created_at\": \"<dateTime>\"\n}",
+                      "createdAt": "2026-10-21T20:03:40.000Z",
+                      "updatedAt": "2026-10-21T20:03:40.000Z",
+                      "uid": "35240-1f529dbd-2d13-43ec-899f-4fe6fef9bef7"
+                    },
+                    {
+                      "id": "3fd38b5c-c71f-4581-a568-105fd2aed745",
+                      "name": "Unexpected error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/upload/:uploadId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "upload",
+                            ":uploadId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "uploadId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T20:03:40.000Z",
+                      "updatedAt": "2026-10-21T20:03:40.000Z",
+                      "uid": "35240-3fd38b5c-c71f-4581-a568-105fd2aed745"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T20:03:40.000Z",
+                  "updatedAt": "2026-10-21T20:03:40.000Z",
+                  "uid": "35240-9e334646-bd64-40b0-8c13-58dceb819088"
                 }
               ],
-              "variable": []
+              "id": "337ba8c1-d2c7-4a3f-b142-774b312092b7",
+              "createdAt": "2026-10-21T20:03:40.000Z",
+              "updatedAt": "2026-10-21T20:03:40.000Z",
+              "uid": "35240-337ba8c1-d2c7-4a3f-b142-774b312092b7"
             },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
             {
-              "id": "a50e5603-332f-47c3-b1a1-3082d245399f",
-              "name": "List of pending uploads.",
-              "originalRequest": {
+              "name": "s3",
+              "item": [
+                {
+                  "name": "params",
+                  "item": [
+                    {
+                      "name": "Get S3 Upload Parameters",
+                      "id": "46649c8a-a535-4ee8-89f1-385217464caf",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/upload/s3/params?filename=<string>&type=<string>&metadata.size=<integer>&metadata.category=<string>&metadata.uuid=<string>&metadata.labels=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "upload",
+                            "s3",
+                            "params"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) A file name including file extension.",
+                              "key": "filename",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The content-type or mime-type of the file to upload.",
+                              "key": "type",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The size of the file to upload in bytes.",
+                              "key": "metadata.size",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "File category metadata.",
+                              "key": "metadata.category",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "File UUID metadata.",
+                              "key": "metadata.uuid",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Comma-separated list of label names to be added to the file after upload completes.",
+                              "key": "metadata.labels",
+                              "value": "<string>"
+                            }
+                          ]
+                        },
+                        "description": "Get S3 upload parameters via query string. This endpoint provides the necessary information\nto complete the file upload process using GET parameters.\n\nExample CURL command:\n```\ncurl -X GET \"https://lilt.com/v2/upload/s3/params?key=API_KEY&filename=example.json&type=application/json&metadata.size=1024&metadata.labels=important,review-needed\"\n```"
+                      },
+                      "response": [
+                        {
+                          "id": "8e25c78c-1899-453a-b3df-86356d0fb47b",
+                          "name": "Upload initialization information.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/upload/s3/params?filename=<string>&type=<string>&metadata.size=<integer>&metadata.category=<string>&metadata.uuid=<string>&metadata.labels=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "upload",
+                                "s3",
+                                "params"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) A file name including file extension.",
+                                  "key": "filename",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "(Required) The content-type or mime-type of the file to upload.",
+                                  "key": "type",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "The size of the file to upload in bytes.",
+                                  "key": "metadata.size",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "File category metadata.",
+                                  "key": "metadata.category",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "File UUID metadata.",
+                                  "key": "metadata.uuid",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Comma-separated list of label names to be added to the file after upload completes.",
+                                  "key": "metadata.labels",
+                                  "value": "<string>"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"url\": \"<string>\",\n  \"key\": \"<string>\",\n  \"method\": \"<string>\"\n}",
+                          "createdAt": "2026-10-21T20:03:40.000Z",
+                          "updatedAt": "2026-10-21T20:03:40.000Z",
+                          "uid": "35240-8e25c78c-1899-453a-b3df-86356d0fb47b"
+                        },
+                        {
+                          "id": "b9b2a962-0890-46a8-aec1-7d285e2febf0",
+                          "name": "Unexpected error",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/upload/s3/params?filename=<string>&type=<string>&metadata.size=<integer>&metadata.category=<string>&metadata.uuid=<string>&metadata.labels=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "upload",
+                                "s3",
+                                "params"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) A file name including file extension.",
+                                  "key": "filename",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "(Required) The content-type or mime-type of the file to upload.",
+                                  "key": "type",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "The size of the file to upload in bytes.",
+                                  "key": "metadata.size",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "File category metadata.",
+                                  "key": "metadata.category",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "File UUID metadata.",
+                                  "key": "metadata.uuid",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Comma-separated list of label names to be added to the file after upload completes.",
+                                  "key": "metadata.labels",
+                                  "value": "<string>"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-10-21T20:03:40.000Z",
+                          "updatedAt": "2026-10-21T20:03:40.000Z",
+                          "uid": "35240-b9b2a962-0890-46a8-aec1-7d285e2febf0"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T20:03:40.000Z",
+                      "updatedAt": "2026-10-21T20:03:40.000Z",
+                      "uid": "35240-46649c8a-a535-4ee8-89f1-385217464caf"
+                    },
+                    {
+                      "name": "Initiate File Upload to Cloud Storage",
+                      "id": "5d32bc4d-5a0f-4eb5-93e4-a30457afd657",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"filename\": \"<string>\",\n  \"type\": \"<string>\",\n  \"metadata\": {\n    \"size\": \"<integer>\",\n    \"category\": \"<string>\",\n    \"uuid\": \"<string>\",\n    \"labels\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/upload/s3/params",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "upload",
+                            "s3",
+                            "params"
+                          ]
+                        },
+                        "description": "Initiate the upload of a file to cloud storage. This endpoint provides the necessary information\nto complete the file upload process.\n\nSupports both single file and bulk upload requests. For bulk uploads, pass an array of upload\nobjects (maximum 100 items). The response format matches the request format - a single object\nfor single file requests, or an array for bulk requests.\n\nExample CURL command (single file):\n```\ncurl -X POST https://lilt.com/v2/upload/s3/params?key=API_KEY \\\n--header \"Content-Type: application/json\" \\\n--data-raw '{\n\"filename\": \"example.json\",\n\"type\": \"application/json\",\n\"metadata\": {\n\"size\": 1024,\n\"labels\": [\"important\", \"review-needed\"]\n}\n}'\n```\n\nExample CURL command (bulk upload):\n```\ncurl -X POST https://lilt.com/v2/upload/s3/params?key=API_KEY \\\n--header \"Content-Type: application/json\" \\\n--data-raw '[\n{\n\"filename\": \"file1.json\",\n\"type\": \"application/json\",\n\"metadata\": { \"size\": 1024 }\n},\n{\n\"filename\": \"file2.txt\",\n\"type\": \"text/plain\",\n\"metadata\": { \"size\": 2048 }\n}\n]'\n```"
+                      },
+                      "response": [
+                        {
+                          "id": "948a38bb-a31e-49f8-aecc-9bbbe2467cad",
+                          "name": "Upload initialization information. Returns a single object for single file requests,\nor an array of objects for bulk requests.\n",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"filename\": \"<string>\",\n  \"type\": \"<string>\",\n  \"metadata\": {\n    \"size\": \"<integer>\",\n    \"category\": \"<string>\",\n    \"uuid\": \"<string>\",\n    \"labels\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/upload/s3/params",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "upload",
+                                "s3",
+                                "params"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"url\": \"<string>\",\n  \"key\": \"<string>\",\n  \"method\": \"<string>\"\n}",
+                          "createdAt": "2026-10-21T20:03:40.000Z",
+                          "updatedAt": "2026-10-21T20:03:40.000Z",
+                          "uid": "35240-948a38bb-a31e-49f8-aecc-9bbbe2467cad"
+                        },
+                        {
+                          "id": "de0dfa4f-d6eb-433d-aa76-6c31983667a8",
+                          "name": "Unexpected error",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"filename\": \"<string>\",\n  \"type\": \"<string>\",\n  \"metadata\": {\n    \"size\": \"<integer>\",\n    \"category\": \"<string>\",\n    \"uuid\": \"<string>\",\n    \"labels\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/upload/s3/params",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "upload",
+                                "s3",
+                                "params"
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-10-21T20:03:40.000Z",
+                          "updatedAt": "2026-10-21T20:03:40.000Z",
+                          "uid": "35240-de0dfa4f-d6eb-433d-aa76-6c31983667a8"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T20:03:40.000Z",
+                      "updatedAt": "2026-10-21T20:03:40.000Z",
+                      "uid": "35240-5d32bc4d-5a0f-4eb5-93e4-a30457afd657"
+                    }
+                  ],
+                  "id": "e79ab130-6eb5-47ce-bdb0-4c3654a0fcc4",
+                  "createdAt": "2026-10-21T20:03:40.000Z",
+                  "updatedAt": "2026-10-21T20:03:40.000Z",
+                  "uid": "35240-e79ab130-6eb5-47ce-bdb0-4c3654a0fcc4"
+                },
+                {
+                  "name": "multipart",
+                  "item": [
+                    {
+                      "name": "{uploadId}",
+                      "item": [
+                        {
+                          "name": "complete",
+                          "item": [
+                            {
+                              "name": "Complete Multipart Upload",
+                              "id": "e1919683-7ed2-4907-aaee-dfd3b3e659fe",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"parts\": [\n    {\n      \"ETag\": \"<string>\",\n      \"PartNumber\": \"<integer>\"\n    },\n    {\n      \"ETag\": \"<string>\",\n      \"PartNumber\": \"<integer>\"\n    }\n  ]\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/v2/upload/s3/multipart/:uploadId/complete?s3Key=<string>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v2",
+                                    "upload",
+                                    "s3",
+                                    "multipart",
+                                    ":uploadId",
+                                    "complete"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "(Required) Upload key from initiate response",
+                                      "key": "s3Key",
+                                      "value": "<string>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "10f0a3e2-91cd-49d8-abcb-d986664d5157",
+                                      "key": "uploadId",
+                                      "value": "<string>",
+                                      "description": "(Required) Multipart upload ID from initiate response"
+                                    }
+                                  ]
+                                },
+                                "description": "Complete a multipart upload by providing all uploaded parts information.\n\nExample CURL command:\n```\ncurl -X POST \"https://lilt.com/v2/upload/s3/multipart/abc123def456/complete?key=API_KEY&key=uploads/user123/file456.zip\" \\\n--header \"Content-Type: application/json\" \\\n--data-raw '{\n\"parts\": [\n{\"ETag\": \"etag1\", \"PartNumber\": 1},\n{\"ETag\": \"etag2\", \"PartNumber\": 2}\n]\n}'\n```"
+                              },
+                              "response": [
+                                {
+                                  "id": "987b4bea-8445-487f-af28-0ee91948ad38",
+                                  "name": "Upload completion confirmation.",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: basic",
+                                        "key": "Authorization",
+                                        "value": "Basic <credentials>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"parts\": [\n    {\n      \"ETag\": \"<string>\",\n      \"PartNumber\": \"<integer>\"\n    },\n    {\n      \"ETag\": \"<string>\",\n      \"PartNumber\": \"<integer>\"\n    }\n  ]\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/v2/upload/s3/multipart/:uploadId/complete?s3Key=<string>",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "v2",
+                                        "upload",
+                                        "s3",
+                                        "multipart",
+                                        ":uploadId",
+                                        "complete"
+                                      ],
+                                      "query": [
+                                        {
+                                          "description": "(Required) Upload key from initiate response",
+                                          "key": "s3Key",
+                                          "value": "<string>"
+                                        }
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "uploadId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"success\": \"<boolean>\",\n  \"location\": \"<string>\"\n}",
+                                  "createdAt": "2026-10-21T20:03:40.000Z",
+                                  "updatedAt": "2026-10-21T20:03:40.000Z",
+                                  "uid": "35240-987b4bea-8445-487f-af28-0ee91948ad38"
+                                },
+                                {
+                                  "id": "c4ae9ea6-3349-4c21-9b72-8cba9d4012db",
+                                  "name": "Unexpected error",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: basic",
+                                        "key": "Authorization",
+                                        "value": "Basic <credentials>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"parts\": [\n    {\n      \"ETag\": \"<string>\",\n      \"PartNumber\": \"<integer>\"\n    },\n    {\n      \"ETag\": \"<string>\",\n      \"PartNumber\": \"<integer>\"\n    }\n  ]\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/v2/upload/s3/multipart/:uploadId/complete?s3Key=<string>",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "v2",
+                                        "upload",
+                                        "s3",
+                                        "multipart",
+                                        ":uploadId",
+                                        "complete"
+                                      ],
+                                      "query": [
+                                        {
+                                          "description": "(Required) Upload key from initiate response",
+                                          "key": "s3Key",
+                                          "value": "<string>"
+                                        }
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "uploadId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Internal Server Error",
+                                  "code": 500,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"message\": \"<string>\"\n}",
+                                  "createdAt": "2026-10-21T20:03:40.000Z",
+                                  "updatedAt": "2026-10-21T20:03:40.000Z",
+                                  "uid": "35240-c4ae9ea6-3349-4c21-9b72-8cba9d4012db"
+                                }
+                              ],
+                              "createdAt": "2026-10-21T20:03:40.000Z",
+                              "updatedAt": "2026-10-21T20:03:40.000Z",
+                              "uid": "35240-e1919683-7ed2-4907-aaee-dfd3b3e659fe"
+                            }
+                          ],
+                          "id": "8f438915-c58c-4fb4-b9b2-d083404fea99",
+                          "createdAt": "2026-10-21T20:03:40.000Z",
+                          "updatedAt": "2026-10-21T20:03:40.000Z",
+                          "uid": "35240-8f438915-c58c-4fb4-b9b2-d083404fea99"
+                        },
+                        {
+                          "name": "{partNumber}",
+                          "item": [
+                            {
+                              "name": "Sign Upload Part",
+                              "id": "271d5dbb-658c-4dc9-bcfd-4f53e10c1c23",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v2/upload/s3/multipart/:uploadId/:partNumber?s3Key=<string>&size=<integer>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v2",
+                                    "upload",
+                                    "s3",
+                                    "multipart",
+                                    ":uploadId",
+                                    ":partNumber"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "(Required) Upload key from initiate response",
+                                      "key": "s3Key",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "description": "(Required) Size of this part in bytes",
+                                      "key": "size",
+                                      "value": "<integer>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "2297efb4-f6e1-4dfe-b4c0-9ad04fe9c9ef",
+                                      "key": "uploadId",
+                                      "value": "<string>",
+                                      "description": "(Required) Multipart upload ID from initiate response"
+                                    },
+                                    {
+                                      "id": "20c470f7-fcb7-4dee-9f3e-6284b7e18641",
+                                      "key": "partNumber",
+                                      "value": "<integer>",
+                                      "description": "(Required) Part number (1-based)"
+                                    }
+                                  ]
+                                },
+                                "description": "Get a signed URL for uploading a specific part of a multipart upload.\n\nMake sure to set the part size to 8MB (8388608 bytes).\n\nExample CURL command:\n```\ncurl -X GET \"https://lilt.com/v2/upload/s3/multipart/abc123def456/1?key=API_KEY&key=uploads/user123/file456.zip&size=5242880\"\n```"
+                              },
+                              "response": [
+                                {
+                                  "id": "cf9de831-825a-47f5-87b5-824d466b73ce",
+                                  "name": "Signed URL for part upload.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: basic",
+                                        "key": "Authorization",
+                                        "value": "Basic <credentials>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/v2/upload/s3/multipart/:uploadId/:partNumber?s3Key=<string>&size=<integer>",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "v2",
+                                        "upload",
+                                        "s3",
+                                        "multipart",
+                                        ":uploadId",
+                                        ":partNumber"
+                                      ],
+                                      "query": [
+                                        {
+                                          "description": "(Required) Upload key from initiate response",
+                                          "key": "s3Key",
+                                          "value": "<string>"
+                                        },
+                                        {
+                                          "description": "(Required) Size of this part in bytes",
+                                          "key": "size",
+                                          "value": "<integer>"
+                                        }
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "uploadId"
+                                        },
+                                        {
+                                          "key": "partNumber"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"url\": \"<string>\",\n  \"method\": \"<string>\"\n}",
+                                  "createdAt": "2026-10-21T20:03:40.000Z",
+                                  "updatedAt": "2026-10-21T20:03:40.000Z",
+                                  "uid": "35240-cf9de831-825a-47f5-87b5-824d466b73ce"
+                                },
+                                {
+                                  "id": "e4fa83b6-9548-441c-9e4b-a95d3b485d68",
+                                  "name": "Unexpected error",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: basic",
+                                        "key": "Authorization",
+                                        "value": "Basic <credentials>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/v2/upload/s3/multipart/:uploadId/:partNumber?s3Key=<string>&size=<integer>",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "v2",
+                                        "upload",
+                                        "s3",
+                                        "multipart",
+                                        ":uploadId",
+                                        ":partNumber"
+                                      ],
+                                      "query": [
+                                        {
+                                          "description": "(Required) Upload key from initiate response",
+                                          "key": "s3Key",
+                                          "value": "<string>"
+                                        },
+                                        {
+                                          "description": "(Required) Size of this part in bytes",
+                                          "key": "size",
+                                          "value": "<integer>"
+                                        }
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "uploadId"
+                                        },
+                                        {
+                                          "key": "partNumber"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Internal Server Error",
+                                  "code": 500,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"message\": \"<string>\"\n}",
+                                  "createdAt": "2026-10-21T20:03:40.000Z",
+                                  "updatedAt": "2026-10-21T20:03:40.000Z",
+                                  "uid": "35240-e4fa83b6-9548-441c-9e4b-a95d3b485d68"
+                                }
+                              ],
+                              "createdAt": "2026-10-21T20:03:40.000Z",
+                              "updatedAt": "2026-10-21T20:03:40.000Z",
+                              "uid": "35240-271d5dbb-658c-4dc9-bcfd-4f53e10c1c23"
+                            }
+                          ],
+                          "id": "f8457e0a-814c-4422-ba6a-d41455178b38",
+                          "createdAt": "2026-10-21T20:03:40.000Z",
+                          "updatedAt": "2026-10-21T20:03:40.000Z",
+                          "uid": "35240-f8457e0a-814c-4422-ba6a-d41455178b38"
+                        },
+                        {
+                          "name": "Cancel Multipart Upload",
+                          "id": "1fd7344f-faba-4a35-b9ab-e4de1500072a",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/upload/s3/multipart/:uploadId?s3Key=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "upload",
+                                "s3",
+                                "multipart",
+                                ":uploadId"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) Upload key from initiate response",
+                                  "key": "s3Key",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "id": "5257f14d-0aba-4ccc-8fe2-f913589df64d",
+                                  "key": "uploadId",
+                                  "value": "<string>",
+                                  "description": "(Required) Multipart upload ID to cancel"
+                                }
+                              ]
+                            },
+                            "description": "Cancel/abort a multipart upload and clean up any uploaded parts.\n\nExample CURL command:\n```\ncurl -X DELETE \"https://lilt.com/v2/upload/s3/multipart/abc123def456?key=API_KEY&key=uploads/user123/file456.zip\"\n```"
+                          },
+                          "response": [
+                            {
+                              "id": "e73b9ee5-00cb-4535-a779-e25222437766",
+                              "name": "Upload cancellation confirmation.",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v2/upload/s3/multipart/:uploadId?s3Key=<string>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v2",
+                                    "upload",
+                                    "s3",
+                                    "multipart",
+                                    ":uploadId"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "(Required) Upload key from initiate response",
+                                      "key": "s3Key",
+                                      "value": "<string>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "uploadId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"success\": \"<boolean>\",\n  \"message\": \"<string>\"\n}",
+                              "createdAt": "2026-10-21T20:03:40.000Z",
+                              "updatedAt": "2026-10-21T20:03:40.000Z",
+                              "uid": "35240-e73b9ee5-00cb-4535-a779-e25222437766"
+                            },
+                            {
+                              "id": "91c0d990-a497-481b-938e-5bbf2946379d",
+                              "name": "Unexpected error",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v2/upload/s3/multipart/:uploadId?s3Key=<string>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v2",
+                                    "upload",
+                                    "s3",
+                                    "multipart",
+                                    ":uploadId"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "(Required) Upload key from initiate response",
+                                      "key": "s3Key",
+                                      "value": "<string>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "uploadId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Internal Server Error",
+                              "code": 500,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"message\": \"<string>\"\n}",
+                              "createdAt": "2026-10-21T20:03:40.000Z",
+                              "updatedAt": "2026-10-21T20:03:40.000Z",
+                              "uid": "35240-91c0d990-a497-481b-938e-5bbf2946379d"
+                            }
+                          ],
+                          "createdAt": "2026-10-21T20:03:40.000Z",
+                          "updatedAt": "2026-10-21T20:03:40.000Z",
+                          "uid": "35240-1fd7344f-faba-4a35-b9ab-e4de1500072a"
+                        }
+                      ],
+                      "id": "668c91a9-ee2a-4373-b5a2-60445ea8e021",
+                      "createdAt": "2026-10-21T20:03:40.000Z",
+                      "updatedAt": "2026-10-21T20:03:40.000Z",
+                      "uid": "35240-668c91a9-ee2a-4373-b5a2-60445ea8e021"
+                    },
+                    {
+                      "name": "Initiate Multipart Upload",
+                      "id": "55c1e489-a848-4420-be34-3f971aa84a1e",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"filename\": \"<string>\",\n  \"type\": \"<string>\",\n  \"metadata\": {\n    \"size\": \"<integer>\",\n    \"category\": \"<string>\",\n    \"uuid\": \"<string>\",\n    \"labels\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/upload/s3/multipart",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "upload",
+                            "s3",
+                            "multipart"
+                          ]
+                        },
+                        "description": "Initiate a multipart upload for large files. This endpoint provides the necessary information\nto start a multipart upload process.\n\nSupports both single file and bulk upload requests. For bulk uploads, pass an array of upload\nobjects (maximum 100 items). The response format matches the request format - a single object\nfor single file requests, or an array for bulk requests.\n\nExample CURL command (single file):\n```\ncurl -X POST https://lilt.com/v2/upload/s3/multipart?key=API_KEY \\\n--header \"Content-Type: application/json\" \\\n--data-raw '{\n\"filename\": \"large-file.zip\",\n\"type\": \"application/zip\",\n\"metadata\": {\n\"size\": 104857600\n}\n}'\n```\n\nExample CURL command (bulk upload):\n```\ncurl -X POST https://lilt.com/v2/upload/s3/multipart?key=API_KEY \\\n--header \"Content-Type: application/json\" \\\n--data-raw '[\n{\n\"filename\": \"large-file1.zip\",\n\"type\": \"application/zip\",\n\"metadata\": { \"size\": 104857600 }\n},\n{\n\"filename\": \"large-file2.zip\",\n\"type\": \"application/zip\",\n\"metadata\": { \"size\": 209715200 }\n}\n]'\n```"
+                      },
+                      "response": [
+                        {
+                          "id": "3509b4ad-29a5-4bca-95b6-56b9d9dec7c3",
+                          "name": "Multipart upload initialization information. Returns a single object for single file requests,\nor an array of objects for bulk requests.\n",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"filename\": \"<string>\",\n  \"type\": \"<string>\",\n  \"metadata\": {\n    \"size\": \"<integer>\",\n    \"category\": \"<string>\",\n    \"uuid\": \"<string>\",\n    \"labels\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/upload/s3/multipart",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "upload",
+                                "s3",
+                                "multipart"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"uploadId\": \"<string>\",\n  \"key\": \"<string>\"\n}",
+                          "createdAt": "2026-10-21T20:03:40.000Z",
+                          "updatedAt": "2026-10-21T20:03:40.000Z",
+                          "uid": "35240-3509b4ad-29a5-4bca-95b6-56b9d9dec7c3"
+                        },
+                        {
+                          "id": "a671adef-12a4-4054-9513-925143b3e8f4",
+                          "name": "Unexpected error",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"filename\": \"<string>\",\n  \"type\": \"<string>\",\n  \"metadata\": {\n    \"size\": \"<integer>\",\n    \"category\": \"<string>\",\n    \"uuid\": \"<string>\",\n    \"labels\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/upload/s3/multipart",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "upload",
+                                "s3",
+                                "multipart"
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-10-21T20:03:40.000Z",
+                          "updatedAt": "2026-10-21T20:03:40.000Z",
+                          "uid": "35240-a671adef-12a4-4054-9513-925143b3e8f4"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T20:03:40.000Z",
+                      "updatedAt": "2026-10-21T20:03:40.000Z",
+                      "uid": "35240-55c1e489-a848-4420-be34-3f971aa84a1e"
+                    }
+                  ],
+                  "id": "c420878d-9d4c-499a-83fa-62cdcfb37c91",
+                  "createdAt": "2026-10-21T20:03:40.000Z",
+                  "updatedAt": "2026-10-21T20:03:40.000Z",
+                  "uid": "35240-c420878d-9d4c-499a-83fa-62cdcfb37c91"
+                }
+              ],
+              "id": "a0adc8c8-45fb-4b46-ab28-4261341d014f",
+              "createdAt": "2026-10-21T20:03:40.000Z",
+              "updatedAt": "2026-10-21T20:03:40.000Z",
+              "uid": "35240-a0adc8c8-45fb-4b46-ab28-4261341d014f"
+            },
+            {
+              "name": "Get All Pending Uploads or specific list of uploads by ids or statuses",
+              "id": "71d51b93-26e5-4bd9-bb38-ef5adc6b7cba",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
                 "url": {
+                  "raw": "{{baseUrl}}/v2/upload?ids=<string>&statuses=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
                   "path": [
                     "v2",
                     "upload"
                   ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
                   "query": [
                     {
+                      "description": "Comma-separated list of upload IDs to filter by.",
                       "key": "ids",
                       "value": "<string>"
                     },
                     {
+                      "description": "Comma-separated list of upload statuses to filter by.",
                       "key": "statuses",
                       "value": "<string>"
                     }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "[\n  {\n    \"id\": 12345,\n    \"filename\": \"document.xliff\",\n    \"status\": \"pending\",\n    \"created_at\": \"2010-03-08T17:37:54.478Z\"\n  },\n  {\n    \"id\": 12345,\n    \"filename\": \"document.xliff\",\n    \"status\": \"pending\",\n    \"created_at\": \"1949-11-16T16:44:33.880Z\"\n  }\n]",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "876a7832-dd79-46f8-8244-66bd2c995014",
-              "name": "Unexpected error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "upload"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "ids",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "statuses",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"Internal server error.\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "caf7f6a1-a159-4c15-ba21-2b6544202a8b",
-          "name": "Get Upload by ID",
-          "request": {
-            "name": "Get Upload by ID",
-            "description": {
-              "content": "Retrieve a specific upload by its unique identifier.\n\nExample CURL command:\n```\n  curl -X GET https://lilt.com/2/upload/12345?key=API_KEY\n```\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v2",
-                "upload",
-                ":uploadId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "uploadId",
-                  "description": "(Required) Unique upload identifier"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "97fa207f-2840-4d26-8759-0dd5afc590eb",
-              "name": "Upload details.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "upload",
-                    ":uploadId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "uploadId",
-                      "description": "(Required) Unique upload identifier"
-                    }
                   ]
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                "description": "Retrieve all pending uploads for the current user and organization.\n\nExample CURL command:\n```\ncurl -X GET https://lilt.com/2/upload?key=API_KEY\n```"
               },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "response": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": 12345,\n  \"filename\": \"document.xliff\",\n  \"status\": \"pending\",\n  \"created_at\": \"2000-12-30T06:59:16.889Z\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "96a5a97b-6a6a-4806-a290-9d9c0ab4b38f",
-              "name": "Unexpected error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "upload",
-                    ":uploadId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "uploadId",
-                      "description": "(Required) Unique upload identifier"
+                  "id": "ab69bb08-033e-4668-abe3-47a761f24a3f",
+                  "name": "List of pending uploads.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/upload?ids=<string>&statuses=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "upload"
+                      ],
+                      "query": [
+                        {
+                          "description": "Comma-separated list of upload IDs to filter by.",
+                          "key": "ids",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Comma-separated list of upload statuses to filter by.",
+                          "key": "statuses",
+                          "value": "<string>"
+                        }
+                      ]
                     }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
                   },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "[\n  {\n    \"id\": \"<integer>\",\n    \"filename\": \"<string>\",\n    \"status\": \"<string>\",\n    \"created_at\": \"<dateTime>\"\n  },\n  {\n    \"id\": \"<integer>\",\n    \"filename\": \"<string>\",\n    \"status\": \"<string>\",\n    \"created_at\": \"<dateTime>\"\n  }\n]",
+                  "createdAt": "2026-10-21T20:03:40.000Z",
+                  "updatedAt": "2026-10-21T20:03:40.000Z",
+                  "uid": "35240-ab69bb08-033e-4668-abe3-47a761f24a3f"
+                },
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "id": "5c176080-83f5-491c-af84-f6f207c635ff",
+                  "name": "Unexpected error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/upload?ids=<string>&statuses=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "upload"
+                      ],
+                      "query": [
+                        {
+                          "description": "Comma-separated list of upload IDs to filter by.",
+                          "key": "ids",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Comma-separated list of upload statuses to filter by.",
+                          "key": "statuses",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T20:03:40.000Z",
+                  "updatedAt": "2026-10-21T20:03:40.000Z",
+                  "uid": "35240-5c176080-83f5-491c-af84-f6f207c635ff"
                 }
               ],
-              "body": "{\n  \"message\": \"Internal server error.\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "createdAt": "2026-10-21T20:03:40.000Z",
+              "updatedAt": "2026-10-21T20:03:40.000Z",
+              "uid": "35240-71d51b93-26e5-4bd9-bb38-ef5adc6b7cba"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "563571fa-a674-4e7c-be98-fcfa079ec563",
-          "name": "Get S3 Upload Parameters",
-          "request": {
-            "name": "Get S3 Upload Parameters",
-            "description": {
-              "content": "Get S3 upload parameters via query string. This endpoint provides the necessary information\nto complete the file upload process using GET parameters.\n\nExample CURL command:\n```\n  curl -X GET \"https://lilt.com/v2/upload/s3/params?key=API_KEY&filename=example.json&type=application/json&metadata.size=1024&metadata.labels=important,review-needed\"\n```\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v2",
-                "upload",
-                "s3",
-                "params"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "filename",
-                  "value": "<string>",
-                  "description": "(Required) A file name including file extension."
-                },
-                {
-                  "disabled": false,
-                  "key": "type",
-                  "value": "<string>",
-                  "description": "(Required) The content-type or mime-type of the file to upload."
-                },
-                {
-                  "disabled": false,
-                  "key": "metadata.size",
-                  "value": "<integer>",
-                  "description": "The size of the file to upload in bytes."
-                },
-                {
-                  "disabled": false,
-                  "key": "metadata.category",
-                  "value": "<string>",
-                  "description": "File category metadata."
-                },
-                {
-                  "disabled": false,
-                  "key": "metadata.uuid",
-                  "value": "<string>",
-                  "description": "File UUID metadata."
-                },
-                {
-                  "disabled": false,
-                  "key": "metadata.labels",
-                  "value": "<string>",
-                  "description": "Comma-separated list of label names to be added to the file after upload completes."
-                }
-              ],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "e4c70c63-6f7e-4b1d-be28-b584c3403715",
-              "name": "Upload initialization information.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "upload",
-                    "s3",
-                    "params"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "filename",
-                      "value": "document.xliff"
-                    },
-                    {
-                      "key": "type",
-                      "value": "video/mp4"
-                    },
-                    {
-                      "key": "metadata.size",
-                      "value": "1024"
-                    },
-                    {
-                      "key": "metadata.category",
-                      "value": "documents"
-                    },
-                    {
-                      "key": "metadata.uuid",
-                      "value": "123e4567-e89b-12d3-a456-426614174000"
-                    },
-                    {
-                      "key": "metadata.labels",
-                      "value": "important,review-needed"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"url\": \"https://storage.googleapis.com/bucket/uploads/user123/file456.json?...\",\n  \"key\": \"uploads/user123/file456.json\",\n  \"method\": \"PUT\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "2f53c2ed-06c7-4dbf-8d06-04214d833dcf",
-              "name": "Unexpected error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "upload",
-                    "s3",
-                    "params"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "filename",
-                      "value": "document.xliff"
-                    },
-                    {
-                      "key": "type",
-                      "value": "video/mp4"
-                    },
-                    {
-                      "key": "metadata.size",
-                      "value": "1024"
-                    },
-                    {
-                      "key": "metadata.category",
-                      "value": "documents"
-                    },
-                    {
-                      "key": "metadata.uuid",
-                      "value": "123e4567-e89b-12d3-a456-426614174000"
-                    },
-                    {
-                      "key": "metadata.labels",
-                      "value": "important,review-needed"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"Internal server error.\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "85f993a7-2b2c-4646-9457-d41b2714da16",
-          "name": "Initiate File Upload to Cloud Storage",
-          "request": {
-            "name": "Initiate File Upload to Cloud Storage",
-            "description": {
-              "content": "Initiate the upload of a file to cloud storage. This endpoint provides the necessary information\nto complete the file upload process.\n\nSupports both single file and bulk upload requests. For bulk uploads, pass an array of upload\nobjects (maximum 100 items). The response format matches the request format - a single object\nfor single file requests, or an array for bulk requests.\n\nExample CURL command (single file):\n```\n  curl -X POST https://lilt.com/v2/upload/s3/params?key=API_KEY \\\n  --header \"Content-Type: application/json\" \\\n  --data-raw '{\n    \"filename\": \"example.json\",\n    \"type\": \"application/json\",\n    \"metadata\": {\n      \"size\": 1024,\n      \"labels\": [\"important\", \"review-needed\"]\n    }\n  }'\n```\n\nExample CURL command (bulk upload):\n```\n  curl -X POST https://lilt.com/v2/upload/s3/params?key=API_KEY \\\n  --header \"Content-Type: application/json\" \\\n  --data-raw '[\n    {\n      \"filename\": \"file1.json\",\n      \"type\": \"application/json\",\n      \"metadata\": { \"size\": 1024 }\n    },\n    {\n      \"filename\": \"file2.txt\",\n      \"type\": \"text/plain\",\n      \"metadata\": { \"size\": 2048 }\n    }\n  ]'\n```\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v2",
-                "upload",
-                "s3",
-                "params"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"filename\": \"<string>\",\n  \"type\": \"<string>\",\n  \"metadata\": {\n    \"size\": \"<integer>\",\n    \"category\": \"<string>\",\n    \"uuid\": \"<string>\",\n    \"labels\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "b4f9673c-5fb8-4020-aac8-2dbbbbb712f6",
-              "name": "Upload initialization information. Returns a single object for single file requests,\nor an array of objects for bulk requests.\n",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "upload",
-                    "s3",
-                    "params"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"filename\": \"document.xliff\",\n  \"type\": \"video/mp4\",\n  \"metadata\": {\n    \"size\": 1024,\n    \"category\": \"documents\",\n    \"uuid\": \"123e4567-e89b-12d3-a456-426614174000\",\n    \"labels\": [\n      \"important\",\n      \"review-needed\"\n    ]\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"url\": \"https://storage.googleapis.com/bucket/uploads/user123/file456.json?...\",\n  \"key\": \"uploads/user123/file456.json\",\n  \"method\": \"PUT\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "e6585466-05ad-454f-98c3-61b46ef3902f",
-              "name": "Unexpected error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "upload",
-                    "s3",
-                    "params"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"filename\": \"document.xliff\",\n  \"type\": \"video/mp4\",\n  \"metadata\": {\n    \"size\": 1024,\n    \"category\": \"documents\",\n    \"uuid\": \"123e4567-e89b-12d3-a456-426614174000\",\n    \"labels\": [\n      \"important\",\n      \"review-needed\"\n    ]\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"Internal server error.\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "e4e98a7f-5839-42c0-8d40-5432412121fa",
-          "name": "Initiate Multipart Upload",
-          "request": {
-            "name": "Initiate Multipart Upload",
-            "description": {
-              "content": "Initiate a multipart upload for large files. This endpoint provides the necessary information\nto start a multipart upload process.\n\nSupports both single file and bulk upload requests. For bulk uploads, pass an array of upload\nobjects (maximum 100 items). The response format matches the request format - a single object\nfor single file requests, or an array for bulk requests.\n\nExample CURL command (single file):\n```\n  curl -X POST https://lilt.com/v2/upload/s3/multipart?key=API_KEY \\\n  --header \"Content-Type: application/json\" \\\n  --data-raw '{\n    \"filename\": \"large-file.zip\",\n    \"type\": \"application/zip\",\n    \"metadata\": {\n      \"size\": 104857600\n    }\n  }'\n```\n\nExample CURL command (bulk upload):\n```\n  curl -X POST https://lilt.com/v2/upload/s3/multipart?key=API_KEY \\\n  --header \"Content-Type: application/json\" \\\n  --data-raw '[\n    {\n      \"filename\": \"large-file1.zip\",\n      \"type\": \"application/zip\",\n      \"metadata\": { \"size\": 104857600 }\n    },\n    {\n      \"filename\": \"large-file2.zip\",\n      \"type\": \"application/zip\",\n      \"metadata\": { \"size\": 209715200 }\n    }\n  ]'\n```\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v2",
-                "upload",
-                "s3",
-                "multipart"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"filename\": \"<string>\",\n  \"type\": \"<string>\",\n  \"metadata\": {\n    \"size\": \"<integer>\",\n    \"category\": \"<string>\",\n    \"uuid\": \"<string>\",\n    \"labels\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "643756d5-a79c-4367-ab88-1723fa222d1a",
-              "name": "Multipart upload initialization information. Returns a single object for single file requests,\nor an array of objects for bulk requests.\n",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "upload",
-                    "s3",
-                    "multipart"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"filename\": \"large-file.zip\",\n  \"type\": \"application/zip\",\n  \"metadata\": {\n    \"size\": 104857600,\n    \"category\": \"documents\",\n    \"uuid\": \"123e4567-e89b-12d3-a456-426614174000\",\n    \"labels\": [\n      \"important\",\n      \"review-needed\"\n    ]\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"uploadId\": \"abc123def456\",\n  \"key\": \"uploads/user123/large-file.zip\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "9803267c-b399-44f6-a770-e9e02871462e",
-              "name": "Unexpected error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "upload",
-                    "s3",
-                    "multipart"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"filename\": \"large-file.zip\",\n  \"type\": \"application/zip\",\n  \"metadata\": {\n    \"size\": 104857600,\n    \"category\": \"documents\",\n    \"uuid\": \"123e4567-e89b-12d3-a456-426614174000\",\n    \"labels\": [\n      \"important\",\n      \"review-needed\"\n    ]\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"Internal server error.\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "6f10b7de-6aa4-4bd4-a9db-b30abcfdf2ed",
-          "name": "Complete Multipart Upload",
-          "request": {
-            "name": "Complete Multipart Upload",
-            "description": {
-              "content": "Complete a multipart upload by providing all uploaded parts information.\n\nExample CURL command:\n```\n  curl -X POST \"https://lilt.com/v2/upload/s3/multipart/abc123def456/complete?key=API_KEY&key=uploads/user123/file456.zip\" \\\n  --header \"Content-Type: application/json\" \\\n  --data-raw '{\n    \"parts\": [\n      {\"ETag\": \"etag1\", \"PartNumber\": 1},\n      {\"ETag\": \"etag2\", \"PartNumber\": 2}\n    ]\n  }'\n```\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v2",
-                "upload",
-                "s3",
-                "multipart",
-                ":uploadId",
-                "complete"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "s3Key",
-                  "value": "<string>",
-                  "description": "(Required) Upload key from initiate response"
-                }
-              ],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "uploadId",
-                  "description": "(Required) Multipart upload ID from initiate response"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"parts\": [\n    {\n      \"ETag\": \"<string>\",\n      \"PartNumber\": \"<integer>\"\n    },\n    {\n      \"ETag\": \"<string>\",\n      \"PartNumber\": \"<integer>\"\n    }\n  ]\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "13288594-a81a-4fb5-a45c-3888cb71b947",
-              "name": "Upload completion confirmation.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "upload",
-                    "s3",
-                    "multipart",
-                    ":uploadId",
-                    "complete"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "s3Key",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "uploadId",
-                      "description": "(Required) Multipart upload ID from initiate response"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"parts\": [\n    {\n      \"ETag\": \"abc123def456\",\n      \"PartNumber\": 1\n    },\n    {\n      \"ETag\": \"abc123def456\",\n      \"PartNumber\": 1\n    }\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"success\": true,\n  \"location\": \"https://storage.googleapis.com/bucket/uploads/user123/file456.zip\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "0c5c11d8-e490-4141-a92c-dc6da4f60427",
-              "name": "Unexpected error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "upload",
-                    "s3",
-                    "multipart",
-                    ":uploadId",
-                    "complete"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "s3Key",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "uploadId",
-                      "description": "(Required) Multipart upload ID from initiate response"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"parts\": [\n    {\n      \"ETag\": \"abc123def456\",\n      \"PartNumber\": 1\n    },\n    {\n      \"ETag\": \"abc123def456\",\n      \"PartNumber\": 1\n    }\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"Internal server error.\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "5514a51c-5f51-4acb-a02c-d97eae30f3fc",
-          "name": "Sign Upload Part",
-          "request": {
-            "name": "Sign Upload Part",
-            "description": {
-              "content": "Get a signed URL for uploading a specific part of a multipart upload.\n\nMake sure to set the part size to 8MB (8388608 bytes).\n\nExample CURL command:\n```\n  curl -X GET \"https://lilt.com/v2/upload/s3/multipart/abc123def456/1?key=API_KEY&key=uploads/user123/file456.zip&size=5242880\"\n```\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v2",
-                "upload",
-                "s3",
-                "multipart",
-                ":uploadId",
-                ":partNumber"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "s3Key",
-                  "value": "<string>",
-                  "description": "(Required) Upload key from initiate response"
-                },
-                {
-                  "disabled": false,
-                  "key": "size",
-                  "value": "<integer>",
-                  "description": "(Required) Size of this part in bytes"
-                }
-              ],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "uploadId",
-                  "description": "(Required) Multipart upload ID from initiate response"
-                },
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "partNumber",
-                  "description": "(Required) Part number (1-based)"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "bb7a7d55-cd13-48a0-90a8-e114e465dda7",
-              "name": "Signed URL for part upload.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "upload",
-                    "s3",
-                    "multipart",
-                    ":uploadId",
-                    ":partNumber"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "s3Key",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "size",
-                      "value": "<integer>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "uploadId",
-                      "description": "(Required) Multipart upload ID from initiate response"
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "partNumber",
-                      "description": "(Required) Part number (1-based)"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"url\": \"https://storage.googleapis.com/bucket/uploads/user123/file456.zip?partNumber=1&...\",\n  \"method\": \"PUT\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "7d163480-f016-4cc8-ab2f-ea848876116e",
-              "name": "Unexpected error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "upload",
-                    "s3",
-                    "multipart",
-                    ":uploadId",
-                    ":partNumber"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "s3Key",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "size",
-                      "value": "<integer>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "uploadId",
-                      "description": "(Required) Multipart upload ID from initiate response"
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "partNumber",
-                      "description": "(Required) Part number (1-based)"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"Internal server error.\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "e6f631f1-ad20-42e8-a098-e55aef1aa06d",
-          "name": "Cancel Multipart Upload",
-          "request": {
-            "name": "Cancel Multipart Upload",
-            "description": {
-              "content": "Cancel/abort a multipart upload and clean up any uploaded parts.\n\nExample CURL command:\n```\n  curl -X DELETE \"https://lilt.com/v2/upload/s3/multipart/abc123def456?key=API_KEY&key=uploads/user123/file456.zip\"\n```\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v2",
-                "upload",
-                "s3",
-                "multipart",
-                ":uploadId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "s3Key",
-                  "value": "<string>",
-                  "description": "(Required) Upload key from initiate response"
-                }
-              ],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "uploadId",
-                  "description": "(Required) Multipart upload ID to cancel"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "DELETE",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "8b111058-6221-46a9-b438-f86fe14acfb9",
-              "name": "Upload cancellation confirmation.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "upload",
-                    "s3",
-                    "multipart",
-                    ":uploadId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "s3Key",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "uploadId",
-                      "description": "(Required) Multipart upload ID to cancel"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"success\": true,\n  \"message\": \"Multipart upload cancelled successfully\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "81ea77c5-d069-4ad8-a988-650238289c9d",
-              "name": "Unexpected error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "upload",
-                    "s3",
-                    "multipart",
-                    ":uploadId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "s3Key",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "uploadId",
-                      "description": "(Required) Multipart upload ID to cancel"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"Internal server error.\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "ea5bb44f-49cf-4128-8f39-8db5b97eed46",
+          "createdAt": "2026-10-21T20:03:40.000Z",
+          "updatedAt": "2026-10-21T20:03:40.000Z",
+          "uid": "35240-ea5bb44f-49cf-4128-8f39-8db5b97eed46"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://api.lilt.com",
-      "key": "baseUrl"
+      "id": "6f5e242f-b358-407c-ba91-5473712a0cb5",
+      "createdAt": "2026-10-21T20:03:40.000Z",
+      "updatedAt": "2026-10-21T20:03:40.000Z",
+      "uid": "35240-6f5e242f-b358-407c-ba91-5473712a0cb5"
     }
   ],
   "auth": {
@@ -1458,21 +1515,20 @@
     "basic": [
       {
         "key": "username",
-        "value": "{{basicAuthUsername}}"
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
       },
       {
         "key": "password",
-        "value": "{{basicAuthPassword}}"
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "fbf84f9c-3aba-4a93-954f-3cefcf7dc21a",
-    "name": "LILT Create Uploads API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "LILT API Support: https://lilt.atlassian.net/servicedesk/customer/portals\n\nThe LILT API enables programmatic access to the full-range of LILT backend services including:\n  * Training of and translating with interactive, adaptive machine translation\n  * Large-scale translation memory\n  * The Lexicon (a large-scale termbase)\n  * Programmatic control of the LILT CAT environment\n  * Translation memory synchronization\n\n\nRequests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests.\n\nThe base url for this REST API is `https://api.lilt.com/`.\n\n## Authentication\n\nRequests are authenticated via API key, which requires the Business plan.\n\nRequests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your API key as both the `username` and `password`.\n\nFor development, you may also pass the API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use.\n\n## Quotas\n\nOur services have a general quota of 4000 requests per minute. Should you hit the maximum requests per minute, you will need to wait 60 seconds before you can send another request.\n",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.lilt.com"
     }
-  }
+  ]
 }

@@ -1,1455 +1,1509 @@
 {
+  "info": {
+    "_postman_id": "2eda8868-81ff-4d04-ae52-f4a8abb12ea0",
+    "name": "LILT Files API",
+    "description": "LILT API Support: https://lilt.atlassian.net/servicedesk/customer/portals\n\nThe LILT API enables programmatic access to the full-range of LILT backend services including:\n* Training of and translating with interactive, adaptive machine translation\n* Large-scale translation memory\n* The Lexicon (a large-scale termbase)\n* Programmatic control of the LILT CAT environment\n* Translation memory synchronization\n\nRequests and responses are in JSON format.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T20:02:51.000Z",
+    "updatedAt": "2026-10-21T20:02:51.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-2eda8868-81ff-4d04-ae52-f4a8abb12ea0"
+  },
   "item": [
     {
-      "id": "3fd39799-2d59-4ca8-92e2-08d9ab897e07",
-      "name": "Files",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
+      "name": "v2",
       "item": [
         {
-          "id": "f880ded8-47f5-4b81-9fd3-cbcd5bbaa9f4",
-          "name": "Retrieve a File",
-          "request": {
-            "name": "Retrieve a File",
-            "description": {
-              "content": "Retrieves one or more files available to your user. Files are not associated with a project or a memory. They are unprocessed and can be used later in the project/document creation workflow step.\n\nTo retrieve a specific file, specify the <strong>id</strong> request parameter. To retrieve all files, omit the <strong>id</strong> request parameter.\n\nExample CURL command:\n```bash\n curl -X GET https://api.lilt.com/v2/files?key=API_KEY&id=274\n```",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v2",
-                "files"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "id",
-                  "value": "<integer>",
-                  "description": "A unique File identifier."
-                },
-                {
-                  "disabled": false,
-                  "key": "labels",
-                  "value": "<string>,<string>",
-                  "description": "One or more labels. This will return the files which contain all of\nthe given labels.\n"
-                }
-              ],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "files",
+          "item": [
             {
-              "id": "428d58bb-9b15-4e2b-b670-7336c74d84b7",
-              "name": "A list of files.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "files"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
+              "name": "download",
+              "item": [
+                {
+                  "name": "Download file",
+                  "id": "0f75df71-87a0-4f99-8f28-1427b6a6a8e6",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/octet-stream"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/files/download?id=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "files",
+                        "download"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) A File id.",
+                          "key": "id",
+                          "value": "<string>"
+                        }
+                      ]
+                    },
+                    "description": "Download a File.\n\nExample CURL:\n```bash\ncurl -X GET 'https://api.lilt.com/v2/files/download?key=API_KEY&id=1'\n```"
+                  },
+                  "response": [
                     {
-                      "key": "id",
-                      "value": "<integer>"
+                      "id": "55914170-1f1f-4f5d-8e8d-05a25679ca5f",
+                      "name": "A file.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/octet-stream"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/files/download?id=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "files",
+                            "download"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) A File id.",
+                              "key": "id",
+                              "value": "<string>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/octet-stream"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "<string>",
+                      "createdAt": "2026-10-21T20:02:51.000Z",
+                      "updatedAt": "2026-10-21T20:02:51.000Z",
+                      "uid": "35240-55914170-1f1f-4f5d-8e8d-05a25679ca5f"
                     },
                     {
-                      "key": "labels",
-                      "value": "<string>,<string>"
+                      "id": "4a6b5f5b-9cb3-4c15-8b94-a423192bebaf",
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/octet-stream"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/files/download?id=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "files",
+                            "download"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) A File id.",
+                              "key": "id",
+                              "value": "<string>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "text/plain"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "<string>",
+                      "createdAt": "2026-10-21T20:02:51.000Z",
+                      "updatedAt": "2026-10-21T20:02:51.000Z",
+                      "uid": "35240-4a6b5f5b-9cb3-4c15-8b94-a423192bebaf"
+                    },
+                    {
+                      "id": "4aa6aa92-c6da-4734-b70f-3f7eb6be3eac",
+                      "name": "Unexpected error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/files/download?id=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "files",
+                            "download"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) A File id.",
+                              "key": "id",
+                              "value": "<string>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T20:02:51.000Z",
+                      "updatedAt": "2026-10-21T20:02:51.000Z",
+                      "uid": "35240-4aa6aa92-c6da-4734-b70f-3f7eb6be3eac"
                     }
                   ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
+                  "createdAt": "2026-10-21T20:02:51.000Z",
+                  "updatedAt": "2026-10-21T20:02:51.000Z",
+                  "uid": "35240-0f75df71-87a0-4f99-8f28-1427b6a6a8e6"
+                }
+              ],
+              "id": "6e07acdc-1cb0-4c22-bc13-49e36e2fb8ed",
+              "createdAt": "2026-10-21T20:02:51.000Z",
+              "updatedAt": "2026-10-21T20:02:51.000Z",
+              "uid": "35240-6e07acdc-1cb0-4c22-bc13-49e36e2fb8ed"
+            },
+            {
+              "name": "labels",
+              "item": [
+                {
+                  "name": "Add Label to File",
+                  "id": "a55e62f8-196c-46c8-8131-8e41d7c6bc9c",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
                   },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/octet-stream"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/files/labels?id=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "files",
+                        "labels"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) A File id.",
+                          "key": "id",
+                          "value": "<string>"
+                        }
+                      ]
+                    },
+                    "description": "Add a label to a File.\n\nExample CURL:\n```bash\ncurl -X POST 'https://api.lilt.com/v2/files/labels?key=API_KEY&id=1'\n--header 'Content-Type: application/json' \\\n--data-raw '{\n\"name\": \"label_name\"\n}'\n```"
+                  },
+                  "response": [
+                    {
+                      "id": "044370b0-dc56-44ac-ac1b-718c5eca5d6b",
+                      "name": "A success response.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/files/labels?id=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "files",
+                            "labels"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) A File id.",
+                              "key": "id",
+                              "value": "<string>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "No Content",
+                      "code": 204,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-10-21T20:02:51.000Z",
+                      "updatedAt": "2026-10-21T20:02:51.000Z",
+                      "uid": "35240-044370b0-dc56-44ac-ac1b-718c5eca5d6b"
+                    },
+                    {
+                      "id": "135e02c5-7cf3-4a70-8750-eaa31e4eccdf",
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/octet-stream"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/files/labels?id=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "files",
+                            "labels"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) A File id.",
+                              "key": "id",
+                              "value": "<string>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "text/plain"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "<string>",
+                      "createdAt": "2026-10-21T20:02:51.000Z",
+                      "updatedAt": "2026-10-21T20:02:51.000Z",
+                      "uid": "35240-135e02c5-7cf3-4a70-8750-eaa31e4eccdf"
+                    },
+                    {
+                      "id": "44236535-b8e8-450e-a8a2-37d3292112e0",
+                      "name": "Unexpected error",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/files/labels?id=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "files",
+                            "labels"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) A File id.",
+                              "key": "id",
+                              "value": "<string>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T20:02:51.000Z",
+                      "updatedAt": "2026-10-21T20:02:51.000Z",
+                      "uid": "35240-44236535-b8e8-450e-a8a2-37d3292112e0"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T20:02:51.000Z",
+                  "updatedAt": "2026-10-21T20:02:51.000Z",
+                  "uid": "35240-a55e62f8-196c-46c8-8131-8e41d7c6bc9c"
+                },
+                {
+                  "name": "Remove Label from File",
+                  "id": "e2375657-dea1-49a3-9b07-43f0376efe2c",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/octet-stream"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/files/labels?id=<string>&name=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "files",
+                        "labels"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) A File id.",
+                          "key": "id",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) A label name.",
+                          "key": "name",
+                          "value": "<string>"
+                        }
+                      ]
+                    },
+                    "description": "Remove a label from a File.\n\nExample CURL:\n```bash\ncurl -X DELETE 'https://api.lilt.com/v2/files/labels?key=API_KEY&id=1&name=label_name'\n```"
+                  },
+                  "response": [
+                    {
+                      "id": "2d3b297b-3953-4ccf-9a9f-5276ac241170",
+                      "name": "A success response.",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/files/labels?id=<string>&name=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "files",
+                            "labels"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) A File id.",
+                              "key": "id",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) A label name.",
+                              "key": "name",
+                              "value": "<string>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "No Content",
+                      "code": 204,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-10-21T20:02:51.000Z",
+                      "updatedAt": "2026-10-21T20:02:51.000Z",
+                      "uid": "35240-2d3b297b-3953-4ccf-9a9f-5276ac241170"
+                    },
+                    {
+                      "id": "8af251b8-291d-44b6-b9e9-20aab4273c2a",
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/octet-stream"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/files/labels?id=<string>&name=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "files",
+                            "labels"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) A File id.",
+                              "key": "id",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) A label name.",
+                              "key": "name",
+                              "value": "<string>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "text/plain"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "<string>",
+                      "createdAt": "2026-10-21T20:02:51.000Z",
+                      "updatedAt": "2026-10-21T20:02:51.000Z",
+                      "uid": "35240-8af251b8-291d-44b6-b9e9-20aab4273c2a"
+                    },
+                    {
+                      "id": "c13e36f9-5348-4e16-9559-ba77fa1c90d1",
+                      "name": "Unexpected error",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/files/labels?id=<string>&name=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "files",
+                            "labels"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) A File id.",
+                              "key": "id",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) A label name.",
+                              "key": "name",
+                              "value": "<string>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T20:02:51.000Z",
+                      "updatedAt": "2026-10-21T20:02:51.000Z",
+                      "uid": "35240-c13e36f9-5348-4e16-9559-ba77fa1c90d1"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T20:02:51.000Z",
+                  "updatedAt": "2026-10-21T20:02:51.000Z",
+                  "uid": "35240-e2375657-dea1-49a3-9b07-43f0376efe2c"
+                }
+              ],
+              "id": "6ffd79df-1458-4cac-9b9f-36343fb15e1f",
+              "createdAt": "2026-10-21T20:02:51.000Z",
+              "updatedAt": "2026-10-21T20:02:51.000Z",
+              "uid": "35240-6ffd79df-1458-4cac-9b9f-36343fb15e1f"
+            },
+            {
+              "name": "Retrieve a File",
+              "id": "a6136b42-b116-4cb9-859e-192ae01fb4a6",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "[\n  {\n    \"id\": 46530,\n    \"name\": \"en_US.json\",\n    \"file_hash\": \"3858f62230ac3c915f300c664312c63f\",\n    \"detected_lang\": \"de\",\n    \"detected_lang_confidence\": 0.7,\n    \"category\": \"REFERENCE\",\n    \"created_at\": \"2019-10-16T22:12:34Z\",\n    \"updated_at\": \"2019-10-16T22:12:34Z\"\n  },\n  {\n    \"id\": 46530,\n    \"name\": \"en_US.json\",\n    \"file_hash\": \"3858f62230ac3c915f300c664312c63f\",\n    \"detected_lang\": \"de\",\n    \"detected_lang_confidence\": 0.7,\n    \"category\": \"REFERENCE\",\n    \"created_at\": \"2019-10-16T22:12:34Z\",\n    \"updated_at\": \"2019-10-16T22:12:34Z\"\n  }\n]",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "9e62550a-bf16-4120-97bb-908890c511b2",
-              "name": "Unauthorized",
-              "originalRequest": {
                 "url": {
+                  "raw": "{{baseUrl}}/v2/files?id=<integer>&labels=<string>,<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
                   "path": [
                     "v2",
                     "files"
                   ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
                   "query": [
                     {
+                      "description": "A unique File identifier.",
                       "key": "id",
                       "value": "<integer>"
                     },
                     {
+                      "description": "One or more labels. This will return the files which contain all of\nthe given labels.\n",
                       "key": "labels",
                       "value": "<string>,<string>"
                     }
-                  ],
-                  "variable": []
+                  ]
                 },
+                "description": "Retrieves one or more files available to your user. Files are not associated with a project or a memory. They are unprocessed and can be used later in the project/document creation workflow step.\n\nTo retrieve a specific file, specify the id request parameter. To retrieve all files, omit the id request parameter.\n\nExample CURL command:\n```bash\ncurl -X GET https://api.lilt.com/v2/files?key=API_KEY&id=274\n```"
+              },
+              "response": [
+                {
+                  "id": "21c25ee6-749d-40f2-9871-eb7fad2eb98b",
+                  "name": "A list of files.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/files?id=<integer>&labels=<string>,<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "files"
+                      ],
+                      "query": [
+                        {
+                          "description": "A unique File identifier.",
+                          "key": "id",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "One or more labels. This will return the files which contain all of\nthe given labels.\n",
+                          "key": "labels",
+                          "value": "<string>,<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "[\n  {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"file_hash\": \"<string>\",\n    \"detected_lang\": \"<string>\",\n    \"detected_lang_confidence\": \"<number>\",\n    \"category\": \"<string>\",\n    \"labels\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\"\n  },\n  {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"file_hash\": \"<string>\",\n    \"detected_lang\": \"<string>\",\n    \"detected_lang_confidence\": \"<number>\",\n    \"category\": \"<string>\",\n    \"labels\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\"\n  }\n]",
+                  "createdAt": "2026-10-21T20:02:51.000Z",
+                  "updatedAt": "2026-10-21T20:02:51.000Z",
+                  "uid": "35240-21c25ee6-749d-40f2-9871-eb7fad2eb98b"
+                },
+                {
+                  "id": "db2960c3-b9f8-4e62-a9d2-3d3818f302eb",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/octet-stream"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/files?id=<integer>&labels=<string>,<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "files"
+                      ],
+                      "query": [
+                        {
+                          "description": "A unique File identifier.",
+                          "key": "id",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "One or more labels. This will return the files which contain all of\nthe given labels.\n",
+                          "key": "labels",
+                          "value": "<string>,<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/plain"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "<string>",
+                  "createdAt": "2026-10-21T20:02:51.000Z",
+                  "updatedAt": "2026-10-21T20:02:51.000Z",
+                  "uid": "35240-db2960c3-b9f8-4e62-a9d2-3d3818f302eb"
+                },
+                {
+                  "id": "417180ac-b2b4-4e12-8d76-652e8f47b11c",
+                  "name": "User does not have permission for provided file.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/files?id=<integer>&labels=<string>,<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "files"
+                      ],
+                      "query": [
+                        {
+                          "description": "A unique File identifier.",
+                          "key": "id",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "One or more labels. This will return the files which contain all of\nthe given labels.\n",
+                          "key": "labels",
+                          "value": "<string>,<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-10-21T20:02:51.000Z",
+                  "updatedAt": "2026-10-21T20:02:51.000Z",
+                  "uid": "35240-417180ac-b2b4-4e12-8d76-652e8f47b11c"
+                },
+                {
+                  "id": "d3166550-f67d-42dc-abf4-764bf35faa35",
+                  "name": "File deleted.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/files?id=<integer>&labels=<string>,<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "files"
+                      ],
+                      "query": [
+                        {
+                          "description": "A unique File identifier.",
+                          "key": "id",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "One or more labels. This will return the files which contain all of\nthe given labels.\n",
+                          "key": "labels",
+                          "value": "<string>,<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Gone",
+                  "code": 410,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-10-21T20:02:51.000Z",
+                  "updatedAt": "2026-10-21T20:02:51.000Z",
+                  "uid": "35240-d3166550-f67d-42dc-abf4-764bf35faa35"
+                },
+                {
+                  "id": "ff8e5c3d-a9a9-478b-bd9e-1bacd9f42541",
+                  "name": "Unexpected error.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/files?id=<integer>&labels=<string>,<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "files"
+                      ],
+                      "query": [
+                        {
+                          "description": "A unique File identifier.",
+                          "key": "id",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "One or more labels. This will return the files which contain all of\nthe given labels.\n",
+                          "key": "labels",
+                          "value": "<string>,<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T20:02:51.000Z",
+                  "updatedAt": "2026-10-21T20:02:51.000Z",
+                  "uid": "35240-ff8e5c3d-a9a9-478b-bd9e-1bacd9f42541"
+                }
+              ],
+              "createdAt": "2026-10-21T20:02:51.000Z",
+              "updatedAt": "2026-10-21T20:02:51.000Z",
+              "uid": "35240-a6136b42-b116-4cb9-859e-192ae01fb4a6"
+            },
+            {
+              "name": "Upload a File",
+              "id": "86003b41-3bd8-4537-9b09-a81cc8d0d990",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
+                    "key": "Content-Type",
                     "value": "application/octet-stream"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/octet-stream"
-                }
-              ],
-              "body": "string",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "33576471-5d0d-4d90-ac91-5b8a9bf6602b",
-              "name": "User does not have permission for provided file.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "files"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "id",
-                      "value": "<integer>"
-                    },
-                    {
-                      "key": "labels",
-                      "value": "<string>,<string>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Forbidden",
-              "code": 403,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "04014945-c6ce-4860-a5a1-0dd1532b0fb1",
-              "name": "File deleted.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "files"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "id",
-                      "value": "<integer>"
-                    },
-                    {
-                      "key": "labels",
-                      "value": "<string>,<string>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Gone",
-              "code": 410,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "41eb6d00-f3ab-444d-9ca6-f649848d2e05",
-              "name": "Unexpected error.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "files"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "id",
-                      "value": "<integer>"
-                    },
-                    {
-                      "key": "labels",
-                      "value": "<string>,<string>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"Internal server error.\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "c417e599-5539-4323-8b72-79c2d8be2a02",
-          "name": "Upload a File",
-          "request": {
-            "name": "Upload a File",
-            "description": {
-              "content": "Upload a File in any of the formats [documented in our knowledge\nbase](/kb/supported-file-formats).\nRequest parameters should be passed in as query string parameters.\n\nExample CURL command:\n```bash\n  curl -X POST https://api.lilt.com/v2/files?key=API_KEY&name=en_US.json \\\n  --header \"Content-Type: application/octet-stream\" \\\n  --data-binary @en_US.json\n```\nCalls to GET /files are used to monitor the language detection results. The API response will be augmented to include detected language and confidence score.\n\nThe language detection will complete asynchronously. Prior to completion, the `detected_lang` value will be `zxx`, the reserved ISO 639-2 code for \"No linguistic content/not applicable\".\n\nIf the language can not be determined, or the detection process fails, the `detected_lang` field will return `und`, the reserved ISO 639-2 code for undetermined language, and the `detected_lang_confidence` score will be `0`.\n\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v2",
-                "files"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "name",
-                  "value": "<string>",
-                  "description": "(Required) A file name."
+                "body": {
+                  "mode": "file",
+                  "file": {}
                 },
-                {
-                  "disabled": false,
-                  "key": "file_hash",
-                  "value": "<string>",
-                  "description": "A hash value to associate with the file. The MD5 hash of the body contents will be used by default if a value isn't provided."
-                },
-                {
-                  "disabled": false,
-                  "key": "langId",
-                  "value": "<boolean>",
-                  "description": "Flag indicating whether to perform language detection on the uploaded file. Default is false."
-                },
-                {
-                  "disabled": false,
-                  "key": "project_id",
-                  "value": "<integer>",
-                  "description": "The project to associate the uploaded file with."
-                },
-                {
-                  "disabled": false,
-                  "key": "category",
-                  "value": "<string>",
-                  "description": "The category of the file. The options are `REFERENCE`, or `API`. The default is API. Files with the `REFERENCE` category will be displayed as reference material."
-                },
-                {
-                  "disabled": false,
-                  "key": "labels",
-                  "value": "<string>",
-                  "description": "Comma-separated list of labels to add to the uploaded document."
-                },
-                {
-                  "disabled": false,
-                  "key": "job_type",
-                  "value": "<string>",
-                  "description": "Specifies the job type when adding this file to a job."
-                }
-              ],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/octet-stream"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "file"
-            }
-          },
-          "response": [
-            {
-              "id": "261d4829-cdbd-4298-918f-f642ffb2ad42",
-              "name": "A SourceFile object.",
-              "originalRequest": {
                 "url": {
+                  "raw": "{{baseUrl}}/v2/files?name=<string>&file_hash=<string>&langId=<boolean>&project_id=<integer>&category=<string>&labels=<string>&job_type=PROMPT_RESPONSE",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
                   "path": [
                     "v2",
                     "files"
                   ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
                   "query": [
                     {
+                      "description": "(Required) A file name.",
                       "key": "name",
                       "value": "<string>"
                     },
                     {
+                      "description": "A hash value to associate with the file. The MD5 hash of the body contents will be used by default if a value isn't provided.",
                       "key": "file_hash",
                       "value": "<string>"
                     },
                     {
+                      "description": "Flag indicating whether to perform language detection on the uploaded file. Default is false.",
                       "key": "langId",
                       "value": "<boolean>"
                     },
                     {
+                      "description": "The project to associate the uploaded file with.",
                       "key": "project_id",
                       "value": "<integer>"
                     },
                     {
+                      "description": "The category of the file. The options are `REFERENCE`, or `API`. The default is API. Files with the `REFERENCE` category will be displayed as reference material.",
                       "key": "category",
                       "value": "<string>"
                     },
                     {
+                      "description": "Comma-separated list of labels to add to the uploaded document.",
                       "key": "labels",
                       "value": "<string>"
                     },
                     {
+                      "description": "Specifies the job type when adding this file to a job.",
                       "key": "job_type",
-                      "value": "<string>"
+                      "value": "PROMPT_RESPONSE"
+                    }
+                  ]
+                },
+                "description": "Upload a File in any of the formats documented in our knowledge\nbase.\nRequest parameters should be passed in as query string parameters.\n\nExample CURL command:\n```bash\ncurl -X POST https://api.lilt.com/v2/files?key=API_KEY&name=en_US.json \\\n--header \"Content-Type: application/octet-stream\" \\\n--data-binary @en_US.json\n```\nCalls to GET /files are used to monitor the language detection results. The API response will be augmented to include detected language and confidence score.\n\nThe language detection will complete asynchronously. Prior to completion, the `detected_lang` value will be `zxx`, the reserved ISO 639-2 code for \"No linguistic content/not applicable\".\n\nIf the language can not be determined, or the detection process fails, the `detected_lang` field will return `und`, the reserved ISO 639-2 code for undetermined language, and the `detected_lang_confidence` score will be `0`."
+              },
+              "response": [
+                {
+                  "id": "e884dae4-6855-4654-bfa3-6c7a3dba8537",
+                  "name": "A SourceFile object.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/octet-stream"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "file",
+                      "file": {}
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/files?name=<string>&file_hash=<string>&langId=<boolean>&project_id=<integer>&category=<string>&labels=<string>&job_type=PROMPT_RESPONSE",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "files"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) A file name.",
+                          "key": "name",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "A hash value to associate with the file. The MD5 hash of the body contents will be used by default if a value isn't provided.",
+                          "key": "file_hash",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Flag indicating whether to perform language detection on the uploaded file. Default is false.",
+                          "key": "langId",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "The project to associate the uploaded file with.",
+                          "key": "project_id",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "The category of the file. The options are `REFERENCE`, or `API`. The default is API. Files with the `REFERENCE` category will be displayed as reference material.",
+                          "key": "category",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Comma-separated list of labels to add to the uploaded document.",
+                          "key": "labels",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Specifies the job type when adding this file to a job.",
+                          "key": "job_type",
+                          "value": "PROMPT_RESPONSE"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
                     }
                   ],
-                  "variable": []
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"file_hash\": \"<string>\",\n  \"detected_lang\": \"<string>\",\n  \"detected_lang_confidence\": \"<number>\",\n  \"category\": \"<string>\",\n  \"labels\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"created_at\": \"<dateTime>\",\n  \"updated_at\": \"<dateTime>\"\n}",
+                  "createdAt": "2026-10-21T20:02:51.000Z",
+                  "updatedAt": "2026-10-21T20:02:51.000Z",
+                  "uid": "35240-e884dae4-6855-4654-bfa3-6c7a3dba8537"
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "file"
-                }
-              },
-              "status": "Created",
-              "code": 201,
-              "header": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "id": "4026cb0d-dde1-4132-a050-03c544675bbe",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/octet-stream"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/octet-stream"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "file",
+                      "file": {}
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/files?name=<string>&file_hash=<string>&langId=<boolean>&project_id=<integer>&category=<string>&labels=<string>&job_type=PROMPT_RESPONSE",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "files"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) A file name.",
+                          "key": "name",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "A hash value to associate with the file. The MD5 hash of the body contents will be used by default if a value isn't provided.",
+                          "key": "file_hash",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Flag indicating whether to perform language detection on the uploaded file. Default is false.",
+                          "key": "langId",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "The project to associate the uploaded file with.",
+                          "key": "project_id",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "The category of the file. The options are `REFERENCE`, or `API`. The default is API. Files with the `REFERENCE` category will be displayed as reference material.",
+                          "key": "category",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Comma-separated list of labels to add to the uploaded document.",
+                          "key": "labels",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Specifies the job type when adding this file to a job.",
+                          "key": "job_type",
+                          "value": "PROMPT_RESPONSE"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/plain"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "<string>",
+                  "createdAt": "2026-10-21T20:02:51.000Z",
+                  "updatedAt": "2026-10-21T20:02:51.000Z",
+                  "uid": "35240-4026cb0d-dde1-4132-a050-03c544675bbe"
+                },
+                {
+                  "id": "f72949ed-c0e1-45a6-8f78-dfde627b5682",
+                  "name": "Unexpected error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/octet-stream"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "file",
+                      "file": {}
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/files?name=<string>&file_hash=<string>&langId=<boolean>&project_id=<integer>&category=<string>&labels=<string>&job_type=PROMPT_RESPONSE",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "files"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) A file name.",
+                          "key": "name",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "A hash value to associate with the file. The MD5 hash of the body contents will be used by default if a value isn't provided.",
+                          "key": "file_hash",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Flag indicating whether to perform language detection on the uploaded file. Default is false.",
+                          "key": "langId",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "The project to associate the uploaded file with.",
+                          "key": "project_id",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "The category of the file. The options are `REFERENCE`, or `API`. The default is API. Files with the `REFERENCE` category will be displayed as reference material.",
+                          "key": "category",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Comma-separated list of labels to add to the uploaded document.",
+                          "key": "labels",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Specifies the job type when adding this file to a job.",
+                          "key": "job_type",
+                          "value": "PROMPT_RESPONSE"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T20:02:51.000Z",
+                  "updatedAt": "2026-10-21T20:02:51.000Z",
+                  "uid": "35240-f72949ed-c0e1-45a6-8f78-dfde627b5682"
                 }
               ],
-              "body": "{\n  \"id\": 46530,\n  \"name\": \"en_US.json\",\n  \"file_hash\": \"3858f62230ac3c915f300c664312c63f\",\n  \"detected_lang\": \"de\",\n  \"detected_lang_confidence\": 0.7,\n  \"category\": \"REFERENCE\",\n  \"created_at\": \"2019-10-16T22:12:34Z\",\n  \"updated_at\": \"2019-10-16T22:12:34Z\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "createdAt": "2026-10-21T20:02:51.000Z",
+              "updatedAt": "2026-10-21T20:02:51.000Z",
+              "uid": "35240-86003b41-3bd8-4537-9b09-a81cc8d0d990"
             },
             {
-              "id": "cf931d05-de0a-42f8-a07c-965db1d48d59",
-              "name": "Unauthorized",
-              "originalRequest": {
+              "name": "Delete a File",
+              "id": "58077d36-fdf0-4680-9bc5-6403927e9717",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
                 "url": {
+                  "raw": "{{baseUrl}}/v2/files?id=<integer>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
                   "path": [
                     "v2",
                     "files"
                   ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
                   "query": [
                     {
-                      "key": "name",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "file_hash",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "langId",
-                      "value": "<boolean>"
-                    },
-                    {
-                      "key": "project_id",
-                      "value": "<integer>"
-                    },
-                    {
-                      "key": "category",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "labels",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "job_type",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/octet-stream"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "file"
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/octet-stream"
-                }
-              ],
-              "body": "string",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "ed503fc3-cfa8-4c79-9018-0ba5cc559a28",
-              "name": "Unexpected error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "files"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "name",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "file_hash",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "langId",
-                      "value": "<boolean>"
-                    },
-                    {
-                      "key": "project_id",
-                      "value": "<integer>"
-                    },
-                    {
-                      "key": "category",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "labels",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "job_type",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "file"
-                }
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"Internal server error.\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "a0a26ea7-30c2-4bcb-b542-0838d9d4415b",
-          "name": "Delete a File",
-          "request": {
-            "name": "Delete a File",
-            "description": {
-              "content": "Delete a File.\n\nExample CURL command:\n```bash\n  curl -X DELETE https://api.lilt.com/v2/files?key=API_KEY&id=123\n```\n\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v2",
-                "files"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "id",
-                  "value": "<integer>",
-                  "description": "(Required) A unique File identifier."
-                }
-              ],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/octet-stream"
-              }
-            ],
-            "method": "DELETE",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "66e9d92f-b191-40fe-8d2a-4b9b07a6ae25",
-              "name": "A status object.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "files"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
+                      "description": "(Required) A unique File identifier.",
                       "key": "id",
                       "value": "<integer>"
                     }
-                  ],
-                  "variable": []
+                  ]
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
+                "description": "Delete a File.\n\nExample CURL command:\n```bash\ncurl -X DELETE https://api.lilt.com/v2/files?key=API_KEY&id=123\n```"
               },
-              "status": "No Content",
-              "code": 204,
-              "header": [
+              "response": [
                 {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "608b1184-9db7-4b91-8d0c-c03c30135e6a",
-              "name": "Unauthorized",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "files"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
+                  "id": "8b401b46-90d6-4f2b-80d7-55d49cc82686",
+                  "name": "A status object.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/files?id=<integer>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "files"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) A unique File identifier.",
+                          "key": "id",
+                          "value": "<integer>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-10-21T20:02:51.000Z",
+                  "updatedAt": "2026-10-21T20:02:51.000Z",
+                  "uid": "35240-8b401b46-90d6-4f2b-80d7-55d49cc82686"
+                },
+                {
+                  "id": "88be6862-175a-44d0-bb65-b94f4dc018c6",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/octet-stream"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/files?id=<integer>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "files"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) A unique File identifier.",
+                          "key": "id",
+                          "value": "<integer>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "text",
+                  "header": [
                     {
-                      "key": "id",
-                      "value": "<integer>"
+                      "key": "Content-Type",
+                      "value": "text/plain"
                     }
                   ],
-                  "variable": []
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "<string>",
+                  "createdAt": "2026-10-21T20:02:51.000Z",
+                  "updatedAt": "2026-10-21T20:02:51.000Z",
+                  "uid": "35240-88be6862-175a-44d0-bb65-b94f4dc018c6"
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/octet-stream"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/octet-stream"
-                }
-              ],
-              "body": "string",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "ac0d3f4e-2df6-4038-8d0a-54cbc22a1b93",
-              "name": "Unexpected error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "files"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
+                  "id": "0fc69132-9a6d-4ee0-a439-1e67633b70fe",
+                  "name": "Unexpected error",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/files?id=<integer>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "files"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) A unique File identifier.",
+                          "key": "id",
+                          "value": "<integer>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
                     {
-                      "key": "id",
-                      "value": "<integer>"
+                      "key": "Content-Type",
+                      "value": "application/json"
                     }
                   ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T20:02:51.000Z",
+                  "updatedAt": "2026-10-21T20:02:51.000Z",
+                  "uid": "35240-0fc69132-9a6d-4ee0-a439-1e67633b70fe"
                 }
               ],
-              "body": "{\n  \"message\": \"Internal server error.\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "createdAt": "2026-10-21T20:02:51.000Z",
+              "updatedAt": "2026-10-21T20:02:51.000Z",
+              "uid": "35240-58077d36-fdf0-4680-9bc5-6403927e9717"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "2738c913-1067-45be-a15a-77ccabe8e5bb",
-          "name": "Download file",
-          "request": {
-            "name": "Download file",
-            "description": {
-              "content": "Download a File.\n\nExample CURL:\n```bash\ncurl -X GET 'https://api.lilt.com/v2/files/download?key=API_KEY&id=1'\n```\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v2",
-                "files",
-                "download"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "id",
-                  "value": "<string>",
-                  "description": "(Required) A File id."
-                }
-              ],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/octet-stream"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "8feb22cd-5e9c-4ebe-94fd-d77bf9c39424",
-              "name": "A file.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "files",
-                    "download"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "id",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/octet-stream"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/octet-stream"
-                }
-              ],
-              "body": "string",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "2f98803f-3b68-4ba9-b364-0a58ccd100a8",
-              "name": "Unauthorized",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "files",
-                    "download"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "id",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/octet-stream"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/octet-stream"
-                }
-              ],
-              "body": "string",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "b3a7a2e9-979e-4576-a62d-26b6ab1a5037",
-              "name": "Unexpected error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "files",
-                    "download"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "id",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"Internal server error.\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "b8ec5356-cb2a-4c12-9df8-597205704b34",
-          "name": "Add Label to File",
-          "request": {
-            "name": "Add Label to File",
-            "description": {
-              "content": "Add a label to a File.\n\nExample CURL:\n```bash\ncurl -X POST 'https://api.lilt.com/v2/files/labels?key=API_KEY&id=1'\n--header 'Content-Type: application/json' \\\n--data-raw '{\n    \"name\": \"label_name\"\n}'\n```\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v2",
-                "files",
-                "labels"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "id",
-                  "value": "<string>",
-                  "description": "(Required) A File id."
-                }
-              ],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/octet-stream"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"<string>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "f204105a-6347-4771-920c-64c0f4342e22",
-              "name": "A success response.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "files",
-                    "labels"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "id",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"label_name\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "No Content",
-              "code": 204,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "41b38716-fbd0-4cb1-8844-6e1d3e8649b7",
-              "name": "Unauthorized",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "files",
-                    "labels"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "id",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/octet-stream"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"label_name\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/octet-stream"
-                }
-              ],
-              "body": "string",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "6c697a08-bfcf-475a-9cb5-abf8bf6b5cc6",
-              "name": "Unexpected error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "files",
-                    "labels"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "id",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"label_name\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"Internal server error.\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "2637838d-18cb-4476-833d-fe0ceea06647",
-          "name": "Remove Label from File",
-          "request": {
-            "name": "Remove Label from File",
-            "description": {
-              "content": "Remove a label from a File.\n\nExample CURL:\n```bash\ncurl -X DELETE 'https://api.lilt.com/v2/files/labels?key=API_KEY&id=1&name=label_name'\n```\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v2",
-                "files",
-                "labels"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "id",
-                  "value": "<string>",
-                  "description": "(Required) A File id."
-                },
-                {
-                  "disabled": false,
-                  "key": "name",
-                  "value": "<string>",
-                  "description": "(Required) A label name."
-                }
-              ],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/octet-stream"
-              }
-            ],
-            "method": "DELETE",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "d66ae96c-2235-4b65-9452-3f19955f5822",
-              "name": "A success response.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "files",
-                    "labels"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "id",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "name",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "No Content",
-              "code": 204,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "132bbcd7-4824-45f9-87d5-40ea7711792b",
-              "name": "Unauthorized",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "files",
-                    "labels"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "id",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "name",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/octet-stream"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/octet-stream"
-                }
-              ],
-              "body": "string",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "f8867a51-33bc-4568-b2a1-f1dec8c91918",
-              "name": "Unexpected error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "files",
-                    "labels"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "id",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "name",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"Internal server error.\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "7621c4d3-8ad9-40a6-bd2e-dfbe4317ff8b",
+          "createdAt": "2026-10-21T20:02:51.000Z",
+          "updatedAt": "2026-10-21T20:02:51.000Z",
+          "uid": "35240-7621c4d3-8ad9-40a6-bd2e-dfbe4317ff8b"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://api.lilt.com",
-      "key": "baseUrl"
+      "id": "9e253e0a-ddea-4081-be8c-8bcb41d55e11",
+      "createdAt": "2026-10-21T20:02:51.000Z",
+      "updatedAt": "2026-10-21T20:02:51.000Z",
+      "uid": "35240-9e253e0a-ddea-4081-be8c-8bcb41d55e11"
     }
   ],
   "auth": {
@@ -1457,21 +1511,20 @@
     "basic": [
       {
         "key": "username",
-        "value": "{{basicAuthUsername}}"
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
       },
       {
         "key": "password",
-        "value": "{{basicAuthPassword}}"
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "6cc7255f-200a-40b4-8c16-602e30823c64",
-    "name": "LILT Create Files API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "LILT API Support: https://lilt.atlassian.net/servicedesk/customer/portals\n\nThe LILT API enables programmatic access to the full-range of LILT backend services including:\n  * Training of and translating with interactive, adaptive machine translation\n  * Large-scale translation memory\n  * The Lexicon (a large-scale termbase)\n  * Programmatic control of the LILT CAT environment\n  * Translation memory synchronization\n\n\nRequests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests.\n\nThe base url for this REST API is `https://api.lilt.com/`.\n\n## Authentication\n\nRequests are authenticated via API key, which requires the Business plan.\n\nRequests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your API key as both the `username` and `password`.\n\nFor development, you may also pass the API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use.\n\n## Quotas\n\nOur services have a general quota of 4000 requests per minute. Should you hit the maximum requests per minute, you will need to wait 60 seconds before you can send another request.\n",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.lilt.com"
     }
-  }
+  ]
 }

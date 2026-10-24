@@ -1,805 +1,816 @@
 {
+  "info": {
+    "_postman_id": "8f4a5d5d-1e01-4b18-9114-de50f8fe6e81",
+    "name": "LILT Webhook Configuration API",
+    "description": "LILT API Support: https://lilt.atlassian.net/servicedesk/customer/portals\n\nThe LILT API enables programmatic access to the full-range of LILT backend services including:\n* Training of and translating with interactive, adaptive machine translation\n* Large-scale translation memory\n* The Lexicon (a large-scale termbase)\n* Programmatic control of the LILT CAT environment\n* Translation memory synchronization\n\nRequests and responses are in JSON format.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T20:03:46.000Z",
+    "updatedAt": "2026-10-21T20:03:47.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-8f4a5d5d-1e01-4b18-9114-de50f8fe6e81"
+  },
   "item": [
     {
-      "id": "7b98e3a3-61ee-4306-a450-81e1e72f9d1b",
-      "name": "Webhook Configuration",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
+      "name": "v3",
       "item": [
         {
-          "id": "2c42c59a-f4a4-4854-9355-3d6cc97fbd9c",
-          "name": "Retrieve a list of Webhook Configurations.",
-          "request": {
-            "name": "Retrieve a list of Webhook Configurations.",
-            "description": {
-              "content": "Retrieves a list of webhook configurations available to your LILT organization.\nUse this to manage your webhook configurations.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v3",
-                "connectors",
-                "configuration",
-                "webhooks"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "connectors",
+          "item": [
             {
-              "id": "de76add6-816d-4a6d-a8c9-0ca1d7a84ecf",
-              "name": "The webhook configurations response.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v3",
-                    "connectors",
-                    "configuration",
-                    "webhooks"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "name": "configuration",
+              "item": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "name": "webhooks",
+                  "item": [
+                    {
+                      "name": "{id}",
+                      "item": [
+                        {
+                          "name": "Retrieve a specific Webhook Configuration by ID",
+                          "id": "30ca8aa9-dfc2-42f8-8882-dbda83a4a12b",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v3/connectors/configuration/webhooks/:id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v3",
+                                "connectors",
+                                "configuration",
+                                "webhooks",
+                                ":id"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "d3e3b94a-8105-4588-a48a-ccc2150ef12a",
+                                  "key": "id",
+                                  "value": "<integer>",
+                                  "description": "(Required) The Webhook Configuration ID."
+                                }
+                              ]
+                            },
+                            "description": "Retrieves a specific webhook configuration by its ID.\nDeleted webhook configurations are not returned."
+                          },
+                          "response": [
+                            {
+                              "id": "37b23177-9b00-43cc-a2a0-bb3d0fd00004",
+                              "name": "Returns the webhook configuration.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v3/connectors/configuration/webhooks/:id",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v3",
+                                    "connectors",
+                                    "configuration",
+                                    "webhooks",
+                                    ":id"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"id\": \"<integer>\",\n  \"webhookName\": \"<string>\",\n  \"webhookUrl\": \"<uri>\",\n  \"eventType\": [\n    \"PROJECT_DELIVER\",\n    \"JOB_DELIVER\"\n  ]\n}",
+                              "createdAt": "2026-10-21T20:03:47.000Z",
+                              "updatedAt": "2026-10-21T20:03:47.000Z",
+                              "uid": "35240-37b23177-9b00-43cc-a2a0-bb3d0fd00004"
+                            },
+                            {
+                              "id": "22e48743-0ea6-4452-b0fa-e451dacb4fb7",
+                              "name": "Unexpected error",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v3/connectors/configuration/webhooks/:id",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v3",
+                                    "connectors",
+                                    "configuration",
+                                    "webhooks",
+                                    ":id"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Internal Server Error",
+                              "code": 500,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"message\": \"<string>\"\n}",
+                              "createdAt": "2026-10-21T20:03:47.000Z",
+                              "updatedAt": "2026-10-21T20:03:47.000Z",
+                              "uid": "35240-22e48743-0ea6-4452-b0fa-e451dacb4fb7"
+                            }
+                          ],
+                          "createdAt": "2026-10-21T20:03:47.000Z",
+                          "updatedAt": "2026-10-21T20:03:47.000Z",
+                          "uid": "35240-30ca8aa9-dfc2-42f8-8882-dbda83a4a12b"
+                        },
+                        {
+                          "name": "Update a specific Webhook Configuration by ID",
+                          "id": "d66e4edf-6406-4e99-b5f0-027ed805a059",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"webhookName\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v3/connectors/configuration/webhooks/:id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v3",
+                                "connectors",
+                                "configuration",
+                                "webhooks",
+                                ":id"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "f50e5a70-1156-4ea3-aaf6-679905ddc5ed",
+                                  "key": "id",
+                                  "value": "<integer>",
+                                  "description": "(Required) The Webhook Configuration ID."
+                                }
+                              ]
+                            },
+                            "description": "Updates a specific webhook configuration by its ID.\nOnly the fields that are provided in the request body will be updated."
+                          },
+                          "response": [
+                            {
+                              "id": "47475ec1-040a-4ca1-abf9-d3e69e4e2be5",
+                              "name": "Returns the updated webhook configuration.",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"webhookName\": \"<string>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/v3/connectors/configuration/webhooks/:id",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v3",
+                                    "connectors",
+                                    "configuration",
+                                    "webhooks",
+                                    ":id"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"id\": \"<integer>\",\n  \"webhookName\": \"<string>\",\n  \"webhookUrl\": \"<uri>\",\n  \"eventType\": [\n    \"PROJECT_DELIVER\",\n    \"JOB_DELIVER\"\n  ]\n}",
+                              "createdAt": "2026-10-21T20:03:47.000Z",
+                              "updatedAt": "2026-10-21T20:03:47.000Z",
+                              "uid": "35240-47475ec1-040a-4ca1-abf9-d3e69e4e2be5"
+                            },
+                            {
+                              "id": "e47c8019-4b92-44d9-8129-2a7bb893d74f",
+                              "name": "Unexpected error",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"webhookName\": \"<string>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/v3/connectors/configuration/webhooks/:id",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v3",
+                                    "connectors",
+                                    "configuration",
+                                    "webhooks",
+                                    ":id"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Internal Server Error",
+                              "code": 500,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"message\": \"<string>\"\n}",
+                              "createdAt": "2026-10-21T20:03:47.000Z",
+                              "updatedAt": "2026-10-21T20:03:47.000Z",
+                              "uid": "35240-e47c8019-4b92-44d9-8129-2a7bb893d74f"
+                            }
+                          ],
+                          "createdAt": "2026-10-21T20:03:47.000Z",
+                          "updatedAt": "2026-10-21T20:03:47.000Z",
+                          "uid": "35240-d66e4edf-6406-4e99-b5f0-027ed805a059"
+                        },
+                        {
+                          "name": "Delete a specific Webhook Configuration by ID",
+                          "id": "d60a84c7-f149-44bd-ade5-89bb8d2ac2a8",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v3/connectors/configuration/webhooks/:id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v3",
+                                "connectors",
+                                "configuration",
+                                "webhooks",
+                                ":id"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "5f444ca9-b85d-4082-ad19-0439bb2bd3de",
+                                  "key": "id",
+                                  "value": "<integer>",
+                                  "description": "(Required) The Webhook Configuration ID."
+                                }
+                              ]
+                            }
+                          },
+                          "response": [
+                            {
+                              "id": "16dce126-ed8f-4c83-a7a6-cd397230693b",
+                              "name": "Upon success a response with an empty body is returned.",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v3/connectors/configuration/webhooks/:id",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v3",
+                                    "connectors",
+                                    "configuration",
+                                    "webhooks",
+                                    ":id"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "No Content",
+                              "code": 204,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-10-21T20:03:47.000Z",
+                              "updatedAt": "2026-10-21T20:03:47.000Z",
+                              "uid": "35240-16dce126-ed8f-4c83-a7a6-cd397230693b"
+                            },
+                            {
+                              "id": "aac637ff-280f-4900-93d5-b3c6b388e7af",
+                              "name": "Unexpected error",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v3/connectors/configuration/webhooks/:id",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v3",
+                                    "connectors",
+                                    "configuration",
+                                    "webhooks",
+                                    ":id"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Internal Server Error",
+                              "code": 500,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"message\": \"<string>\"\n}",
+                              "createdAt": "2026-10-21T20:03:47.000Z",
+                              "updatedAt": "2026-10-21T20:03:47.000Z",
+                              "uid": "35240-aac637ff-280f-4900-93d5-b3c6b388e7af"
+                            }
+                          ],
+                          "createdAt": "2026-10-21T20:03:47.000Z",
+                          "updatedAt": "2026-10-21T20:03:47.000Z",
+                          "uid": "35240-d60a84c7-f149-44bd-ade5-89bb8d2ac2a8"
+                        }
+                      ],
+                      "id": "41b1152c-b049-4e13-a311-d0879d0a430d",
+                      "createdAt": "2026-10-21T20:03:47.000Z",
+                      "updatedAt": "2026-10-21T20:03:47.000Z",
+                      "uid": "35240-41b1152c-b049-4e13-a311-d0879d0a430d"
+                    },
+                    {
+                      "name": "Retrieve a list of Webhook Configurations",
+                      "id": "98ae429b-1816-4713-a3ed-460965601df7",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v3/connectors/configuration/webhooks",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v3",
+                            "connectors",
+                            "configuration",
+                            "webhooks"
+                          ]
+                        },
+                        "description": "Retrieves a list of webhook configurations available to your LILT organization.\nUse this to manage your webhook configurations."
+                      },
+                      "response": [
+                        {
+                          "id": "cacc284f-1b5f-49fe-8bf1-9fd6c998d1ce",
+                          "name": "The webhook configurations response.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v3/connectors/configuration/webhooks",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v3",
+                                "connectors",
+                                "configuration",
+                                "webhooks"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "[\n  {\n    \"id\": \"<integer>\",\n    \"webhookName\": \"<string>\",\n    \"webhookUrl\": \"<uri>\",\n    \"eventType\": [\n      \"PROJECT_DELIVER\",\n      \"INSTANT_TRANSLATE_FAILED\"\n    ]\n  },\n  {\n    \"id\": \"<integer>\",\n    \"webhookName\": \"<string>\",\n    \"webhookUrl\": \"<uri>\",\n    \"eventType\": [\n      \"JOB_UPDATE\",\n      \"INSTANT_TRANSLATE_FAILED\"\n    ]\n  }\n]",
+                          "createdAt": "2026-10-21T20:03:47.000Z",
+                          "updatedAt": "2026-10-21T20:03:47.000Z",
+                          "uid": "35240-cacc284f-1b5f-49fe-8bf1-9fd6c998d1ce"
+                        },
+                        {
+                          "id": "dde82f4d-7d45-4634-82a3-1c64e4b70a0c",
+                          "name": "Unexpected error",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v3/connectors/configuration/webhooks",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v3",
+                                "connectors",
+                                "configuration",
+                                "webhooks"
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-10-21T20:03:47.000Z",
+                          "updatedAt": "2026-10-21T20:03:47.000Z",
+                          "uid": "35240-dde82f4d-7d45-4634-82a3-1c64e4b70a0c"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T20:03:47.000Z",
+                      "updatedAt": "2026-10-21T20:03:47.000Z",
+                      "uid": "35240-98ae429b-1816-4713-a3ed-460965601df7"
+                    },
+                    {
+                      "name": "Creates a new Webhook Configuration",
+                      "id": "31543f7f-9073-4da2-8d8b-fbfe9f91dc3f",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"webhookName\": \"<string>\",\n  \"webhookUrl\": \"<uri>\",\n  \"eventType\": [\n    \"PROJECT_UPDATE\",\n    \"INSTANT_TRANSLATE_FAILED\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v3/connectors/configuration/webhooks",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v3",
+                            "connectors",
+                            "configuration",
+                            "webhooks"
+                          ]
+                        },
+                        "description": "Creates a new webhook configuration for your LILT organization."
+                      },
+                      "response": [
+                        {
+                          "id": "356f0156-cb61-4f41-b741-4e74dc832e06",
+                          "name": "Returns the newly created webhook configuration.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"webhookName\": \"<string>\",\n  \"webhookUrl\": \"<uri>\",\n  \"eventType\": [\n    \"PROJECT_UPDATE\",\n    \"INSTANT_TRANSLATE_FAILED\"\n  ]\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v3/connectors/configuration/webhooks",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v3",
+                                "connectors",
+                                "configuration",
+                                "webhooks"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"id\": \"<integer>\",\n  \"webhookName\": \"<string>\",\n  \"webhookUrl\": \"<uri>\",\n  \"eventType\": [\n    \"PROJECT_DELIVER\",\n    \"JOB_DELIVER\"\n  ]\n}",
+                          "createdAt": "2026-10-21T20:03:47.000Z",
+                          "updatedAt": "2026-10-21T20:03:47.000Z",
+                          "uid": "35240-356f0156-cb61-4f41-b741-4e74dc832e06"
+                        },
+                        {
+                          "id": "d2d3f570-4a69-41ae-80d1-d3ab7d5e5c07",
+                          "name": "Unexpected error",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"webhookName\": \"<string>\",\n  \"webhookUrl\": \"<uri>\",\n  \"eventType\": [\n    \"PROJECT_UPDATE\",\n    \"INSTANT_TRANSLATE_FAILED\"\n  ]\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v3/connectors/configuration/webhooks",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v3",
+                                "connectors",
+                                "configuration",
+                                "webhooks"
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-10-21T20:03:47.000Z",
+                          "updatedAt": "2026-10-21T20:03:47.000Z",
+                          "uid": "35240-d2d3f570-4a69-41ae-80d1-d3ab7d5e5c07"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T20:03:47.000Z",
+                      "updatedAt": "2026-10-21T20:03:47.000Z",
+                      "uid": "35240-31543f7f-9073-4da2-8d8b-fbfe9f91dc3f"
+                    }
+                  ],
+                  "id": "f38d585b-de43-4853-be7e-78165b09f19d",
+                  "createdAt": "2026-10-21T20:03:47.000Z",
+                  "updatedAt": "2026-10-21T20:03:47.000Z",
+                  "uid": "35240-f38d585b-de43-4853-be7e-78165b09f19d"
                 }
               ],
-              "body": "[\n  {\n    \"id\": 12345,\n    \"webhookName\": \"string\",\n    \"webhookUrl\": \"http://PWKZevmLLcRWpekdPoMXp.quxRj,Wr-wLcTNXr\",\n    \"eventType\": [\n      \"INSTANT_TRANSLATE_COMPLETED\",\n      \"INSTANT_TRANSLATE_COMPLETED\"\n    ]\n  },\n  {\n    \"id\": 12345,\n    \"webhookName\": \"string\",\n    \"webhookUrl\": \"http://ZLCmeNvthOQrZBiPd.bkoyTXFtik0XVRvBib,5ZpwWXbg7jTyh,+IVRv\",\n    \"eventType\": [\n      \"INSTANT_TRANSLATE_FAILED\",\n      \"PROJECT_DELIVER\"\n    ]\n  }\n]",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "020e78bf-f624-4408-8eea-4c6baa30802c",
-              "name": "Unexpected error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v3",
-                    "connectors",
-                    "configuration",
-                    "webhooks"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"Internal server error.\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "id": "1fd7112d-351e-4b90-8c7b-7c00fa526dd5",
+              "createdAt": "2026-10-21T20:03:47.000Z",
+              "updatedAt": "2026-10-21T20:03:47.000Z",
+              "uid": "35240-1fd7112d-351e-4b90-8c7b-7c00fa526dd5"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "bb18cbe0-316e-488f-8053-8f12113a3a91",
-          "name": "Creates a new Webhook Configuration",
-          "request": {
-            "name": "Creates a new Webhook Configuration",
-            "description": {
-              "content": "Creates a new webhook configuration for your LILT organization.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v3",
-                "connectors",
-                "configuration",
-                "webhooks"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"webhookName\": \"<string>\",\n  \"webhookUrl\": \"<uri>\",\n  \"eventType\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "f29ce731-1ca0-4795-937e-6e69fdc34c47",
-              "name": "Returns the newly created webhook configuration.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v3",
-                    "connectors",
-                    "configuration",
-                    "webhooks"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"webhookName\": \"<string>\",\n  \"webhookUrl\": \"<uri>\",\n  \"eventType\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": 12345,\n  \"webhookName\": \"string\",\n  \"webhookUrl\": \"http://qG.hmhqewHwrLTUfiaX+4IiB53esAIKlE23EtKcrfBijGuGtHC+yFELeFjmIAuTQYc-5bJbIgW\",\n  \"eventType\": [\n    \"JOB_DELIVER\",\n    \"INSTANT_TRANSLATE_FAILED\"\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "2aa7e6ac-c8d2-4157-a0fa-794cc5148fe4",
-              "name": "Unexpected error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v3",
-                    "connectors",
-                    "configuration",
-                    "webhooks"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"webhookName\": \"<string>\",\n  \"webhookUrl\": \"<uri>\",\n  \"eventType\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"Internal server error.\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "22faf2fa-43e6-4a39-b23c-25a4ead85823",
-          "name": "Retrieve a specific Webhook Configuration by ID.",
-          "request": {
-            "name": "Retrieve a specific Webhook Configuration by ID.",
-            "description": {
-              "content": "Retrieves a specific webhook configuration by its ID.\nDeleted webhook configurations are not returned.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v3",
-                "connectors",
-                "configuration",
-                "webhooks",
-                ":id"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "id",
-                  "description": "(Required) The Webhook Configuration ID."
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "268790f2-30b1-4fe8-956b-5f6ed56b6e22",
-              "name": "Returns the webhook configuration.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v3",
-                    "connectors",
-                    "configuration",
-                    "webhooks",
-                    ":id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "id",
-                      "description": "(Required) The Webhook Configuration ID."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": 12345,\n  \"webhookName\": \"string\",\n  \"webhookUrl\": \"http://qG.hmhqewHwrLTUfiaX+4IiB53esAIKlE23EtKcrfBijGuGtHC+yFELeFjmIAuTQYc-5bJbIgW\",\n  \"eventType\": [\n    \"JOB_DELIVER\",\n    \"INSTANT_TRANSLATE_FAILED\"\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "906d9e33-dec8-4abf-a483-85193cb96c85",
-              "name": "Unexpected error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v3",
-                    "connectors",
-                    "configuration",
-                    "webhooks",
-                    ":id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "id",
-                      "description": "(Required) The Webhook Configuration ID."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"Internal server error.\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "d7746ada-5d69-490f-835c-27f7f54f653f",
-          "name": "Update a specific Webhook Configuration by ID.",
-          "request": {
-            "name": "Update a specific Webhook Configuration by ID.",
-            "description": {
-              "content": "Updates a specific webhook configuration by its ID.\nOnly the fields that are provided in the request body will be updated.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v3",
-                "connectors",
-                "configuration",
-                "webhooks",
-                ":id"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "id",
-                  "description": "(Required) The Webhook Configuration ID."
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "PUT",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"webhookName\": \"<string>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "d82c2140-faf5-4720-8e62-e7eb3730cab2",
-              "name": "Returns the updated webhook configuration.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v3",
-                    "connectors",
-                    "configuration",
-                    "webhooks",
-                    ":id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "id",
-                      "description": "(Required) The Webhook Configuration ID."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"webhookName\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"id\": 12345,\n  \"webhookName\": \"string\",\n  \"webhookUrl\": \"http://qG.hmhqewHwrLTUfiaX+4IiB53esAIKlE23EtKcrfBijGuGtHC+yFELeFjmIAuTQYc-5bJbIgW\",\n  \"eventType\": [\n    \"JOB_DELIVER\",\n    \"INSTANT_TRANSLATE_FAILED\"\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "80bc3d7e-ba8d-4d69-9adc-0172c1fb4d20",
-              "name": "Unexpected error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v3",
-                    "connectors",
-                    "configuration",
-                    "webhooks",
-                    ":id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "id",
-                      "description": "(Required) The Webhook Configuration ID."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"webhookName\": \"<string>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"Internal server error.\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "e3c8a89a-6da4-43fc-a5f3-f92e6fb79bef",
-          "name": "Delete a specific Webhook Configuration by ID.",
-          "request": {
-            "name": "Delete a specific Webhook Configuration by ID.",
-            "description": {},
-            "url": {
-              "path": [
-                "v3",
-                "connectors",
-                "configuration",
-                "webhooks",
-                ":id"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "id",
-                  "description": "(Required) The Webhook Configuration ID."
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "DELETE",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "eca842e4-383a-4afb-b877-ad0e470c2397",
-              "name": "Upon success a response with an empty body is returned.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v3",
-                    "connectors",
-                    "configuration",
-                    "webhooks",
-                    ":id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "id",
-                      "description": "(Required) The Webhook Configuration ID."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "No Content",
-              "code": 204,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "51b3cf75-9fe8-4339-8a2d-1293772f865f",
-              "name": "Unexpected error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v3",
-                    "connectors",
-                    "configuration",
-                    "webhooks",
-                    ":id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "id",
-                      "description": "(Required) The Webhook Configuration ID."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"Internal server error.\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "01fca36a-2f28-40e7-b8f5-b65c688a283b",
+          "createdAt": "2026-10-21T20:03:47.000Z",
+          "updatedAt": "2026-10-21T20:03:47.000Z",
+          "uid": "35240-01fca36a-2f28-40e7-b8f5-b65c688a283b"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://api.lilt.com",
-      "key": "baseUrl"
+      "id": "6a33a10e-1313-4906-9e00-2d6c15d859da",
+      "createdAt": "2026-10-21T20:03:47.000Z",
+      "updatedAt": "2026-10-21T20:03:47.000Z",
+      "uid": "35240-6a33a10e-1313-4906-9e00-2d6c15d859da"
     }
   ],
   "auth": {
@@ -807,21 +818,20 @@
     "basic": [
       {
         "key": "username",
-        "value": "{{basicAuthUsername}}"
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
       },
       {
         "key": "password",
-        "value": "{{basicAuthPassword}}"
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "45e3dffd-b4ea-4551-ba45-e84976125aca",
-    "name": "LILT Create Webhook Configuration API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "LILT API Support: https://lilt.atlassian.net/servicedesk/customer/portals\n\nThe LILT API enables programmatic access to the full-range of LILT backend services including:\n  * Training of and translating with interactive, adaptive machine translation\n  * Large-scale translation memory\n  * The Lexicon (a large-scale termbase)\n  * Programmatic control of the LILT CAT environment\n  * Translation memory synchronization\n\n\nRequests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests.\n\nThe base url for this REST API is `https://api.lilt.com/`.\n\n## Authentication\n\nRequests are authenticated via API key, which requires the Business plan.\n\nRequests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your API key as both the `username` and `password`.\n\nFor development, you may also pass the API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use.\n\n## Quotas\n\nOur services have a general quota of 4000 requests per minute. Should you hit the maximum requests per minute, you will need to wait 60 seconds before you can send another request.\n",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.lilt.com"
     }
-  }
+  ]
 }
