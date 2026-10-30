@@ -64,6 +64,160 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Lilt is a company surfaced as a portfolio company of redpoint-ventures and added to the API Evangelist network as a stub for enrichment. Sector: ai. This profile is a lead awaiting the enrichment pipeline.
+LILT is an AI translation and localization platform that pairs contextual, adaptive machine translation with human linguist verification. The LILT REST API (https://api.lilt.com) exposes the platform programmatically: adaptive machine translation, large-scale translation memory and the Lexicon termbase, document and file translation, job/project/segment management, Lilt Create multilingual content generation, workflow templates, domains, cloud and multipart uploads, and webhook configuration. LILT also ships connectors for CMS, DAM and repository systems, first-party Python, Node and Java SDKs, and a hosted remote MCP server at mcp.lilt.com for agent-driven translation.
 
-Backed by: redpoint-ventures — https://lilt.com/
+**Areas:** Company · Artificial Intelligence · Translation · Localization · Machine Translation · Language · Content · Translation Memory · Agents
+
+## Lilt on APIs.io
+
+Everything profiled for Lilt is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/lilt/](https://apis.io/providers/lilt/)** — or go straight to one of the APIs or properties below.
+
+### APIs (13)
+
+- [Lilt Create API](https://apis.io/apis/lilt/lilt-create-api/) — The Create API from Lilt — 2 operation(s) for create.
+- [Lilt Documents API](https://apis.io/apis/lilt/lilt-documents-api/) — The Documents API from Lilt — 2 operation(s) for documents.
+- [Lilt Domains API](https://apis.io/apis/lilt/lilt-domains-api/) — The Domains API from Lilt — 1 operation(s) for domains.
+- [Lilt Files API](https://apis.io/apis/lilt/lilt-files-api/) — The Files API from Lilt — 3 operation(s) for files.
+- [Lilt Jobs API](https://apis.io/apis/lilt/lilt-jobs-api/) — The Jobs API from Lilt — 9 operation(s) for jobs.
+- [Lilt Languages API](https://apis.io/apis/lilt/lilt-languages-api/) — The Languages API from Lilt — 1 operation(s) for languages.
+- [Lilt Memories API](https://apis.io/apis/lilt/lilt-memories-api/) — The Memories API from Lilt — 6 operation(s) for memories.
+- [Lilt Projects API](https://apis.io/apis/lilt/lilt-projects-api/) — The Projects API from Lilt — 1 operation(s) for projects.
+- [Lilt Segments API](https://apis.io/apis/lilt/lilt-segments-api/) — The Segments API from Lilt — 3 operation(s) for segments.
+- [Lilt Translate API](https://apis.io/apis/lilt/lilt-translate-api/) — The Translate API from Lilt — 3 operation(s) for translate.
+- [Lilt Uploads API](https://apis.io/apis/lilt/lilt-uploads-api/) — The Uploads API from Lilt — 7 operation(s) for uploads.
+- [Lilt Webhook Configuration API](https://apis.io/apis/lilt/lilt-webhook-configuration-api/) — The Webhook Configuration API from Lilt — 2 operation(s) for webhook configuration.
+- [Lilt Workflows API](https://apis.io/apis/lilt/lilt-workflows-api/) — The Workflows API from Lilt — 1 operation(s) for workflows.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Lilt Webhooks](https://apis.io/asyncapis/lilt/lilt-webhooks/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [LILT](https://apis.io/servers/lilt/lilt/)
+
+#### Collections (13)
+
+Postman and Open Collection request collections.
+
+- [LILT Create API](https://apis.io/collections/lilt/open-lilt-create-api/)
+- [LILT Create Documents API](https://apis.io/collections/lilt/open-lilt-documents-api/)
+- [LILT Create Domains API](https://apis.io/collections/lilt/open-lilt-domains-api/)
+- [LILT Create Files API](https://apis.io/collections/lilt/open-lilt-files-api/)
+- [LILT Create Jobs API](https://apis.io/collections/lilt/open-lilt-jobs-api/)
+- [LILT Create Languages API](https://apis.io/collections/lilt/open-lilt-languages-api/)
+- [LILT Create Memories API](https://apis.io/collections/lilt/open-lilt-memories-api/)
+- [LILT Create Projects API](https://apis.io/collections/lilt/open-lilt-projects-api/)
+- [LILT Create Segments API](https://apis.io/collections/lilt/open-lilt-segments-api/)
+- [LILT Create Translate API](https://apis.io/collections/lilt/open-lilt-translate-api/)
+- [LILT Create Uploads API](https://apis.io/collections/lilt/open-lilt-uploads-api/)
+- [LILT Create Webhook Configuration API](https://apis.io/collections/lilt/open-lilt-webhook-configuration-api/)
+- [LILT Create Workflows API](https://apis.io/collections/lilt/open-lilt-workflows-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Lilt Api Overlay](https://apis.io/overlays/lilt/lilt-api-overlay/)
+
+#### Security (4)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Lilt Authentication](https://apis.io/security/lilt/lilt-authentication/)
+- [Lilt Domain Security](https://apis.io/security/lilt/lilt-domain-security/)
+- [Lilt Trust Center](https://apis.io/security/lilt/lilt-trust-center/)
+- [Lilt Vulnerability Disclosure](https://apis.io/security/lilt/lilt-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Lilt Scopes](https://apis.io/scopes/lilt/lilt-scopes/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Lilt Rate Limits](https://apis.io/rate-limits/lilt/lilt-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://lilt.com/)
+- [Documentation](https://support.lilt.com/developers/introduction)
+- [Getting started](https://support.lilt.com/developers/quickstart)
+- [API reference](https://support.lilt.com/api-reference/languages/retrieve-supported-languages)
+- [Pricing](https://lilt.com/pricing)
+- [Sign up](https://lilt.com/signin)
+- [Support](https://support.lilt.com/kb/contacting-support-submitting-feature-requests)
+- [Blog](https://lilt.com/blog)
+- [Compliance](https://trust.lilt.com/)
+- [Terms of service](https://lilt.com/website-terms-of-use)
+- [Privacy policy](https://lilt.com/legal/privacy)
+- [GitHub](https://github.com/lilt)
+- [Status](https://status.lilt.com/)
+
+## API Evangelist rating
+
+**Kin Score 61.1** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 75.0 |
+| Contract quality | 57.2 |
+| Contract governance | 4.5 |
+| Operational transparency | 73.7 |
+| Developer ergonomics | 67.3 |
+| Access clarity | 60.5 |
+
+**Agent readiness 51.1** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | mostly |
+
+**Regulatory alignment 36.4** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/lilt/](https://apis.io/providers/lilt/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Lilt: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/lilt/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
